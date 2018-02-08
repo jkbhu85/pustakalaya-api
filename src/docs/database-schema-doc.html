@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Pustakalaya: Database Schema</title>
+  <link type="text/css" rel="stylesheet" href="css/pustakalaya-global.css"/>
+</head>
+
+<body>
+  <header>
+    <h1>Pustakalaya: Database Schema</h1>
+  </header>
+
+  <nav></nav>
+
+  <div id="main-content">
+    <noscript>
+      This website does not work without JavaScript. Please enable JavaScript or use a browser
+      that supports JavaScript.
+    </noscript>
+
+
+    <div class="db-table-wrapper">
+        <table class="db-table">
+          <caption class="db-table-name"><span>Database Table: <span>Countries (COUN)</span></span></caption>
+          <thead>
+            <tr>
+              <th class="field-name">Field name</th>
+              <th class="field-type">Field type</th>
+              <th class="field-min-length">Min length</th>
+              <th class="field-max-length">Max length</th>
+              <th class="field-desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>coun_pk</td>
+              <td>number</td>
+              <td>-</td>
+              <td>3</td>
+              <td>primary key</td>
+            </tr>
+
+            <tr>
+              <td>name</td>
+              <td>string</td>
+              <td>1</td>
+              <td>50</td>
+              <td>-</td>
+            </tr>
+            
+            <tr>
+              <td>isd_code</td>
+              <td>string</td>
+              <td>-</td>
+              <td>4</td>
+              <td>-</td>
+            </tr>
+            
+            <tr>
+              <td>abbreviation</td>
+              <td>string</td>
+              <td>-</td>
+              <td>3</td>
+              <td>-</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>UserRoles (USRO)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>usro_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>role_name</td>
+            <td>string</td>
+            <td>1</td>
+            <td>24</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>UserAcStatus (USAS)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>usas_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>status_name</td>
+            <td>number</td>
+            <td>1</td>
+            <td>24</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>BookInstanceStatus (BOIS)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>bois_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>status_name</td>
+            <td>string</td>
+            <td>1</td>
+            <td>24</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>Books (BOOK)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>book_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>8</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>-</td>
+            <td>150</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>author</td>
+            <td>string</td>
+            <td>-</td>
+            <td>250</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>edition</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>greater than 0</td>
+          </tr>
+
+          <tr>
+            <td>price</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7,2</td>
+            <td>can not be negative</td>
+          </tr>
+          <tr>
+            <td>number_of_pages</td>
+            <td>number</td>
+            <td>-</td>
+            <td>5</td>
+            <td>greater than 0</td>
+          </tr>
+
+          <tr>
+            <td>isbn</td>
+            <td>string</td>
+            <td>-</td>
+            <td>17</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>publication</td>
+            <td>string</td>
+            <td>-</td>
+            <td>100</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>LibUsers (LIUS)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>lius_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>lius_usro_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+              <td>lius_usas_fk</td>
+              <td>number</td>
+              <td>-</td>
+              <td>2</td>
+              <td>foreign key</td>
+            </tr>
+
+          <tr>
+            <td>email_uk</td>
+            <td>string</td>
+            <td>3</td>
+            <td>80</td>
+            <td>unique</td>
+          </tr>
+
+          <tr>
+            <td>password_hash</td>
+            <td>string</td>
+            <td>-</td>
+            <td>64</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>password_salt</td>
+            <td>string</td>
+            <td>-</td>
+            <td>8</td>
+            <td>-</td>
+          </tr>
+          
+          <tr>
+            <td>password_version</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>unsuccessful_tries</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>number of times login failed due to incorrect password</td>
+          </tr>
+
+          <tr>
+            <td>security_question</td>
+            <td>string</td>
+            <td>-</td>
+            <td>100</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>security_answer</td>
+            <td>string</td>
+            <td>-</td>
+            <td>50</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>date_of_birth</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>first_name</td>
+            <td>string</td>
+            <td>-</td>
+            <td>30</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>last_name</td>
+            <td>string</td>
+            <td>-</td>
+            <td>80</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>gender</td>
+            <td>string</td>
+            <td>-</td>
+            <td>1</td>
+            <td>M or F or O</td>
+          </tr>
+
+          <tr>
+            <td>mobile_number_uk</td>
+            <td>string</td>
+            <td>-</td>
+            <td>10</td>
+            <td>unique</td>
+          </tr>
+
+          <tr>
+            <td>lius_coun_fk_monu</td>
+            <td>number</td>
+            <td>-</td>
+            <td>3</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>image_path</td>
+            <td>string</td>
+            <td>-</td>
+            <td>20</td>
+            <td>img_ + &lt;user_id&gt; + . + &lt;ext&gt;</td>
+          </tr>
+
+          <tr>
+            <td>book_quota</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>created_on</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>Addresses (ADDR)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>addr_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>8</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>addr_lius_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>address_type</td>
+            <td>string</td>
+            <td>-</td>
+            <td>1</td>
+            <td>P or C</td>
+          </tr>
+          
+          <tr>
+            <td>address_line_1</td>
+            <td>string</td>
+            <td>-</td>
+            <td>30</td>
+            <td>-</td>
+          </tr>
+          
+          <tr>
+            <td>address_line_2</td>
+            <td>string</td>
+            <td>-</td>
+            <td>30</td>
+            <td>-</td>
+          </tr>
+          
+          <tr>
+            <td>city</td>
+            <td>string</td>
+            <td>-</td>
+            <td>30</td>
+            <td>-</td>
+          </tr>
+          
+          <tr>
+            <td>state_name</td>
+            <td>string</td>
+            <td>-</td>
+            <td>30</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>pin</td>
+            <td>string</td>
+            <td>-</td>
+            <td>8</td>
+            <td>-</td>
+          </tr>
+          
+          <tr>
+            <td>addr_coun_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>3</td>
+            <td>foreign key</td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>UserAcStatusHistory (UASH)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>uash_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>10</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>uash_usas_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>uash_lius_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>start_date</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>end_date</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>description</td>
+            <td>string</td>
+            <td>-</td>
+            <td>200</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>UserRoleHistory (USRH)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>usrh_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>10</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>usrh_lius_fk_user</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>usrh_lius_fk_assigned_by</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>usrh_lius_fk_released_by</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>usrh_usro_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>2</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>assign_date</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>release_date</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>reason_of_release</td>
+            <td>string</td>
+            <td>-</td>
+            <td>200</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>UserInfo (USIN)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>usin_pk_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>primary key, foreign key</td>
+          </tr>
+
+          <tr>
+            <td>usin_lius_fk_ac_created_by</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>usin_usrh_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>10</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>usin_uash_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>10</td>
+            <td>foreign key</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>BookInstance (BOIN)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>boin_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>9</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+              <td>boin_book_fk</td>
+              <td>number</td>
+              <td>-</td>
+              <td>8</td>
+              <td>foreign key</td>
+          </tr>
+
+          <tr>
+              <td>boin_bois_fk</td>
+              <td>number</td>
+              <td>-</td>
+              <td>2</td>
+              <td>foreign key</td>
+          </tr>
+          <tr>
+          	<td>boin_lius_fk_added_by</td>
+          	<td>number</td>
+          	<td>-</td>
+          	<td>7</td>
+          	<td>foreign key</td>
+          </tr>
+          <tr>
+          	<td>boin_lius_fk_removed_by</td>
+          	<td>number</td>
+          	<td>-</td>
+          	<td>7</td>
+          	<td>foreign key</td>
+          </tr>
+          <tr>
+          	<td>reason_of_removal</td>
+          	<td>string</td>
+          	<td>-</td>
+          	<td>200</td>
+          	<td>-</td>
+          </tr>
+          <tr>
+            <td>added_on</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+          <tr>
+            <td>removed_on</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name"><span>Database Table: <span>BookAssignmentHistory (BOAH)</span></span></caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>boah_pk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>10</td>
+            <td>primary key</td>
+          </tr>
+          <tr>
+            <td>boah_boin_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>9</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>boas_lius_fk_issued_to</td>
+            <td>number</td>
+            <td>-</td>
+            <td>9</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>boas_lius_fk_issued_by</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7</td>
+            <td>foreign key</td>
+          </tr>
+
+          <tr>
+            <td>assign_date</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>expected_return_date</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>return_date</td>
+            <td>date</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>amount_fined</td>
+            <td>number</td>
+            <td>-</td>
+            <td>7,2</td>
+            <td>can not be negative</td>
+          </tr>
+          
+          <tr>
+            <td>comments</td>
+            <td>string</td>
+            <td>-</td>
+            <td>200</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!--
+
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>-</td>
+          </tr>
+
+    -->
+
+  </div> <!-- #main-cotent -->
+
+  <script src="js/nav.js"></script>
+</body>
+</html>
+  
+  

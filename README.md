@@ -32,21 +32,21 @@ This system has mainly two objects - user and book.
 The following are properties of objects:
 
 user
-  Email (also works as username)
-  Password
-  Name
-  Addresses
-  Mobile number
-  Photo
-  Date of birth
-  Role
+  - Email (also works as username)
+  - Password
+  - Name
+  - Addresses
+  - Mobile number
+  - Photo
+  - Date of birth
+  - Role
 
 book
-  Title
-  Authors
-  Publisher
-  Published year
-  ISBN
-  Edition
-  Number of pages
-  Price of book
+  - Title
+  - Authors
+  - Publisher
+  - Published year
+  - ISBN
+  - Edition
+  - Number of pages
+  - Price of book

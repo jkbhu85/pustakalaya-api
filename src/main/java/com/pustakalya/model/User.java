@@ -1,16 +1,13 @@
 package com.pustakalya.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class User implements Serializable {
-	private static final long serialVersionUID = 8657959541545580862L;
-
+public class User {
 	private int userId;
 
 	private String name;
-	private String mobileNumber;
+	private String mobile;
 	private String isdCode;
 	private String imgPath;
 	private Date dateOfBirth;
@@ -44,12 +41,12 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public String getMobileNumber() {
-		return mobileNumber;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public String getIsdCode() {

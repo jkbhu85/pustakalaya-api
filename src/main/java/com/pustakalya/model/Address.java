@@ -5,12 +5,8 @@ package com.pustakalya.model;
  * @author Jitendra
  */
 public class Address {
-	public static final char ADDR_TYPE_PERMANENT = 'P';
-	public static final char ADDR_TYPE_CURRENT = 'C';
-	
 	private int addrId;
 	private int userId;
-	private AddressType addressType;
 	private String addrLine1;
 	private String addrLine2;
 	private String city;
@@ -33,14 +29,6 @@ public class Address {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
-	}
-
-	public AddressType getAddressType() {
-		return addressType;
-	}
-
-	public void setAddressType(AddressType addressType) {
-		this.addressType = addressType;
 	}
 
 	public String getAddrLine1() {

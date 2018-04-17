@@ -7,8 +7,8 @@ package com.pustakalya.model;
 public class Address {
 	private int addrId;
 	private int userId;
-	private String addrLine1;
-	private String addrLine2;
+	private String line1;
+	private String line2;
 	private String city;
 	private String state;
 	private String pin;
@@ -31,20 +31,20 @@ public class Address {
 		this.userId = userId;
 	}
 
-	public String getAddrLine1() {
-		return addrLine1;
+	public String getLine1() {
+		return line1;
 	}
 
-	public void setAddrLine1(String addrLine1) {
-		this.addrLine1 = addrLine1;
+	public void setLine1(String line1) {
+		this.line1 = line1;
 	}
 
-	public String getAddrLine2() {
-		return addrLine2;
+	public String getLine2() {
+		return line2;
 	}
 
-	public void setAddrLine2(String addrLine2) {
-		this.addrLine2 = addrLine2;
+	public void setLine2(String line2) {
+		this.line2 = line2;
 	}
 
 	public String getCity() {

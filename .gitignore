@@ -1,5 +1,6 @@
 /target/
 .classpath
+.factorypath
 .project
 .jsdtscope
 *.prefs
@@ -8,3 +9,4 @@
 *.name
 *.container
 *.component
+/.apt_generated/

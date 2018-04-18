@@ -1,4 +1,4 @@
-package com.pustakalya.model;
+package com.jk.pustakalaya.model;
 
 /**
  * Represents book in database.

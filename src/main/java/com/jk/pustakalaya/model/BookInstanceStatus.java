@@ -1,4 +1,4 @@
-package com.pustakalya.model;
+package com.jk.pustakalaya.model;
 
 public enum BookInstanceStatus {
 	ISSUED("ISSUED"),

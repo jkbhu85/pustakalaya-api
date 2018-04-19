@@ -1,4 +1,6 @@
 /target/
+/.apt_generated/
+/.settings/
 .classpath
 .factorypath
 .project
@@ -9,4 +11,3 @@
 *.name
 *.container
 *.component
-/.apt_generated/

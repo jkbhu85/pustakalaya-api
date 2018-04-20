@@ -1,3 +1,10 @@
+# IDEs and editors
+.idea
+.c9/
+*.launch
+.settings/
+/src/frontend/*.sublime-workspace
+
 /target/
 /.apt_generated/
 /.settings/
@@ -11,3 +18,43 @@
 *.name
 *.container
 *.component
+
+
+# ignore below files from frontend
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/src/frontend/dist
+/src/frontend/dist-server
+/src/frontend/tmp
+/src/frontend/out-tsc
+
+# dependencies
+/src/frontend/node_modules
+
+
+# IDE - VSCode
+/src/frontend/.vscode/*
+/src/frontend/.editorconfig
+!/src/frontend/.vscode/settings.json
+!/src/frontend/.vscode/tasks.json
+!/src/frontend/.vscode/launch.json
+!/src/frontend/.vscode/extensions.json
+
+# misc
+/src/frontend/.sass-cache
+/src/frontend/connect.lock
+/src/frontend/coverage
+/src/frontend/libpeerconnection.log
+/src/frontend/npm-debug.log
+/src/frontend/yarn-error.log
+/src/frontend/testem.log
+/src/frontend/typings
+
+# e2e
+/src/frontend/e2e/*.js
+/src/frontend/e2e/*.map
+
+# System Files
+/src/frontend/.DS_Store
+/src/frontend/Thumbs.db

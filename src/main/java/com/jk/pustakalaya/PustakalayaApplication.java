@@ -17,7 +17,7 @@ public class PustakalayaApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 		List<String> list = Arrays.asList(args);
-		list.add("--debug");
+		//list.add("--debug");
 		SpringApplication.run(PustakalayaApplication.class, list.toArray(new String[] {}));
 	}
 }

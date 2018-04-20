@@ -212,3 +212,28 @@ INSERT INTO UserAccountStatus VALUES(null, 'INCOMPLETE');
 INSERT INTO BookInstanceStatus VALUES(null, 'ISSUED');
 INSERT INTO BookInstanceStatus VALUES(null, 'AVAILABLE');
 INSERT INTO BookInstanceStatus VALUES(null, 'REMOVED');
+
+INSERT INTO LibUsers VALUES
+(null -- id
+,4 -- role
+,1 -- account status
+, "krishna.murlidhar@m.com" -- email
+, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
+, "abckdkdt" -- password salt
+, 1 -- password version
+, 0 -- unsuccessful tries
+, "The person i love" -- security question
+, "none" -- security answer
+, "1991-07-01" -- date of birth
+, "Krishna" -- first name
+, "Murlidhar" -- last name
+, "M" -- gender
+, "912345678" -- mobile
+, 1 -- isd country
+, "" -- image path
+, 8 -- book quota
+, sysdate() -- time of creation
+, null -- account created by
+, null -- user role history
+, null -- user account history
+);

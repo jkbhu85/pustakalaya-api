@@ -6,7 +6,7 @@ import { PageNotFoundComponent } from './app-base/page-not-found.component';
 
 const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', component: PageNotFoundComponent }
 ];
 

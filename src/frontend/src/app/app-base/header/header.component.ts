@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styles: []
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
+  loggedIn = false;
 
   constructor() { }
 

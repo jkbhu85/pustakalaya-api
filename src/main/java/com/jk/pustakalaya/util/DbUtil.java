@@ -15,8 +15,20 @@ public class DbUtil {
 	private static String dbPassword;
 	private static String driverClass;
 	
+	static {
+		try {
+			init();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void init() throws IOException, ClassNotFoundException, SQLException {
-		InputStream in = new FileInputStream(App.CONFIG_PATH + File.separator + "db.properties");
+		InputStream in = new FileInputStream(App.CONFIG_PATH + File.separator + "app.properties");
 		Properties prop = new Properties();
 		prop.load(in);
 		

@@ -1,14 +1,37 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/home">Pustakalaya</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapsible" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
+     id="mainNav">
+  <a class="navbar-brand"
+     routerLink="/home">{{'app.title' | translate}}</a>
+  <button class="navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarCollapsible"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarCollapsible">
-    <ul class="navbar-nav mr-auto">
+  <div class="collapse navbar-collapse"
+       id="navbarCollapsible">
+    <ul id="exampleAccordian"
+        class="navbar-nav navbar-sidenav"
+        *ngIf="loggedIn">
       <li class="nav-item">
-        <a routerLink="/" class="nav-link">Home</a>
+        <a [routerLink]="['/']"
+           class="nav-link">Home</a>
       </li>
+    </ul>
+    <ul class="navbar-nav sidenav-toggler"
+        *ngIf="loggedIn">
+      <li class="nav-item">
+        <a class="nav-link"
+           id="sidenavToggler">
+          <i class="fa fa-fw fa-angle-left">&nbsp;</i>
+        </a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
     </ul>
   </div>
 </nav>

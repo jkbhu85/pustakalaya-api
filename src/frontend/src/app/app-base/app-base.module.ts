@@ -7,6 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { HomeComponent } from './home/home.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,9 +18,6 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     AppCommonModule
-  ],
-  exports: [
-    AppComponent
   ]
 })
 export class AppBaseModule { }

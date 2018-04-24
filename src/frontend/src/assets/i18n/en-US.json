@@ -1,0 +1,17 @@
+{
+  "app": {
+    "title": "Pustakalaya"
+  },
+  "login": {
+    "title": "Login",
+    "userId": "Username",
+    "password": "Password",
+    "vld": {
+      "userIdReq": "Username is required",
+      "passwordReq": "Password is required"
+    }
+  },
+  "forgotPwd": {
+    "title": "Forgot Password"
+  }
+}

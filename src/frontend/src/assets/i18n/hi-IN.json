@@ -8,7 +8,8 @@
     "password": "पासवर्ड",
     "vld": {
       "userIdReq": "यूजरनेम आवश्यक है",
-      "passwordReq": "पासवर्ड आवश्यक है"
+      "passwordReq": "पासवर्ड आवश्यक है",
+      "invalidCredentials": "पहचान जानकारी गलत है"
     }
   },
   "forgotPwd": {

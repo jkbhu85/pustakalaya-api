@@ -15,8 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet Filter implementation class CorsFilter
  */
-@WebFilter(dispatcherTypes = {DispatcherType.REQUEST }
-					, urlPatterns = { "/*" })
+//@WebFilter(dispatcherTypes = {DispatcherType.REQUEST } , urlPatterns = { "/*" })
 public class CorsFilter implements Filter {
     public CorsFilter() {
     	System.err.println("-------- CorsFilter created --------");

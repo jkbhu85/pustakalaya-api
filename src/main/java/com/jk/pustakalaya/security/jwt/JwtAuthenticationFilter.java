@@ -9,10 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 	private static final String TOKEN_HEADER_NAME = "json_web_token";
+	
+	public JwtAuthenticationFilter() {
+		this(new AntPathRequestMatcher("/**"));
+	}
 
 	protected JwtAuthenticationFilter(RequestMatcher requiresAuthenticationRequestMatcher) {
 		super(requiresAuthenticationRequestMatcher);

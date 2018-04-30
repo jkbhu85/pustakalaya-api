@@ -1,18 +1,16 @@
 package com.jk.pustakalaya.security.jwt;
 
-import java.util.Collection;
-
 public class JwtPayload {
 	public static final String PAYLOAD_KEY_ID = "id";
 	public static final String PAYLOAD_KEY_NAME = "name";
 	public static final String PAYLOAD_KEY_EMAIL = "email";
 	public static final String PAYLOAD_KEY_ROLES = "roles";
-	
+
 	private String id;
 	private String name;
 	private String email;
-	private Collection<String> roles;
-	
+	private String[] roles;
+
 	public JwtPayload() {}
 
 	/**
@@ -21,7 +19,7 @@ public class JwtPayload {
 	 * @param email
 	 * @param roles
 	 */
-	public JwtPayload(String id, String name, String email, Collection<String> roles) {
+	public JwtPayload(String id, String name, String email, String[] roles) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -76,17 +74,17 @@ public class JwtPayload {
 	/**
 	 * @return the roles
 	 */
-	public Collection<String> getRoles() {
+	public String[] getRoles() {
 		return roles;
 	}
 
 	/**
 	 * @param roles the roles to set
 	 */
-	public void setRoles(Collection<String> roles) {
+	public void setRoles(String[] roles) {
 		this.roles = roles;
 	}
-	
-	
-	
+
+
+
 }

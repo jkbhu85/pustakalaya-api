@@ -11,13 +11,16 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	private final Object principal;
 
 	public JwtAuthenticationToken(Object principal) {
-		this(principal, null);
+		this(principal, null, false);
 	}
-	
-	public JwtAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
+
+	public JwtAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities, boolean authenticated) {
 		super(authorities);
-		this.principal =principal;
-		this.setAuthenticated(true);
+
+		assert principal != null: ("Principal can not be null.");
+
+		this.principal = principal;
+		this.setAuthenticated(authenticated);
 	}
 
 	/**
@@ -28,7 +31,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
 	public Object getCredentials() {
 		return null;
 	}
-	
+
 	/**
 	 * Returns JWT string.
 	 */

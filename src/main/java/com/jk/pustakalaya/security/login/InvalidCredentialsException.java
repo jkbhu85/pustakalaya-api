@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.login;
+package com.jk.pustakalaya.security.login;
 
 public class InvalidCredentialsException extends RuntimeException {
 

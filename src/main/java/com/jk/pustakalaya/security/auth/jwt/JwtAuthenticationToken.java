@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.security.jwt;
+package com.jk.pustakalaya.security.auth.jwt;
 
 import java.util.Collection;
 

@@ -1,7 +1,7 @@
-package com.jk.pustakalaya.login;
+package com.jk.pustakalaya.security.login;
 
-import com.jk.pustakalaya.security.jwt.JwtPayload;
-import com.jk.pustakalaya.security.jwt.JwtUtil;
+import com.jk.pustakalaya.security.auth.jwt.JwtPayload;
+import com.jk.pustakalaya.security.auth.jwt.JwtUtil;
 
 public class LoginServiceImpl implements LoginService {
 

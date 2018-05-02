@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.security.jwt;
+package com.jk.pustakalaya.security.auth.jwt;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +14,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class JwtUtil {
 	private static final JwtUtilHelper helper = new JwtUtilHelper();
-	private static final long ZONE_OFFSET_VALUE = Calendar.getInstance().get(Calendar.ZONE_OFFSET);
+	private static final long ZONE_OFFSET_VALUE = Calendar.getInstance().get(Calendar.ZONE_OFFSET) * 1000L;
 
 	private static class JwtUtilHelper {
 		private final JWTVerifier jwtVerifier;
@@ -41,7 +41,7 @@ public class JwtUtil {
 
 
 		private String encode (JwtPayload payload) throws JWTCreationException {
-			Date issuedAt = new Date(System.currentTimeMillis() - ZONE_OFFSET_VALUE);
+			Date issuedAt = new Date(System.currentTimeMillis());
 			Date expiresAt = new Date(issuedAt.getTime() + 15 * 60 * 1000);
 
 			Builder builder =
@@ -60,9 +60,6 @@ public class JwtUtil {
 
 		private JwtPayload decode(String token) throws JWTVerificationException {
 			DecodedJWT jwt = jwtVerifier.verify(token);
-			long now = System.currentTimeMillis() - ZONE_OFFSET_VALUE;
-
-			if (jwt.getExpiresAt().getTime() < now) return null;
 
 			JwtPayload payload =
 					new JwtPayload(

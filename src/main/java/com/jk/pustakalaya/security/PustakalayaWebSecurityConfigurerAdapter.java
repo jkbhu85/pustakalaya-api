@@ -3,25 +3,27 @@ package com.jk.pustakalaya.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.jk.pustakalaya.security.jwt.JwtAuthenticationFilter;
-import com.jk.pustakalaya.security.jwt.JwtAuthenticationProvider;
+import com.jk.pustakalaya.security.auth.jwt.JwtAuthenticationFilter;
+import com.jk.pustakalaya.security.auth.jwt.JwtAuthenticationProvider;
 
 
 @EnableWebSecurity
@@ -39,11 +41,11 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 
 */
-	@Autowired
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
-			.authenticationProvider(new JwtAuthenticationProvider());
+			.authenticationProvider(jwtAuthenticationProvider());
 	}
 
 
@@ -54,14 +56,14 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
 		http
 			.csrf()
 				.disable()
 			.logout()
 				.disable()
 			.sessionManagement()
-				.disable()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
 			.headers()
 				.disable()
 			.requestCache()
@@ -69,21 +71,39 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 			.anonymous()
 				.disable()
 			.authorizeRequests()
-				.anyRequest().authenticated()
-				.and()
-			.addFilterAt(new JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+				.anyRequest().authenticated();
+
+		http
+			.exceptionHandling()
+				.authenticationEntryPoint(appAuthenticationEntryPoint());
+
+		http
+			.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), BasicAuthenticationFilter.class);
 	}
 
 
-	public AuthenticationManager authenticationManager(AuthenticationProvider ...authProviders) {
-		List<AuthenticationProvider> list = new ArrayList<>();
-
-		for (AuthenticationProvider ap: authProviders) {
-			list.add(ap);
-		}
-
-		return new ProviderManager(list);
+	@Bean
+	public AccessDeniedHandler appAccessDeniedHandler() {
+		log.debug("Custom AccessDeniedHandler created");
+		return (request, response, exception) -> {
+			response.sendError(HttpServletResponse.SC_FORBIDDEN);
+		};
 	}
+
+	@Bean
+	public AuthenticationProvider jwtAuthenticationProvider() {
+		return new JwtAuthenticationProvider();
+	}
+
+	@Bean
+	public AuthenticationEntryPoint appAuthenticationEntryPoint() {
+		log.debug("Custom AuthenticationEntryPoint created");
+		return (request, response, authException) -> {
+			System.out.println("Authentication entry point called");
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		};
+	}
+
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {

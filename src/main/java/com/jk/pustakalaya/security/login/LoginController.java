@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.login;
+package com.jk.pustakalaya.security.login;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;

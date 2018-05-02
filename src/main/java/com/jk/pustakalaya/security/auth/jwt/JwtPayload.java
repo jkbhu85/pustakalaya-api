@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.security.jwt;
+package com.jk.pustakalaya.security.auth.jwt;
 
 public class JwtPayload {
 	public static final String PAYLOAD_KEY_ID = "id";

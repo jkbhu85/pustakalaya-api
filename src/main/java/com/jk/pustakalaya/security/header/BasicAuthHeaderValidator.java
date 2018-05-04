@@ -8,7 +8,7 @@ package com.jk.pustakalaya.security.header;
  *
  */
 public class BasicAuthHeaderValidator implements AuthHeaderValidator {
-	private static final String HEADER_PREFIX = "PtkToken: ";
+	private static final String HEADER_PREFIX = "Bearer: ";
 
 	@Override
 	public boolean isHeaderValid(String headerValue) {

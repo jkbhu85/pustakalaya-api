@@ -53,7 +53,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		//web.ignoring().antMatchers("/api/login");
+		web.ignoring().antMatchers("/api/login");
 	}
 
 	@Override
@@ -73,11 +73,10 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 			.anonymous()
 				.disable();
 
-		http.cors().configurationSource(corsConfigurationSource());
+		//http.cors().configurationSource(corsConfigurationSource());
 
 		http
 			.authorizeRequests()
-				.antMatchers("/api/login").permitAll()
 				.anyRequest().authenticated();
 
 		http

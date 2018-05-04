@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 	private LoginService loginService = new LoginServiceImpl();
 
-	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.TEXT_PLAIN_VALUE)
-	public String login(@RequestBody LoginCredentials loginCred )
-			throws InvalidCredentialsException {
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+	public String login(@RequestBody LoginCredentials loginCred) throws InvalidCredentialsException {
 		return loginService.login(loginCred);
 	}
 }

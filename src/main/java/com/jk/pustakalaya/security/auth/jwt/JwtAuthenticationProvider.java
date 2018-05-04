@@ -7,6 +7,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.AuthorityUtils;
 
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
+
 
 
 public class JwtAuthenticationProvider implements AuthenticationProvider {
@@ -24,13 +27,11 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 		boolean authenticated = false;
 		JwtPayload payload = null;
 
-		log.debug("principal: {}", jwt);
-
 		try {
 			authenticated = JwtUtil.isAuthenticated(jwt);
 
 			if (authenticated) payload = JwtUtil.decode(jwt);
-		} catch (RuntimeException e) {
+		} catch (JWTVerificationException | JWTCreationException e) {
 			log.debug("authentication failed");
 			throw new JwtAuthenticationException(e.getMessage(), e);
 		}

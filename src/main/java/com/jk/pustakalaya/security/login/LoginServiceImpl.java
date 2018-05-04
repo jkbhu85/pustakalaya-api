@@ -2,8 +2,11 @@ package com.jk.pustakalaya.security.login;
 
 import com.jk.pustakalaya.security.auth.jwt.JwtPayload;
 import com.jk.pustakalaya.security.auth.jwt.JwtUtil;
+import com.jk.pustakalaya.security.header.AuthHeaderValidator;
+import com.jk.pustakalaya.security.header.BasicAuthHeaderValidator;
 
 public class LoginServiceImpl implements LoginService {
+	private AuthHeaderValidator authHeaderValidator = new BasicAuthHeaderValidator();
 
 	@Override
 	public String login(LoginCredentials loginCred) throws InvalidCredentialsException {
@@ -17,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 						new String[] {"USER"}
 					);
 
-			return JwtUtil.encode(payload);
+			return authHeaderValidator.addValidationMarker(JwtUtil.encode(payload));
 		}
 
 		throw new InvalidCredentialsException();

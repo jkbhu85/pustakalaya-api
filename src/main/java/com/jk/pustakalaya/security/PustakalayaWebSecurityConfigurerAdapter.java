@@ -17,10 +17,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.GenericFilterBean;
 
 import com.jk.pustakalaya.security.auth.jwt.JwtAuthenticationFilter;
 import com.jk.pustakalaya.security.auth.jwt.JwtAuthenticationProvider;
@@ -51,7 +53,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/api/login");
+		//web.ignoring().antMatchers("/api/login");
 	}
 
 	@Override
@@ -69,16 +71,24 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 			.requestCache()
 				.disable()
 			.anonymous()
-				.disable()
+				.disable();
+
+		http.cors().configurationSource(corsConfigurationSource());
+
+		http
 			.authorizeRequests()
+				.antMatchers("/api/login").permitAll()
 				.anyRequest().authenticated();
 
 		http
-			.exceptionHandling()
-				.authenticationEntryPoint(appAuthenticationEntryPoint());
+			.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), BasicAuthenticationFilter.class)
+			.addFilterBefore(appExceptionTranslationFilter(), ExceptionTranslationFilter.class);
+	}
 
-		http
-			.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), BasicAuthenticationFilter.class);
+
+	@Bean
+	public GenericFilterBean appExceptionTranslationFilter() {
+		return new PtkExceptionTranslationFilter(appAuthenticationEntryPoint(), appAccessDeniedHandler());
 	}
 
 
@@ -112,7 +122,8 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 		List<String> allowedMethods = new ArrayList<>();
 		List<String> allowedHeaders = new ArrayList<>();
 
-		allowedOrigins.add("**");
+		//allowedOrigins.add("null");
+		allowedOrigins.add("*");
 
 		allowedMethods.add("GET");
 		allowedMethods.add("POST");

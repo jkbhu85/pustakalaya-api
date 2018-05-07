@@ -27,17 +27,6 @@
 		<version>2.0.1.RELEASE</version>
 	</parent>
 
-	<build>
-		<finalName>pustakalaya</finalName>
-		<!-- 
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-		-->
-	</build>
 
 	<dependencies>
 		<dependency>
@@ -103,5 +92,24 @@
 			<artifactId>disruptor</artifactId>
 			<version>3.3.10</version>
 		</dependency>
+		
+		
+		<!-- Spring Devtools -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 	</dependencies>
+	
+	<build>
+		<finalName>pustakalaya</finalName>
+		<!-- 
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+		-->
+	</build>
 </project>

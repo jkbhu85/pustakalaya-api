@@ -53,7 +53,11 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/api/login");
+		web
+			.ignoring()
+				.antMatchers("/api/login")
+				.and()
+			;
 	}
 
 	@Override
@@ -114,8 +118,8 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 	}
 
 
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
+	//@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
 		List<String> allowedOrigins = new ArrayList<>();
 		List<String> allowedMethods = new ArrayList<>();

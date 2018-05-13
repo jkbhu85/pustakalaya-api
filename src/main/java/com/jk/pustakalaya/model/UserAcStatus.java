@@ -1,30 +1,35 @@
 package com.jk.pustakalaya.model;
 
-public enum UserAcStatus {
-	ACTIVE("ACTIVE"),
-	CLOSED("CLOSED"),
-	REVOKED("REVOKED"),
-	LOCKED("LOCKED"),
-	INCOMPLETE("INCOMPLETE");
-	
-	private final String code;
-	
-	private UserAcStatus(String code) {
-		this.code = code;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="UserAcStatus")
+public class UserAcStatus {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+	private String name;
+
+
+	public UserAcStatus() {}
+
+
+	public Integer getId() {
+		return id;
 	}
-	
-	public String code() {
-		return this.code;
+
+
+	public String getName() {
+		return name;
 	}
-	
-	public UserAcStatus fromCode(String code) {
-		if (code != null) {
-			code = code.toUpperCase();
-			for (UserAcStatus uac: UserAcStatus.values()) {
-				if (code.equals(uac.code)) return uac;
-			}
-		}
-		
-		return null;
+
+	@Override
+	public String toString() {
+		return "Account status: " + name;
 	}
+
 }

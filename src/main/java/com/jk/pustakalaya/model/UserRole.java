@@ -1,37 +1,38 @@
 package com.jk.pustakalaya.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Represents user roles used in the application.
  * @author Jitendra
  *
  */
-public enum UserRole {
-	ADMIN("ADMIN"),
-	LIBRARIAN("LIBRARIAN"),
-	MEMBER("MEMBER"),
-	NONE("NONE");
 
-	private final String code;
-	
-	private UserRole(String code) {
-		this.code = code;
+@Entity
+@Table(name="UserRole")
+public class UserRole {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;
+	private String name;
+
+	public UserRole() {
 	}
-	
-	public String code() {
-		return this.code;
+
+	public String getName() {
+		return name;
 	}
-	
-	public UserRole fromCode(String code) {
-		if (code != null) {
-			code = code.toUpperCase();
-			
-			for (UserRole role: UserRole.values()) {
-				if (code.equals(role.code)) {
-					return role;
-				}
-			}
-		}
-		
-		return null;
+
+	public Integer getId() {
+		return id;
+	}
+
+	@Override
+	public String toString() {
+		return "Role: " + name;
 	}
 }

@@ -55,7 +55,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 	public void configure(WebSecurity web) throws Exception {
 		web
 			.ignoring()
-				.antMatchers("/api/login")
+				.antMatchers("/**")
 				.and()
 			;
 	}

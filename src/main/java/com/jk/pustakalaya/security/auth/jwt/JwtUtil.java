@@ -1,6 +1,5 @@
 package com.jk.pustakalaya.security.auth.jwt;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import com.auth0.jwt.JWT;
@@ -14,7 +13,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class JwtUtil {
 	private static final JwtUtilHelper helper = new JwtUtilHelper();
-	private static final long ZONE_OFFSET_VALUE = Calendar.getInstance().get(Calendar.ZONE_OFFSET) * 1000L;
 
 	private static class JwtUtilHelper {
 		private final JWTVerifier jwtVerifier;

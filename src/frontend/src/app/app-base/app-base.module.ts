@@ -6,6 +6,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { HomeComponent } from './home/home.component';
+import { NotificationModule } from '../notifications/notifications.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { HomeComponent } from './home/home.component';
     HomeComponent
   ],
   imports: [
-    AppCommonModule
+    AppCommonModule,
+    NotificationModule
   ]
 })
 export class AppBaseModule { }

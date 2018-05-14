@@ -13,132 +13,125 @@ import com.jk.pustakalaya.model.UserAcStatus;
 import com.jk.pustakalaya.model.UserRole;
 
 @Entity
-@Table(name="LibUser")
-@NamedQuery(name="find_by_email", query="select u from UserAuthInfo u where u.id=?")
+@Table(name = "LibUser")
+@NamedQuery(name = "find_by_email", query = "select u from UserAuthInfo u where u.email=:email")
 public class UserAuthInfo {
 	@Id
 	private Long id;
 
-	@Column(name="emailUk")
+	@Column(name = "firstName")
+	private String firstName;
+
+	@Column(name = "emailUk")
 	private String email;
 
-	@Column(name="passwordHash")
+	@Column(name="unsuccessfulTries")
+	private int unsuccessfulTries;
+
+	@Column(name = "passwordHash")
 	private String passwordHash;
 
-	@Column(name="passwordSalt")
+	@Column(name = "passwordSalt")
 	private String passwordSalt;
 
-	@Column(name="passwordVersion")
+	@Column(name = "passwordVersion")
 	private int passwordVersion;
 
-	@Column(name="securityQuestion")
+	@Column(name = "securityQuestion")
 	private String securityQuestion;
 
-	@Column(name="securityAnswer")
+	@Column(name = "securityAnswer")
 	private String securityAnswer;
 
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="roleFk")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "roleFk")
 	private UserRole role;
 
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="accountStatusFk")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "accountStatusFk")
 	private UserAcStatus accountStatus;
 
+	public UserAuthInfo() {
+	}
 
-	public UserAuthInfo() {}
-
+	public String getFirstName() {
+		return firstName;
+	}
 
 	public String getEmail() {
 		return email;
 	}
 
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public String getPasswordHash() {
 		return passwordHash;
 	}
 
-
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
 	}
-
 
 	public String getPasswordSalt() {
 		return passwordSalt;
 	}
 
-
 	public void setPasswordSalt(String passwordSalt) {
 		this.passwordSalt = passwordSalt;
 	}
-
 
 	public int getPasswordVersion() {
 		return passwordVersion;
 	}
 
-
 	public void setPasswordVersion(int passwordVersion) {
 		this.passwordVersion = passwordVersion;
 	}
-
 
 	public String getSecurityQuestion() {
 		return securityQuestion;
 	}
 
-
 	public void setSecurityQuestion(String securityQuestion) {
 		this.securityQuestion = securityQuestion;
 	}
-
 
 	public String getSecurityAnswer() {
 		return securityAnswer;
 	}
 
-
 	public void setSecurityAnswer(String securityAnswer) {
 		this.securityAnswer = securityAnswer;
 	}
-
 
 	public String getRole() {
 		return role.getName();
 	}
 
-
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
-
 
 	public String getAccountStatus() {
 		return accountStatus.getName();
 	}
 
-
 	public void setAccountStatus(UserAcStatus accountStatus) {
 		this.accountStatus = accountStatus;
 	}
-
 
 	public Long getId() {
 		return id;
 	}
 
-
 	@Override
 	public String toString() {
 		return "UserAuthInfo [id=" + id + ", email=" + email + ", passwordHash=" + passwordHash + ", passwordSalt="
 				+ passwordSalt + ", passwordVersion=" + passwordVersion + ", securityQuestion=" + securityQuestion
-				+ ", securityAnswer=" + securityAnswer + ", role=" + role.getName() + ", accountStatus=" + accountStatus.getName() + "]";
+				+ ", securityAnswer=" + securityAnswer + ", role=" + role.getName() + ", accountStatus="
+				+ accountStatus.getName() + "]";
 	}
 
 }

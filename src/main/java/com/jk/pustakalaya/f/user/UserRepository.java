@@ -22,8 +22,8 @@ public class UserRepository {
 	}
 
 	public UserAuthInfo findUserAuthInfo(String email) {
-		TypedQuery<UserAuthInfo> q = em.createNamedQuery("get_by_email", UserAuthInfo.class);
-		q.setParameter(1, email);
+		TypedQuery<UserAuthInfo> q = em.createNamedQuery("find_by_email", UserAuthInfo.class);
+		q.setParameter("email", email);
 
 		return q.getSingleResult();
 	}

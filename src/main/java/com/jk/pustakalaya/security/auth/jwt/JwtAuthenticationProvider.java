@@ -38,7 +38,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
 		Authentication token = new JwtAuthenticationToken(
 					payload,
-					AuthorityUtils.createAuthorityList(payload.getRoles()),
+					AuthorityUtils.createAuthorityList(payload.getRole()),
 					true
 				);
 

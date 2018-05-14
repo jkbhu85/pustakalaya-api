@@ -12,22 +12,24 @@
                  class="form-control"
                  id="userId"
                  [formControl]="userId" />
-          <div *ngIf="userId.touched || userId.dirty"
+          <div *ngIf="(userId.touched || userId.dirty) && userId.errors"
                class="text-danger">
             <div *ngIf="userId.errors.required">{{'login.vld.userIdReq' | translate}}</div>
           </div>
         </div>
         <div class="form-group">
           <label for="password">{{'login.password' | translate}}</label>
-          <input type="text"
+          <input type="password"
                  class="form-control"
                  id="password"
                  [formControl]="password" />
-          <div *ngIf="password.touched || password.dirty"
+          <div *ngIf="(password.touched || password.dirty) && password.errors"
                class="text-danger">
             <div *ngIf="password.errors.required">{{'login.vld.passwordReq' | translate}}</div>
           </div>
         </div>
+
+        <div class="text-danger" *ngIf="showError">{{errorText$ | async}}</div>
       </div>
 
       <div class="card-footer">

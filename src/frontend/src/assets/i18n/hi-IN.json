@@ -8,11 +8,17 @@
     "password": "पासवर्ड",
     "vld": {
       "userIdReq": "यूजरनेम आवश्यक है",
+      "userIdInvalid": "ईमेल गलत है",
       "passwordReq": "पासवर्ड आवश्यक है",
-      "invalidCredentials": "पहचान जानकारी गलत है"
+      "invalidCredentials": "पहचान जानकारी गलत है",
+      "accountLocked": "आपका खाता बंद है",
+      "accessRevoked": "आपकी पहुँच रोक दी गयी है"
     }
   },
   "forgotPwd": {
     "title": "पासवर्ड भूल गए"
+  },
+  "common": {
+    "errorOccurred": "कोई गड़बड़ हुई है"
   }
 }

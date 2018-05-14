@@ -10,4 +10,13 @@ public interface UserService {
 	void updatePassword(Long id, String oldPassword, String newPassword);
 
 	void updateSecurityQuestion(Long id, String password, String question, String answer);
+	/*
+	void lockAccount(Long id);
+
+	void revokeAccount(Long id);
+
+	void activateAccount(Long id);
+
+	void deleteAccount(Long id);
+	*/
 }

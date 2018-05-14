@@ -18,8 +18,12 @@
         class="navbar-nav navbar-sidenav"
         *ngIf="loggedIn">
       <li class="nav-item">
-        <a [routerLink]="['/']"
+        <a [routerLink]="['/home']"
            class="nav-link">Home</a>
+      </li>
+      <li class="nav-item">
+        <a  (click)="onLogout()"
+           class="nav-link">Logout</a>
       </li>
     </ul>
     <ul class="navbar-nav sidenav-toggler"

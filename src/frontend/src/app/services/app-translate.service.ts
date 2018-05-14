@@ -16,7 +16,7 @@ export class AppTranslateService {
 
 
   public getTranslation(key: string): Observable<any> {
-    return this.translate.getTranslation(key);
+    return this.translate.get(key);
   }
 
 }

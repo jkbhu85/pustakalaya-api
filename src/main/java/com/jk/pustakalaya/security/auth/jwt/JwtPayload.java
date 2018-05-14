@@ -4,12 +4,12 @@ public class JwtPayload {
 	public static final String PAYLOAD_KEY_ID = "id";
 	public static final String PAYLOAD_KEY_NAME = "name";
 	public static final String PAYLOAD_KEY_EMAIL = "email";
-	public static final String PAYLOAD_KEY_ROLES = "roles";
+	public static final String PAYLOAD_KEY_ROLE = "role";
 
 	private String id;
 	private String name;
 	private String email;
-	private String[] roles;
+	private String role;
 
 	public JwtPayload() {}
 
@@ -19,12 +19,12 @@ public class JwtPayload {
 	 * @param email
 	 * @param roles
 	 */
-	public JwtPayload(String id, String name, String email, String[] roles) {
+	public JwtPayload(String id, String name, String email, String role) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.roles = roles;
+		this.role = role;
 	}
 
 
@@ -72,17 +72,17 @@ public class JwtPayload {
 	}
 
 	/**
-	 * @return the roles
+	 * @return the role
 	 */
-	public String[] getRoles() {
-		return roles;
+	public String getRole() {
+		return role;
 	}
 
 	/**
-	 * @param roles the roles to set
+	 * @param role the role to set
 	 */
-	public void setRoles(String[] roles) {
-		this.roles = roles;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 

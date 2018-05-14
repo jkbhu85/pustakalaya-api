@@ -1,5 +1,7 @@
 package com.jk.pustakalaya.security.login;
 
+import org.springframework.http.ResponseEntity;
+
 public interface LoginService {
-	String login(LoginCredentials loginCred);
+	ResponseEntity<String> login(LoginCredentials loginCred);
 }

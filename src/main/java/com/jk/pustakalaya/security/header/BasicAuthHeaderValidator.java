@@ -1,5 +1,6 @@
 package com.jk.pustakalaya.security.header;
 
+import org.springframework.stereotype.Component;
 
 /**
  * Provides basic implementation of {@link AuthHeaderValidator} interface.
@@ -7,6 +8,7 @@ package com.jk.pustakalaya.security.header;
  * @author Jitendra
  *
  */
+@Component
 public class BasicAuthHeaderValidator implements AuthHeaderValidator {
 	private static final String HEADER_PREFIX = "Bearer: ";
 

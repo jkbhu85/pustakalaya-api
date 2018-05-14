@@ -2,6 +2,9 @@ package com.jk.pustakalaya.security.auth.jwt;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator.Builder;
 import com.auth0.jwt.JWTVerifier;
@@ -12,6 +15,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 
 public class JwtUtil {
+	private static Logger log = LoggerFactory.getLogger(JwtUtil.class);
 	private static final JwtUtilHelper helper = new JwtUtilHelper();
 
 	private static class JwtUtilHelper {
@@ -29,7 +33,7 @@ public class JwtUtil {
 			try {
 				alg = Algorithm.HMAC256("=s*7gpm_-WfmkUtEC6YWW&f9E3Bacd*$");
 			}catch (Exception e) {
-				e.printStackTrace();
+				log.error("Exception while getting alogrithm {}", e);
 			}
 
 			this.algorithmRs = alg;
@@ -47,7 +51,7 @@ public class JwtUtil {
 						.withClaim(JwtPayload.PAYLOAD_KEY_ID, payload.getId())
 						.withClaim(JwtPayload.PAYLOAD_KEY_NAME, payload.getName())
 						.withClaim(JwtPayload.PAYLOAD_KEY_EMAIL, payload.getEmail())
-						.withArrayClaim(JwtPayload.PAYLOAD_KEY_ROLES, payload.getRoles())
+						.withClaim(JwtPayload.PAYLOAD_KEY_ROLE, payload.getRole())
 						.withIssuedAt(issuedAt)
 						.withExpiresAt(expiresAt);
 
@@ -64,7 +68,7 @@ public class JwtUtil {
 							jwt.getClaim(JwtPayload.PAYLOAD_KEY_ID).asString(),
 							jwt.getClaim(JwtPayload.PAYLOAD_KEY_NAME).asString(),
 							jwt.getClaim(JwtPayload.PAYLOAD_KEY_EMAIL).asString(),
-							jwt.getClaim(JwtPayload.PAYLOAD_KEY_ROLES).asArray(String.class)
+							jwt.getClaim(JwtPayload.PAYLOAD_KEY_ROLE).asString()
 							);
 
 			return payload;

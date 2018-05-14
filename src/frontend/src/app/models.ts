@@ -22,6 +22,7 @@ export enum Gender {
 export enum BookInstanceStatus {
     ISSUED = 'ISSUED',
     AVAILABLE = 'AVAILABLE',
+    UNAVAILABLE = 'UNAVAILABLE',
     REMOVED = 'REMOVED'
 }
 
@@ -46,34 +47,20 @@ export class User {
 
 export class Address {
     addrId: number;
-    userId: number;
     line1: string;
     line2: string;
     city: string;
     state: string;
     pin: string;
-    countryId: number;
     country: string;
 }
 
 export class UserInfo {
     // fields below are as received from server
-
     /**
-     * Email id of user.
+     * Unique identification for user.
      */
-    email: string;
-
-    /**
-     * UTC time at which token will expire.
-     */
-    exp: number;
-
-    /**
-     * UTC time at which token was created.
-     */
-    iat: number;
-    iss: string;
+    id: number;
 
     /**
      * Name of user.
@@ -81,14 +68,23 @@ export class UserInfo {
     name: string;
 
     /**
-     * Roles held by user.
+     * Role held by user.
      */
-    roles: string[];
+    role: string;
+    /**
+     * Email id of user.
+     */
+    email: string;
 
     /**
-     * Unique identification for user.
+     * time at which token will expire.
      */
-    userGUID: string;
+    exp: number;
+
+    /**
+     * time at which token was created.
+     */
+    iat: number;
 
     // fields below are added by application
 

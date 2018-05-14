@@ -6,6 +6,12 @@
  * @author Jitendra Kumar
  *
  */
+ 
+DROP DATABASE IF EXISTS ptk;
+
+CREATE DATABASE ptk;
+
+USE ptk;
 
 CREATE TABLE Country (
     id      SMALLINT NOT NULL AUTO_INCREMENT,
@@ -230,3 +236,27 @@ INSERT INTO LibUser VALUES
 , 8 -- book quota
 , sysdate() -- time of creation
 );
+
+INSERT INTO LibUser VALUES
+(NULL -- id
+,3 -- role
+,1 -- account status
+, "jitendra.kumar@m.com" -- email
+, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
+, "abckdkdt" -- password salt
+, 1 -- password version
+, 0 -- unsuccessful tries
+, "Who are you" -- security question
+, "unknown" -- security answer
+, "1991-07-10" -- date of birth
+, "Jitendra" -- first name
+, "Kumar" -- last name
+, "M" -- gender
+, "9123456784" -- mobile
+, 1 -- isd country
+, NULL -- image path
+, 4 -- book quota
+, sysdate() -- time of creation
+);
+
+commit;

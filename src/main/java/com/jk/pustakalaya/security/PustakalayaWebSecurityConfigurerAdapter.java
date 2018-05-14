@@ -55,7 +55,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 	public void configure(WebSecurity web) throws Exception {
 		web
 			.ignoring()
-				.antMatchers("/**")
+				.antMatchers("/api/login")
 				.and()
 			;
 	}
@@ -81,6 +81,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 		http
 			.authorizeRequests()
+				.antMatchers("/resources/**").permitAll()
 				.anyRequest().authenticated();
 
 		http
@@ -126,7 +127,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 		List<String> allowedHeaders = new ArrayList<>();
 
 		//allowedOrigins.add("null");
-		allowedOrigins.add("*");
+		allowedOrigins.add("http://localhost:4200");
 
 		allowedMethods.add("GET");
 		allowedMethods.add("POST");
@@ -139,7 +140,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 		config.setAllowedOrigins(allowedOrigins);
 		config.setAllowedMethods(allowedMethods);
-		config.setAllowedHeaders(allowedHeaders);
+//		config.setAllowedHeaders(allowedHeaders);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);

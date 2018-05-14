@@ -5,6 +5,9 @@ import { NotificationService } from '../notifications/notification.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 
+const HOME_PAGE = '/home';
+const LOGIN_PAGE = '/login';
+
 @Injectable()
 export class AuthService {
   private readonly storage: Storage = localStorage; // sessionStorage;
@@ -149,6 +152,7 @@ export class AuthService {
   }
 
   private getUserJsonFromJwt(jwt: string): string {
+    jwt = jwt.split(' ')[1];
     let payload = jwt.split('.')[1];
     let base64 = payload.replace('-', '+').replace('_', '/');
 
@@ -169,6 +173,8 @@ export class AuthService {
 
     this.updateLoginStatus();
     this.activateAutoLogout();
+
+    this.router.navigate([HOME_PAGE]);
   }
 
 
@@ -210,5 +216,6 @@ export class AuthService {
     this.updateLoginStatus();
 
     if (!this.autoLogout) this.deactivateAutoLogout();
+    this.router.navigate([LOGIN_PAGE]);
   }
 }

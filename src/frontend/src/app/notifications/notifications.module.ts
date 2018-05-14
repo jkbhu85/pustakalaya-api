@@ -13,7 +13,6 @@ import { NotificationService } from './notification.service';
         CommonModule
     ],
     exports: [
-        NotificationComponent,
         NotificationGroupComponent
     ],
     providers: [

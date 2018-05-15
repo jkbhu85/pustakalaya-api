@@ -22,6 +22,7 @@ public class JwtUtil {
 		private final JWTVerifier jwtVerifier;
 		private final Builder jwtBuilder;
 		private final Algorithm algorithmRs;
+		private final long MINTUES_TOKEN_AGE = 600;
 
 		// private RSAPublicKey publicKey = null;
 		// private RSAPrivateKey privateKey = null;
@@ -44,7 +45,7 @@ public class JwtUtil {
 
 		private String encode (JwtPayload payload) throws JWTCreationException {
 			Date issuedAt = new Date(System.currentTimeMillis());
-			Date expiresAt = new Date(issuedAt.getTime() + 15 * 60 * 1000);
+			Date expiresAt = new Date(issuedAt.getTime() + MINTUES_TOKEN_AGE * 60 * 1000);
 
 			Builder builder =
 					jwtBuilder

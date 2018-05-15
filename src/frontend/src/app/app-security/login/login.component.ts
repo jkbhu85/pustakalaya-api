@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   showError = false;
   errorText$: Observable<any>;
+  private formValueChangeSubscription: Subscription;
 
   constructor(
     private fb: FormBuilder,
@@ -107,11 +108,9 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private formValueChangeSubscription: Subscription;
-
   private showLoginError(msgKey: string) {
     this.showError = true;
-    this.errorText$ = this.translate.getTranslation(msgKey);
+    this.errorText$ = this.translate.get(msgKey);
     this.formValueChangeSubscription = this.loginForm.valueChanges.subscribe(() => this.hideLoginError())
   }
 

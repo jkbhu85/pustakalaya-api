@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs/Subscription';
+import { AuthService } from '../../app-security/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -13,10 +15,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   loggedIn = false;
+  private subscription: Subscription;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
+    this.subscription = this.authService.getLoginStatus().subscribe((status) => this.loggedIn = status);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

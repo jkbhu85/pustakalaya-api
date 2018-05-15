@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserInfo } from '../models';
+import { UserInfo, UserRole } from '../models';
 import { Router } from '@angular/router';
 import { NotificationService } from '../notifications/notification.service';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -185,19 +185,44 @@ export class AuthService {
 
 
   /**
-   * Returns user information wrapped inside an object.
+   * Returns user information.
    *
-   * A wrapper is being used to take advantage of
-   * Angular's change detection system.
    */
   getUserInfo(): Observable<UserInfo> { return this.user$; }
 
 
   /**
-   * Returns login status wrapped inside an object.
-   *
-   * A wrapper is being used to take advantage of
-   * Angular's change detection system.
+   * Returns `true` if user has the specified role, `false` otherwise.
+   * 
+   * @param role the role to check aginst user information
+   */
+  userHasRole(role: UserRole):boolean {
+    if (!this.user) return false;
+
+    let userRoleNum = this.getRoleNumber(UserRole[this.user.role]);
+    let roleNum = this.getRoleNumber(role);
+
+    return (userRoleNum >= roleNum);
+  }
+
+  private getRoleNumber(role: UserRole): number {
+    switch(role) {
+      case UserRole.ADMIN:
+        return 3;
+      case UserRole.LIBRARIAN:
+        return 2;
+      case UserRole.MEMBER:
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+
+
+
+  /**
+   * Returns login status.
    */
   getLoginStatus(): Observable<boolean> { return this.loggedIn$; }
 

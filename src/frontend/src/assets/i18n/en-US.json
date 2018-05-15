@@ -2,6 +2,16 @@
   "app": {
     "title": "Pustakalaya"
   },
+  "navbar": {
+    "dashboard": "Home",
+    "searchBook": "Search Book",
+    "profile": "Profile",
+    "logout": "Logout",
+    "book": "Book",
+    "addBook": "Add book",
+    "removeBook": "Remove book",
+    "assignBook": "Assign book"
+  },
   "login": {
     "title": "Login",
     "userId": "Username",
@@ -19,6 +29,7 @@
     "title": "Forgot Password"
   },
   "common": {
-    "errorOccurred": "कोई गड़बड़ हुई है"
+    "errorOccurred": "कोई गड़बड़ हुई है",
+    "pageNotFound": "Page not found"
   }
 }

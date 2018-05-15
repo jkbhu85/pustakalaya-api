@@ -9,3 +9,6 @@
 
 - Add ngx-translate for internationalization
     > npm install --save @ngx-translate/core @ngx-translate/http-loader
+
+- Add font-awesome for awesome icons
+    > npm install --save font-awesome

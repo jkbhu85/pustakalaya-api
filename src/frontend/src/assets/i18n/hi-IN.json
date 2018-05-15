@@ -2,6 +2,16 @@
   "app": {
     "title": "पुस्तकालय"
   },
+  "navbar": {
+    "dashboard": "गृह",
+    "searchBook": "किताब खोजें",
+    "profile": "रूपरेखा",
+    "logout": "लॉगआउट",
+    "book": "पुस्तक",
+    "addBook": "पुस्तक जोड़ें",
+    "removeBook": "पुस्तक हटाएं",
+    "assignBook": "पुस्तक सौपें"
+  },
   "login": {
     "title": "लॉगिन करें",
     "userId": "यूजरनेम",
@@ -19,6 +29,7 @@
     "title": "पासवर्ड भूल गए"
   },
   "common": {
-    "errorOccurred": "कोई गड़बड़ हुई है"
+    "errorOccurred": "कोई गड़बड़ हुई है",
+    "pageNotFound": "पेज नहीं मिला"
   }
 }

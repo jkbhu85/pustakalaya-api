@@ -4,7 +4,7 @@ import { AppSecurityRoutingModule } from './app-security-routing.module';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AppCommonModule } from '../modules/app-common.module';
 import { AuthService } from './auth.service';
-import { PathGaurdService } from './path-gaurd.service';
+import { PathGaurdService } from './auth-gaurd.service';
 import { NoAuthGaurdService } from './no-auth-gaurd';
 
 @NgModule({

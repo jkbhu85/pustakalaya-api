@@ -12,10 +12,10 @@ export class AppTranslateService {
   ) {
     this.translate.setDefaultLang(this.defaultLang);
     this.translate.use(this.defaultLang);
+    console.log('using language: ' + this.translate.currentLang);
   }
 
-
-  public getTranslation(key: string): Observable<any> {
+  public get(key: string): Observable<any> {
     return this.translate.get(key);
   }
 

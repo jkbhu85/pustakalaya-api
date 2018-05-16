@@ -29,7 +29,10 @@
     "title": "Forgot Password"
   },
   "common": {
-    "errorOccurred": "कोई गड़बड़ हुई है",
+    "errorOccurred": "Some error occurred.",
     "pageNotFound": "Page not found"
+  },
+  "home": {
+    "welcomeText": "You are welcome in Pustakalaya."
   }
 }

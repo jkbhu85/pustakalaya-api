@@ -31,5 +31,8 @@
   "common": {
     "errorOccurred": "कोई गड़बड़ हुई है",
     "pageNotFound": "पेज नहीं मिला"
+  },
+  "home": {
+    "welcomeText": "पुस्तकालय में आपका स्वागत है |"
   }
 }

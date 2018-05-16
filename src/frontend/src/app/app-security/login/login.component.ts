@@ -64,6 +64,8 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.submitted) return;
 
+    if (this.loginForm.invalid) return;
+
     this.submitted = true;
 
     const data = this.prepareData();
@@ -74,11 +76,11 @@ export class LoginComponent implements OnInit {
         (response: HttpResponse<string>) => this.handleResponse(response),
         (response: HttpResponse<string>) => this.handleResponse(response)
       );
-
-    this.submitted = false;
   }
 
   private handleResponse(response: HttpResponse<string>) {
+    this.submitted = false;
+    
     switch (response.status) {
       case 200:
         // login successful

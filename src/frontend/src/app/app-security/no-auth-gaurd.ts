@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { AuthService } from "./auth.service";
 
 @Injectable()
-export class NoAuthGaurdService implements CanActivate {
+export class NoAuthGaurd implements CanActivate {
   constructor(
     private authService: AuthService,
     private router: Router

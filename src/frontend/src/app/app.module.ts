@@ -10,6 +10,8 @@ import { AppSecurityModule } from './app-security/app-security.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CompleteProfileComponent } from './components/complete-profile/complete-profile.component';
+import { BookModule } from './book/book.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -31,9 +33,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     NotificationModule,
     AppBaseModule,
     AppSecurityModule,
+    BookModule,
     AppRoutingModule
   ],
   providers: [AppTranslateService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  declarations: [CompleteProfileComponent]
 })
 export class AppModule { }

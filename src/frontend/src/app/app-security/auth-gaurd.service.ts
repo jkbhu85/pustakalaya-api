@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, CanActivateChild } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class PathGaurdService implements CanActivate {
+export class AuthGaurd implements CanActivate, CanActivateChild {
 
   constructor(
     private authService: AuthService,
@@ -16,5 +16,9 @@ export class PathGaurdService implements CanActivate {
     this.router.navigate(['/login']);
 
     return false;
+  }
+
+  canActivateChild(): boolean {
+    return this.canActivate();
   }
 }

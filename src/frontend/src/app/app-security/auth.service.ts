@@ -190,6 +190,13 @@ export class AuthService {
    */
   getUserInfo(): Observable<UserInfo> { return this.user$; }
 
+  
+  isAccountComplete(): boolean {
+    if (!this.user) return false;
+
+    return (this.user.name && this.user.name.length > 0);
+  }
+
 
   /**
    * Returns `true` if user has the specified role, `false` otherwise.

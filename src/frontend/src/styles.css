@@ -6,9 +6,20 @@
 body {
     font-family: 'Fira Sans', Mukta, Ubuntu, 'Segoe UI', Arial, Helvetica, sans-serif;
 }
+
 .main-content {
-    padding-top: 2rem;
+    padding-top: 1rem;
 }
+
 .clickable {
     cursor: pointer;
+}
+
+footer {
+    background: #e7e7e7;
+}
+
+footer>div {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }

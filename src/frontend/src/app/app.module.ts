@@ -12,6 +12,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CompleteProfileComponent } from './components/complete-profile/complete-profile.component';
 import { BookModule } from './book/book.module';
+import { UserModule } from './user/user.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -34,6 +35,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppBaseModule,
     AppSecurityModule,
     BookModule,
+    UserModule,
     AppRoutingModule
   ],
   providers: [AppTranslateService],

@@ -10,7 +10,10 @@
     "book": "Book",
     "addBook": "Add book",
     "removeBook": "Remove book",
-    "assignBook": "Assign book"
+    "assignBook": "Assign book",
+    "user": "User",
+    "addUser": "Add user",
+    "modifyUser": "Modify user"
   },
   "login": {
     "title": "Login",

@@ -55,6 +55,17 @@
                class="dropdown-item">{{'navbar.removeBook' | translate}}</a>
           </div>
         </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle clickable" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{'navbar.user' | translate}}
+          </a>
+
+          <div class="dropdown-menu" aria-labelledby="userDropdown">
+            <a [routerLink]="['user/add']" class="dropdown-item">{{'navbar.addUser' | translate}}</a>
+            <a [routerLink]="['user/modify']" class="dropdown-item">{{'navbar.modifyUser' | translate}}</a>
+          </div>
+        </li>
       </ul>
 
       <ul class="navbar-nav ml-auto">

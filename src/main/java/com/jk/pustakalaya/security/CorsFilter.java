@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.core.config.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
@@ -22,8 +24,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
+	private static Logger log = LoggerFactory.getLogger(CorsFilter.class);
+
     public CorsFilter() {
     	System.err.println("-------- CorsFilter created --------");
+    	log.info("-------- CorsFilter created --------");
     }
 
 	@Override

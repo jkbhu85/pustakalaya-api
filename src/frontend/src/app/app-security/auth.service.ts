@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserInfo, UserRole } from '../models';
 import { Router } from '@angular/router';
 import { NotificationService } from '../notifications/notification.service';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject ,  Observable } from 'rxjs';
 
 const HOME_PAGE = '/home';
 const LOGIN_PAGE = '/login';

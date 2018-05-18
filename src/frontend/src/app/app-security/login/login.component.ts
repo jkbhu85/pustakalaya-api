@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BASE_HREF } from '../../consts';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,  Subscription } from 'rxjs';
 import { AppTranslateService } from '../../services/app-translate.service';
 import { AuthService } from '../auth.service';
-import { Subscription } from 'rxjs/Subscription';
 
 const LOGIN_URL = BASE_HREF + '/api/login';
 const KEY_ACCESS_REVOKED = 'login.vld.accessRevoked';

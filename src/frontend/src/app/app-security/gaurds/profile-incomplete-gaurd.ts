@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, CanActivateChild, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
 import { AuthService } from "../auth.service";
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class ProfileIncompleteGaurd implements CanActivate, CanActivateChild {

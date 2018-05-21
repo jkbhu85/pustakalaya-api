@@ -37,5 +37,20 @@
   },
   "home": {
     "welcomeText": "पुस्तकालय में आपका स्वागत है |"
+  },
+  "profile": {
+    "firstName": "प्रथम नाम",
+    "lastName": "अन्तिम नाम",
+    "email": "ईमेल"
+  },
+  "user": {
+    "add": {
+      "vld": {
+        "firstNameRequired": "प्रथम नाम आवश्यक है",
+        "lastNameRequired": "अन्तिम नाम आवश्यक है",
+        "emailRequired": "ईमेल आवश्यक है",
+        "emailInvalid": "ईमेल गलत है"
+      }
+    }
   }
 }

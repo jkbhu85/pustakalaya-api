@@ -1,70 +1,37 @@
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark"
-     id="globalNav">
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" id="globalNav">
   <div class="container">
-    <a class="navbar-brand"
-       routerLink="/home">{{'app.title' | translate}}</a>
-    <button class="navbar-toggler"
-            id="navbarToggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#collapsibleNav"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            *ngIf="loggedIn">
+    <a class="navbar-brand" routerLink="/home">{{'app.title' | translate}}</a>
+    <button class="navbar-toggler" id="navbarToggler" type="button" data-toggle="collapse" data-target="#collapsibleNav" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation" *ngIf="loggedIn">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse"
-         id="collapsibleNav"
-         *ngIf="loggedIn">
+    <div class="collapse navbar-collapse" id="collapsibleNav" *ngIf="loggedIn">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a [routerLink]="['/home']"
-             class="nav-link">
+          <a [routerLink]="['/home']" class="nav-link" routerLinkActive="active">
             {{'navbar.dashboard' | translate}}
           </a>
         </li>
 
         <li class="nav-item">
-          <a [routerLink]="['book/search']"
-             class="nav-link">
+          <a [routerLink]="['bookSearch']" class="nav-link" routerLinkActive="active">
             {{'navbar.searchBook' | translate}}
           </a>
         </li>
       </ul>
 
-      <ul class="navbar-nav"
-          *ngIf="hasRole('LIBRARIAN')">
+      <ul class="navbar-nav" *ngIf="hasRole('LIBRARIAN')">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle clickable"
-             id="bookDropdown"
-             role="button"
-             data-toggle="dropdown"
-             aria-haspopup="true"
-             aria-expanded="false">
+          <a [routerLink]="['/book']" class="nav-link" routerLinkActive="active">
             {{'navbar.book' | translate}}
           </a>
-          <div class="dropdown-menu"
-               aria-labelledby="bookDropdown">
-            <a [routerLink]="['book/assign']"
-               class="dropdown-item">{{'navbar.assignBook' | translate}}</a>
-            <a [routerLink]="['book/add']"
-               class="dropdown-item">{{'navbar.addBook' | translate}}</a>
-            <a [routerLink]="['book/remove']"
-               class="dropdown-item">{{'navbar.removeBook' | translate}}</a>
-          </div>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle clickable" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a [routerLink]="['/user']" class="nav-link" routerLinkActive="active">
             {{'navbar.user' | translate}}
           </a>
-
-          <div class="dropdown-menu" aria-labelledby="userDropdown">
-            <a [routerLink]="['user/add']" class="dropdown-item">{{'navbar.addUser' | translate}}</a>
-            <a [routerLink]="['user/modify']" class="dropdown-item">{{'navbar.modifyUser' | translate}}</a>
-          </div>
         </li>
       </ul>
 
@@ -73,8 +40,7 @@
           <a class="nav-link">{{user.name}}</a>
         </li>
         <li class="nav-item">
-          <a (click)="onLogout()"
-             class="nav-link clickable">
+          <a (click)="onLogout()" class="nav-link clickable">
             {{'navbar.logout' | translate}}
           </a>
         </li>

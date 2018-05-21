@@ -7,21 +7,19 @@ import { AddBookComponent } from './add-book/add-book.component';
 import { RoleLibrianGaurd } from '../app-security/role-librarian-gaurd';
 import { RemoveBookComponent } from './remove-book/remove-book.component';
 import { AssignBookComponent } from './assign-book/assign-book.component';
+import { BookComponent } from './book.component';
 
 
 const bookRoutes: Routes = [
   {
     path: 'book',
+    component: BookComponent,
     canActivateChild: [AuthGaurd, ProfileCompleteGaurd],
     children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'search'
-      },
-      {
-        path: 'search',
-        component: SearchBookComponent
+        redirectTo: 'add'
       },
       {
         path: '',

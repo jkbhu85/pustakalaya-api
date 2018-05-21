@@ -37,5 +37,19 @@
   },
   "home": {
     "welcomeText": "You are welcome in Pustakalaya."
+  },
+  "profile": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email"
+  },
+  "user": {
+    "add": {
+      "vld": {
+        "firstNameRequired": "",
+        "lastNameRequired": "",
+        "emailRequired": ""
+      }
+    }
   }
 }

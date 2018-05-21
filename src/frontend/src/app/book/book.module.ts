@@ -5,6 +5,7 @@ import { RemoveBookComponent } from './remove-book/remove-book.component';
 import { AssignBookComponent } from './assign-book/assign-book.component';
 import { SearchBookComponent } from './search-book/search-book.component';
 import { AppCommonModule } from '../modules/app-common.module';
+import { BookComponent } from './book.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { AppCommonModule } from '../modules/app-common.module';
     AddBookComponent,
     RemoveBookComponent,
     AssignBookComponent,
-    SearchBookComponent
+    SearchBookComponent,
+    BookComponent
   ],
   exports: [
     BookRoutingModule

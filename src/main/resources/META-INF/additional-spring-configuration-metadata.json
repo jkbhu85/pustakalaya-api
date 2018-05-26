@@ -1,59 +1,77 @@
-{
-	"properties": [
-		{
-			"name": "app.path.profile_images",
-			"type": "java.lang.String",
-			"description": "Directory in which profile images will be stored."
-		},
-		{
-			"name": "app.admin.email",
-			"type": "java.lang.String",
-			"description": "Email address of admin."
-		},
-		{
-			"name": "user.security.max_unsucessful_tries",
-			"type": "java.lang.Integer",
-			"description": "Maximum number of unsuccessful tries after which the account will be locked."
-		},
-		{
-			"name": "user.quota.none",
-			"type": "java.lang.Integer",
-			"description": "Maximum number of books that can be assigned to the role 'none'."
-		},
-		{
-			"name": "user.quota.user",
-			"type": "java.lang.Integer",
-			"description": "Maximum number of books that can be assigned to the role 'user'."
-		},
-		{
-			"name": "user.quota.librarian",
-			"type": "java.lang.Integer",
-			"description": "Maximum number of books that can be assigned to the role 'librarian'."
-		},
-		{
-			"name": "user.quota.admin",
-			"type": "java.lang.Integer",
-			"description": "Maximum number of books that can be assigned to the role 'admin'."
-		},
-		{
-			"name": "db.username",
-			"type": "java.lang.String",
-			"description": "Username to be used to make connection with the database."
-		},
-		{
-			"name": "db.password",
-			"type": "java.lang.String",
-			"description": "Password of the username specified by the property 'db.username'."
-		},
-		{
-			"name": "db.url",
-			"type": "java.lang.String",
-			"description": "URL of the database to get connection. Also set the properties 'db.username' and 'db.password' if required."
-		},
-		{
-			"name": "db.driver_class",
-			"type": "java.lang.String",
-			"description": "Name of the class that will be used to make connection to the database with url set using the property 'db.url'."
-		}
-	]
-}
+{"properties": [
+  {
+    "name": "app.path.profile_images",
+    "type": "java.lang.String",
+    "description": "Directory in which profile images will be stored."
+  },
+  {
+    "name": "app.admin.email",
+    "type": "java.lang.String",
+    "description": "Email address of admin."
+  },
+  {
+    "name": "user.security.max_unsucessful_tries",
+    "type": "java.lang.Integer",
+    "description": "Maximum number of unsuccessful tries after which the account will be locked."
+  },
+  {
+    "name": "user.quota.none",
+    "type": "java.lang.Integer",
+    "description": "Maximum number of books that can be assigned to the role 'none'."
+  },
+  {
+    "name": "user.quota.user",
+    "type": "java.lang.Integer",
+    "description": "Maximum number of books that can be assigned to the role 'user'."
+  },
+  {
+    "name": "user.quota.member",
+    "type": "java.lang.Integer",
+    "description": "A description for 'user.quota.member'"
+  },
+  {
+    "name": "user.quota.librarian",
+    "type": "java.lang.Integer",
+    "description": "Maximum number of books that can be assigned to the role 'librarian'."
+  },
+  {
+    "name": "user.quota.admin",
+    "type": "java.lang.Integer",
+    "description": "Maximum number of books that can be assigned to the role 'admin'."
+  },
+  {
+    "name": "db.username",
+    "type": "java.lang.String",
+    "description": "Username to be used to make connection with the database."
+  },
+  {
+    "name": "db.password",
+    "type": "java.lang.String",
+    "description": "Password of the username specified by the property 'db.username'."
+  },
+  {
+    "name": "db.url",
+    "type": "java.lang.String",
+    "description": "URL of the database to get connection. Also set the properties 'db.username' and 'db.password' if required."
+  },
+  {
+    "name": "db.driver_class",
+    "type": "java.lang.String",
+    "description": "Name of the class that will be used to make connection to the database with url set using the property 'db.url'."
+  },
+  {
+    "name": "mail.props.file",
+    "type": "java.lang.String",
+    "description": "A description for 'mail.props.file'"
+  },
+  {
+    "name": "db.props.file",
+    "type": "java.lang.String",
+    "description": "A description for 'db.props.file'"
+  },
+  {
+    "name": "password.encryption.key.file.name",
+    "type": "java.lang.String",
+    "description": "A description for 'password.encryption.key.file.name'"
+  }
+]}

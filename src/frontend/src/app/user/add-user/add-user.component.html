@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-md-10 col-lg-6">
-    <form class="card mb-5" [formGroup]="addUserForm">
-      <h2 class="card-header h3">{{'navbar.addUser' | translate}}</h2>
+    <form class="card mb-4" [formGroup]="addUserForm">
+      <h2 class="card-header h4">{{'navbar.addUser' | translate}}</h2>
 
       <div class="card-body">
         <div class="row">
@@ -9,11 +9,13 @@
             <div class="form-group">
               <label for="firstName">{{'profile.firstName' | translate}}</label>
               <input type="text" class="form-control" id="firstName" [formControl]="firstName" />
+
               <div class="text-danger" *ngIf="(firstName.touched || firstName.dirty) && firstName.errors">
                 <div *ngIf="firstName.errors.required">{{'user.add.vld.firstNameRequired' | translate}}</div>
               </div>
             </div>
           </div>
+
           <div class="col-md-6">
             <div class="form-group">
               <label for="lastName">{{'profile.lastName' | translate}}</label>
@@ -22,8 +24,11 @@
               <div class="text-danger" *ngIf="(lastName.touched || lastName.dirty) && lastName.errors">
                 <div *ngIf="lastName.errors.required">{{'user.add.vld.lastNameRequired' | translate}}</div>
               </div>
+            </div>
           </div>
         </div>
+
+
         <div class="form-group">
           <label for="email">{{'profile.email' | translate}}</label>
           <input type="email" class="form-control" id="email" [formControl]="email" />
@@ -33,15 +38,19 @@
             <div *ngIf="!email.errors.required && email.errors.email">{{'user.add.vld.emailInvalid' | translate}}</div>
           </div>
         </div>
-      </div>
+      </div> <!-- .card-body -->
 
       <div class="card-footer">
         <div class="row">
           <div class="col-md-6 mb-2 mb-md-0">
-            <button class="btn btn-primary">{{'navbar.addUser' | translate}}</button>
+            <button class="btn btn-block btn-primary" [disabled]="submitted">{{'navbar.addUser' | translate}}</button>
+          </div>
+
+          <div class="col-md-6 mb-md-0">
+            <button class="btn btn-block btn-secondary" [disabled]="submitted">{{'common.reset' | translate}}</button>
           </div>
         </div>
       </div>
-    </form>
+    </form> <!-- .card -->
   </div>
 </div>

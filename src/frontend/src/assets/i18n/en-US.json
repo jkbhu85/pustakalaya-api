@@ -33,7 +33,9 @@
   },
   "common": {
     "errorOccurred": "Some error occurred.",
-    "pageNotFound": "Page not found"
+    "pageNotFound": "Page not found",
+    "submit": "Submit",
+    "reset": "Reset"
   },
   "home": {
     "welcomeText": "You are welcome in Pustakalaya."
@@ -46,9 +48,10 @@
   "user": {
     "add": {
       "vld": {
-        "firstNameRequired": "",
-        "lastNameRequired": "",
-        "emailRequired": ""
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is require",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Email is invalid"
       }
     }
   }

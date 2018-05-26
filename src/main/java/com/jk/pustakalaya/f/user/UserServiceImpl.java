@@ -63,4 +63,9 @@ public class UserServiceImpl implements UserService {
 		else throw new RuntimeException("old password is invalid");
 	}
 
+	@Override
+	public void addUser(String email, String firstName, String lastName, String localeStr) {
+		// TODO Auto-generated method stub
+	}
+
 }

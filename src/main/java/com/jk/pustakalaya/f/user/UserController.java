@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,16 @@ public class UserController {
 	@GetMapping("/{id}")
 	public User getUser(@PathVariable("id") Long id) {
 		return service.getUser(id);
+	}
+
+	@PostMapping()
+	public void addUser(@RequestBody Map<String, String> body) {
+		String firstName = body.get("firstName");
+		String lastName = body.get("lastName");
+		String email = body.get("email");
+		String localeStr = body.get("locale");
+
+		service.addUser(email, firstName, lastName, localeStr);
 	}
 
 	@PutMapping("/password")

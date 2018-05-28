@@ -28,8 +28,8 @@ public final class CryptUtil {
 	}
 
 	/**
-	 * Returns decrypted contents of file. If {@code absolutePath} is {@code true},
-	 * {@code fileName} is considered a file name. And the file location is
+	 * Returns decrypted contents of file. If {@code absolutePath} is {@code false},
+	 * {@code fileName} is considered a file name and the file location is
 	 * the directory which is same as value of {@link App.NAME_ENV_VAR_CONFIG}.
 	 *
 	 * @param fileName name or path of the file

@@ -7,13 +7,20 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.Authenticator;
+import javax.mail.BodyPart;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +29,7 @@ import org.springframework.stereotype.Component;
 
 import com.jk.pustakalaya.config.App;
 import com.jk.pustakalaya.util.CryptUtil;
+import com.jk.pustakalaya.util.FileUtil;
 
 /**
  * A basic implementation of {@link Mailer} interface.
@@ -38,15 +46,10 @@ public class SimpleMailer implements Mailer {
 	private String mailPropsFileName = "mail.properties";
 
 	private Session session;
+	private String zipFilePath;
 
 	public SimpleMailer() throws Exception {
 		this.init();
-	}
-
-	public static void main(String[] args) throws Exception {
-		SimpleMailer mailer = new SimpleMailer();
-
-		mailer.sendMail("jk.bhu85@gmail.com", "Test Subject", "Hi Jitendra\n\nThis is some test text.\n\nRegards\nPustakalaya\n" + new Date());
 	}
 
 	private void init() throws Exception {
@@ -57,7 +60,7 @@ public class SimpleMailer implements Mailer {
 
 		String smtpAuth = mailProps.getProperty("mail.smtp.auth");
 
-		if (smtpAuth != null && "true".equalsIgnoreCase(smtpAuth)) {
+		if ("true".equalsIgnoreCase(smtpAuth)) {
 			final String username = mailProps.getProperty("mail.username");
 			final String password = CryptUtil.decryptFromFile(mailProps.getProperty("mail.password.file.name"), false);
 
@@ -76,31 +79,69 @@ public class SimpleMailer implements Mailer {
 		LOG.debug("Mailer initialized successfully.");
 	}
 
+	private void addAttachments(Multipart multipart, List<File> attachments) throws Exception {
+		if (attachments == null || attachments.isEmpty())
+			return;
+
+		BodyPart filePart = new MimeBodyPart();
+		File file;
+
+		if (attachments.size() == 1) {
+			file = attachments.get(0);
+		} else {
+			zipFilePath = FileUtil.zipFiles(attachments);
+			file = new File(zipFilePath);
+		}
+
+		DataSource source = new FileDataSource(file);
+
+		filePart.setDataHandler(new DataHandler(source));
+		filePart.setFileName(file.getName());
+		multipart.addBodyPart(filePart);
+	}
+
+	private void cleanUp() {
+		if (zipFilePath != null)
+			FileUtil.deleteFile(zipFilePath);
+	}
+
 	@Override
 	public boolean sendMail(String recipients, String subject, String message, List<File> attachments) {
+		MimeMessage msg = new MimeMessage(session);
+
+		try {
+			msg.addHeader("Contentp-type", "text/html; charset=UTF-8");
+			msg.setSubject(subject, "UTF-8");
+			msg.setSentDate(new Date());
+			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
+
+			Multipart multipart = new MimeMultipart();
+
+			// add text
+			BodyPart textPart = new MimeBodyPart();
+			textPart.setText(message);
+			multipart.addBodyPart(textPart);
+
+			// add file attachments
+			addAttachments(multipart, attachments);
+			msg.setContent(multipart);
+
+			LOG.debug("Mail prepared, about to send to: {}", recipients);
+			Transport.send(msg);
+			LOG.info("Mail was sent successfully to {}.", recipients);
+			return true;
+		} catch (Exception e) {
+			LOG.error("Exception in sending mail to: {}\nException: {}", recipients, e);
+		} finally {
+			cleanUp();
+		}
+
 		return false;
 	}
 
 	@Override
 	public boolean sendMail(String recipients, String subject, String message) {
-		MimeMessage mailMsg = new MimeMessage(session);
-
-		try {
-			mailMsg.addRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
-			mailMsg.setSubject(subject);
-			mailMsg.setText(message);
-			mailMsg.setSentDate(new Date());
-
-			LOG.debug("Mail prepared, about to send to: {}", recipients);
-			Transport.send(mailMsg);
-			LOG.info("Mail was sent successfully to {}.", recipients);
-
-			return true;
-		} catch (Exception e) {
-			LOG.error("Exception in sending mail to: {}\nexception: {}", recipients, e);
-		}
-
-		return false;
+		return sendMail(recipients, subject, message, null);
 	}
 
 }

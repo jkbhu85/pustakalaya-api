@@ -13,9 +13,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public final class FileUtil {
 	private static final AtomicInteger ID_GENERATOR = new AtomicInteger();
 	private static final String TMP_DIR_PATH = System.getProperty("java.io.tmpdir");
+	private static final Logger LOG = LoggerFactory.getLogger(FileUtil.class);
 
 	private FileUtil() {
 	}
@@ -130,7 +134,10 @@ public final class FileUtil {
 	public static void deleteFile(String filePath) {
 		File file = new File(filePath);
 
-		if (file.exists())
-			file.delete();
+		try {
+			if (file.exists()) file.delete();
+		} catch (Exception e) {
+			LOG.error("Exception while deleting file.  {}", e);
+		}
 	}
 }

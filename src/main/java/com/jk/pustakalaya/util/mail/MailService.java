@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.jk.pustakalaya.config.App;
 import com.jk.pustakalaya.util.CryptUtil;
@@ -38,9 +38,9 @@ import com.jk.pustakalaya.util.FileUtil;
  *
  */
 
-@Component
-public class SimpleMailer implements Mailer {
-	private static Logger LOG = LoggerFactory.getLogger(SimpleMailer.class);
+@Service
+public class MailService implements Mailer {
+	private static Logger LOG = LoggerFactory.getLogger(MailService.class);
 
 	@Value("mail.props.file")
 	private String mailPropsFileName = "mail.properties";
@@ -48,7 +48,7 @@ public class SimpleMailer implements Mailer {
 	private Session session;
 	private String zipFilePath;
 
-	public SimpleMailer() throws Exception {
+	public MailService() throws Exception {
 		this.init();
 	}
 
@@ -76,7 +76,7 @@ public class SimpleMailer implements Mailer {
 			this.session = Session.getDefaultInstance(mailProps);
 		}
 
-		LOG.debug("Mailer initialized successfully.");
+		LOG.debug("Mailer was initialized successfully.");
 	}
 
 	private void addAttachments(Multipart multipart, List<File> attachments) throws Exception {
@@ -89,8 +89,8 @@ public class SimpleMailer implements Mailer {
 		if (attachments.size() == 1) {
 			file = attachments.get(0);
 		} else {
-			zipFilePath = FileUtil.zipFiles(attachments);
-			file = new File(zipFilePath);
+			file = FileUtil.zipFiles(attachments);
+			LOG.debug("Attachments were zipped with zip file name: {}", file.getName());
 		}
 
 		DataSource source = new FileDataSource(file);
@@ -101,8 +101,15 @@ public class SimpleMailer implements Mailer {
 	}
 
 	private void cleanUp() {
-		if (zipFilePath != null)
-			FileUtil.deleteFile(zipFilePath);
+		if (zipFilePath != null) {
+			boolean status = FileUtil.deleteFile(zipFilePath);
+			
+			if (status) {
+				LOG.debug("Zip file was deleted. Path: {}", zipFilePath);
+			} else {
+				LOG.error("Zip file could not be deleted. Path: {}", zipFilePath);
+			}
+		}
 	}
 
 	@Override
@@ -128,7 +135,7 @@ public class SimpleMailer implements Mailer {
 
 			LOG.debug("Mail prepared, about to send to: {}", recipients);
 			Transport.send(msg);
-			LOG.info("Mail was sent successfully to {}.", recipients);
+			LOG.debug("Mail was sent successfully to {}.", recipients);
 			return true;
 		} catch (Exception e) {
 			LOG.error("Exception in sending mail to: {}\nException: {}", recipients, e);

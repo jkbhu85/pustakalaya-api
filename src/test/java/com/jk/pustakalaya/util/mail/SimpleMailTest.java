@@ -12,7 +12,7 @@ public class SimpleMailTest {
 
 	@BeforeClass
 	public static void beforeTest() throws Exception {
-		mailer = new SimpleMailer();
+		mailer = new MailService();
 	}
 
 	@Test

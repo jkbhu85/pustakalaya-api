@@ -3,11 +3,11 @@ package com.jk.pustakalaya.util;
 import java.util.Locale;
 
 /**
- * This class is used to provide locale to the application for current user. It
- * also provides the default locale for the application and what locales are
- * supported by the application.
- * 
- * 
+ * This class is used to get and set locale for current user which can be used
+ * by other parts of the application. It also provides the default locale for
+ * the application and what locales are supported by the application.
+ *
+ *
  * @author Jitendra
  *
  */
@@ -15,14 +15,14 @@ public class UserLocale {
 	private static final ThreadLocal<Locale> mThreadLocal = new ThreadLocal<>();
 
 	/**
-	 * Locale for <i>Hindi</i> language for country <i>India</i>.
+	 * Locale for Hindi-India.
 	 */
-	public static final Locale LOCALE_HI_IN = new Locale("hi", "IN");
+	public static final Locale HI_IN = new Locale("hi", "IN");
 
 	/**
 	 * An array of locales supported by this application.
 	 */
-	public static final Locale[] SUPPORTED_LOCALES = { Locale.US, LOCALE_HI_IN };
+	public static final Locale[] SUPPORTED_LOCALES = { Locale.US, HI_IN };
 
 	/**
 	 * Default locale of this application.
@@ -33,7 +33,7 @@ public class UserLocale {
 	 * Returns a locale object either with language or with language and country
 	 * provided in {@code localeStr}. Returns {@code null} if {@code localeStr} is
 	 * {@code null} or empty.
-	 * 
+	 *
 	 * @param localeStr
 	 *            string containing language and country(optional) separated by '-'
 	 *            or '_'
@@ -67,14 +67,14 @@ public class UserLocale {
 
 	/**
 	 * Sets locale for current user as specified in {@code localeStr}.
-	 * 
+	 *
 	 * @param localeStr
 	 *            string containing language and country(optional) separated by '-'
 	 *            or '_'
 	 * @throws RuntimeException
 	 *             if {@code localeStr} contains more than one separators (i.e. '-'
 	 *             or '_')
-	 * 
+	 *
 	 * @see {@link #toLocale(String)}
 	 */
 	public static void setUserLocale(String localeStr) throws RuntimeException {
@@ -84,7 +84,7 @@ public class UserLocale {
 	/**
 	 * Sets the specified locale for current user. If locale is not supported then
 	 * sets {@link #DEFAULT_LOCALE} as locale for current user.
-	 * 
+	 *
 	 * @param locale
 	 *            the specified locale for current user
 	 */
@@ -100,12 +100,12 @@ public class UserLocale {
 
 	/**
 	 * Returns locale for the current user.
-	 * 
+	 *
 	 * <p>
 	 * If this method is called after {@link #removeUserLocale()} then
 	 * {@link #DEFAULT_LOCALE} is returned.
 	 * </p>
-	 * 
+	 *
 	 * @return locale for the current user
 	 */
 	public static Locale getUserLocale() {
@@ -123,7 +123,7 @@ public class UserLocale {
 
 	/**
 	 * Returns {@code true} if the specified locale is supported by the application.
-	 * 
+	 *
 	 * @param l
 	 *            the specified locale to check if it is supported by the
 	 *            application

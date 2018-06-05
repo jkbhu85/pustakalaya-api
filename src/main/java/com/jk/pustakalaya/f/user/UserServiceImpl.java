@@ -3,6 +3,7 @@ package com.jk.pustakalaya.f.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.jk.pustakalaya.security.InvalidCredentialsException;
 import com.jk.pustakalaya.security.cred.CredentialsUtil;
 
 @Component
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
 			repository.udpateUserAuthInfo(authInfo);
 		}
-		else throw new RuntimeException("old password is invalid");
+		else throw new InvalidCredentialsException("Old password is invalid");
 	}
 
 	private boolean isPasswordValid(String password, UserAuthInfo authInfo) {
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
 			repository.udpateUserAuthInfo(authInfo);
 		}
-		else throw new RuntimeException("old password is invalid");
+		else throw new InvalidCredentialsException("Password is invalid");
 	}
 
 	@Override

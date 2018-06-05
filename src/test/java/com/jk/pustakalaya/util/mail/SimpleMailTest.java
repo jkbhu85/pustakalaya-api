@@ -8,11 +8,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class SimpleMailTest {
-	private static Mailer mailer;
+	private static MailService mailer;
 
 	@BeforeClass
 	public static void beforeTest() throws Exception {
-		mailer = new MailService();
+		mailer = new MailServiceImpl();
 	}
 
 	@Test

@@ -5,7 +5,7 @@ public final class App {
 
 	public static final String NAME_ENV_VAR_CONFIG = "PTK_CONFIG";
 
-	public static String getConfigPath() {
+	public static String getConfigDirPath() {
 		return System.getenv(NAME_ENV_VAR_CONFIG);
 	}
 }

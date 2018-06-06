@@ -7,20 +7,27 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 import com.jk.pustakalaya.config.App;
 
-public final class CryptUtil {
-	private static final String CIPHER_TRANSFORMATION = "DES/ECB/PKCS5Padding";
-	private static final String KEY_GENERATION_ALGORITHM = "DES";
-	private static final int KEY_SIZE = 56; // fixed for DES
+public final class CryptUtils {
+	private static final String DES_CIPHER_TRANSFORMATION = "DES/ECB/PKCS5Padding";
+	private static final String KEY_GENERATION_ALGORITHM_DES = "DES";
+	private static final int DES_KEY_SIZE = 56; // fixed for DES
 	private static final String KEY_FILE_NAME = "securityKey.ser";
+	private static final String UTF_8 = "UTF-8";
 
-	private CryptUtil() {
+	private static final String AES_CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding";
+	private static final String ALGORITHM_AES = "AES";
+
+	private CryptUtils() {
 	}
 
 	private static String getSecretKeyPath() {
@@ -37,16 +44,16 @@ public final class CryptUtil {
 	 * @return decrypted contents of file
 	 * @throws Exception if error occurres in the process
 	 */
-	public static String decryptFromFile(String fileName, boolean absolutePath) throws Exception {
+	public static byte[] decryptFromFile(String fileName, boolean absolutePath) throws Exception {
 		String path;
 
 		if (absolutePath) path = fileName;
 		else path = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + fileName;
 
-		byte[] encrypted = FileUtil.getBytes(path);
+		byte[] encrypted = FileUtils.getBytes(path);
 		byte[] decrypted = decrypt(encrypted);
 
-		return new String(decrypted);
+		return decrypted;
 	}
 
 	/**
@@ -61,13 +68,47 @@ public final class CryptUtil {
 	public static byte[] encrypt(byte[] source) throws Exception {
 		SecretKey secretKey = getSecretKey(getSecretKeyPath());
 
-		Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
+		Cipher cipher = Cipher.getInstance(DES_CIPHER_TRANSFORMATION);
 
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
 		byte[] encryptedSource = cipher.doFinal(source);
 
 		return encryptedSource;
+	}
+
+	public static String encryptIntoBase64(String source, String initialVector, String key) throws Exception {
+		return Base64.getEncoder().encodeToString(encrypt(source.getBytes(), initialVector, key));
+	}
+
+	public static String decryptFromBase64(String base64, String initialVector, String key) throws Exception {
+		byte[] source = Base64.getDecoder().decode(base64.getBytes());
+
+		return new String(decrypt(source, initialVector, key));
+	}
+
+	public static byte[] encrypt(byte[] source, String initialVector, String key) throws Exception {
+		IvParameterSpec ips = new IvParameterSpec(initialVector.getBytes(UTF_8));
+		SecretKeySpec sks = new SecretKeySpec(key.getBytes(UTF_8), ALGORITHM_AES);
+
+		Cipher cipher = Cipher.getInstance(AES_CIPHER_TRANSFORMATION);
+		cipher.init(Cipher.ENCRYPT_MODE, sks, ips);
+
+		byte[] decrypted = cipher.doFinal(source);
+
+		return decrypted;
+	}
+
+	public static byte[] decrypt(byte[] source, String initialVector, String key) throws Exception {
+		IvParameterSpec ips = new IvParameterSpec(initialVector.getBytes(UTF_8));
+		SecretKeySpec sks = new SecretKeySpec(key.getBytes(UTF_8), ALGORITHM_AES);
+
+		Cipher cipher = Cipher.getInstance(AES_CIPHER_TRANSFORMATION);
+		cipher.init(Cipher.DECRYPT_MODE, sks, ips);
+
+		byte[] encrypted = cipher.doFinal(source);
+
+		return encrypted;
 	}
 
 	/**
@@ -86,7 +127,7 @@ public final class CryptUtil {
 		SecretKey secretKey = getSecretKey(secretKeyPath);
 
 		// 2. get cipher
-		Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
+		Cipher cipher = Cipher.getInstance(DES_CIPHER_TRANSFORMATION);
 
 		// 3. init cipher
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -110,7 +151,7 @@ public final class CryptUtil {
 	public static byte[] decrypt(byte[] encrypted) throws Exception {
 		SecretKey secretKey = loadKeyFromFile(getSecretKeyPath());
 
-		Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
+		Cipher cipher = Cipher.getInstance(DES_CIPHER_TRANSFORMATION);
 		cipher.init(Cipher.DECRYPT_MODE, secretKey);
 		return cipher.doFinal(encrypted);
 	}
@@ -129,7 +170,7 @@ public final class CryptUtil {
 	public static byte[] dcrypt(String secretKeyPath, byte[] encrypted) throws Exception {
 		SecretKey secretKey = loadKeyFromFile(secretKeyPath);
 
-		Cipher cipher = Cipher.getInstance(CIPHER_TRANSFORMATION);
+		Cipher cipher = Cipher.getInstance(DES_CIPHER_TRANSFORMATION);
 		cipher.init(Cipher.DECRYPT_MODE, secretKey);
 		return cipher.doFinal(encrypted);
 	}
@@ -146,7 +187,7 @@ public final class CryptUtil {
 			System.out.println("No secret key found at the specified path.");
 
 			// create secret key because one was not found on the path provided
-			secretKey = generateKey(KEY_GENERATION_ALGORITHM, KEY_SIZE);
+			secretKey = generateKey(KEY_GENERATION_ALGORITHM_DES, DES_KEY_SIZE);
 			System.out.println("New secret key generatred");
 
 			// save secret key to the path provided for later use

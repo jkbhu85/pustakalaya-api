@@ -28,8 +28,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.jk.pustakalaya.config.App;
-import com.jk.pustakalaya.util.CryptUtil;
-import com.jk.pustakalaya.util.FileUtil;
+import com.jk.pustakalaya.util.CryptUtils;
+import com.jk.pustakalaya.util.FileUtils;
 
 /**
  * A basic implementation of {@link MailService} interface.
@@ -61,8 +61,11 @@ public class MailServiceImpl implements MailService {
 		String smtpAuth = mailProps.getProperty("mail.smtp.auth");
 
 		if ("true".equalsIgnoreCase(smtpAuth)) {
-			final String username = mailProps.getProperty("mail.username");
-			final String password = CryptUtil.decryptFromFile(mailProps.getProperty("mail.password.file.name"), false);
+			final String username = mailProps.getProperty("ptk.mail.username");
+			final String iv = mailProps.getProperty("ptk.mail.encryption.iv");
+			final String key = mailProps.getProperty("ptk.mail.encryption.key");
+			final String base64Pwd = mailProps.getProperty("ptk.mail.password");
+			final String password = CryptUtils.decryptFromBase64(base64Pwd, iv, key);
 
 			Authenticator authenticator = new Authenticator() {
 				@Override
@@ -89,7 +92,7 @@ public class MailServiceImpl implements MailService {
 		if (attachments.size() == 1) {
 			file = attachments.get(0);
 		} else {
-			file = FileUtil.zipFiles(attachments);
+			file = FileUtils.zipFiles(attachments);
 			LOG.debug("Attachments were zipped with zip file name: {}", file.getName());
 		}
 
@@ -102,8 +105,8 @@ public class MailServiceImpl implements MailService {
 
 	private void cleanUp() {
 		if (zipFilePath != null) {
-			boolean status = FileUtil.deleteFile(zipFilePath);
-			
+			boolean status = FileUtils.deleteFile(zipFilePath);
+
 			if (status) {
 				LOG.debug("Zip file was deleted. Path: {}", zipFilePath);
 			} else {

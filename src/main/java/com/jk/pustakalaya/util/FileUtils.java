@@ -17,18 +17,18 @@ import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public final class FileUtil {
+public final class FileUtils {
 	private static final AtomicLong ID_GENERATOR = new AtomicLong();
 	private static final String TMP_DIR_PATH = System.getProperty("java.io.tmpdir");
 	private static final int KILO_BYTE = 1024;
 
-	private FileUtil() {
+	private FileUtils() {
 	}
 
 	/**
 	 * Returns {@code true} if the file is deleted successfully at {@code filePath},
 	 * {@code false} otherwise.
-	 * 
+	 *
 	 * @param filePath
 	 *            the path of the file to be deleted
 	 * @return {@code true} if the file is deleted successfully at {@code filePath},
@@ -43,7 +43,7 @@ public final class FileUtil {
 	/**
 	 * Returns {@code false} if one or more files could not be deleted successfully,
 	 * {@code true} otherwise.
-	 * 
+	 *
 	 * @param files
 	 *            list of files to be deleted, if list items are directories then
 	 *            files are deleted recursively
@@ -76,7 +76,7 @@ public final class FileUtil {
 	/**
 	 * Returns {@code false} if one or more filePaths could not be deleted
 	 * successfully, {@code true} otherwise.
-	 * 
+	 *
 	 * @param filePaths
 	 *            list of filePaths to be deleted, if list items are directories
 	 *            then filePaths are deleted recursively
@@ -90,7 +90,7 @@ public final class FileUtil {
 	/**
 	 * Returns a list of all un-hidden files in the directory {@code dir}. Returns
 	 * {@code null} if directory {@code dir} does not exist.
-	 * 
+	 *
 	 * @param dir
 	 *            specified directory
 	 * @return a list of all un-hidden files in the directory {@code dir} or
@@ -105,7 +105,7 @@ public final class FileUtil {
 		if (!dir.canRead())
 			throw new IOException("Can not read directory at path: " + dir.getAbsolutePath());
 
-		List<File> list = new LinkedList<File>();
+		List<File> list = new LinkedList<>();
 
 		for (File file : dir.listFiles()) {
 			list.add(file);
@@ -118,7 +118,7 @@ public final class FileUtil {
 	 * Returns a list of all un-hidden absolute filePaths in the directory path
 	 * {@code dirPath}. Returns {@code null} if directory at the specified
 	 * {@code dirPath} does not exist.
-	 * 
+	 *
 	 * @param dirPath
 	 *            path of the specified directory
 	 * @return a list of all un-hidden files in the directory {@code dirPath} or
@@ -137,7 +137,7 @@ public final class FileUtil {
 		if (!dir.canRead())
 			throw new IOException("Can not read directory at path: " + dir.getAbsolutePath());
 
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 
 		for (File file : dir.listFiles()) {
 			list.add(file.getAbsolutePath());
@@ -166,7 +166,7 @@ public final class FileUtil {
 
 	/**
 	 * Returns byte array representing contents of the {@code file}.
-	 * 
+	 *
 	 * @param file
 	 *            the specified file
 	 * @return byte array representing contents of the {@code file}
@@ -213,15 +213,15 @@ public final class FileUtil {
 			return null;
 
 		// @formatter:off
-		
-		String zipFilePath = 
+
+		String zipFilePath =
 				new StringBuffer()
 				.append(TMP_DIR_PATH)
 				.append(File.separator + "attachments_")
 				.append(Math.abs(ID_GENERATOR.incrementAndGet()))
 				.append(".zip")
 				.toString();
-		
+
 		// @formatter:on
 
 		return zipFiles(files, new File(zipFilePath));
@@ -231,7 +231,7 @@ public final class FileUtil {
 	 * Returns a zip file containing {@code files} or {@code null} if {@code files}
 	 * is {@code null} or empty. If {@code zipFile} already exists then it will be
 	 * overwritten.
-	 * 
+	 *
 	 * @param files
 	 *            list of files to be zipped
 	 * @param zipFile
@@ -300,7 +300,7 @@ public final class FileUtil {
 	 * Returns an absolute path of a zip file which contains {@code filePaths} or
 	 * {@code null} if {@code filePaths} is {@code null} or empty. The zip file is
 	 * created in the temporary directory provided by the system.
-	 * 
+	 *
 	 * @param filePaths
 	 *            list of filePaths to be zipped
 	 * @return an absolute path of a zip file which contains {@code filePaths} or
@@ -321,7 +321,7 @@ public final class FileUtil {
 	 * of a zip file which contains {@code filePaths} or {@code null} if
 	 * {@code filePaths} is {@code null} or empty. If a file already exists
 	 * at{@code zipFilePath} then it will be overwritten.
-	 * 
+	 *
 	 * @param filePaths
 	 *            list of filePaths to be zipped
 	 * @param zipFilePath
@@ -344,7 +344,7 @@ public final class FileUtil {
 	/**
 	 * Returns a list of {@link File} objects corressponding to file paths specified
 	 * in {@code filePaths} or {@code null} if {@filePaths} is {@code null}.
-	 * 
+	 *
 	 * @param filePaths
 	 *            list of file paths
 	 * @return a list of {@link File} objects corressponding to file paths specified
@@ -354,12 +354,28 @@ public final class FileUtil {
 		if (filePaths == null)
 			return null;
 
-		List<File> files = new ArrayList<File>();
+		List<File> files = new ArrayList<>();
 
 		for (String filePath : filePaths) {
 			files.add(new File(filePath));
 		}
 
 		return files;
+	}
+
+
+	public static void writeToFile(byte[] contents, String filePath) throws Exception{
+		File file = new File(filePath);
+
+		if (file.exists()) {
+			if (file.isDirectory()) throw new Exception("Can not write to a directory. Path: " + file.getAbsolutePath());
+			if (!file.canWrite()) throw new Exception("No write permission. Path: " + file.getAbsolutePath());
+		}
+
+		OutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+
+		out.write(contents);
+
+		out.close();
 	}
 }

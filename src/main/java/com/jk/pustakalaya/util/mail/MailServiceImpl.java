@@ -25,7 +25,6 @@ import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 import com.jk.pustakalaya.config.App;
 import com.jk.pustakalaya.util.CryptUtils;
@@ -38,7 +37,6 @@ import com.jk.pustakalaya.util.FileUtils;
  *
  */
 
-@Service
 public class MailServiceImpl implements MailService {
 	private static Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
 

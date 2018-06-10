@@ -1,15 +1,15 @@
 package com.jk.pustakalaya.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/demo")
+import com.jk.pustakalaya.util.MailConsts;
+
+@Controller
 public class DemoController {
-	
-	@GetMapping("")
+
+	@RequestMapping("/test/mail")
 	public String getMessage() {
-		return "Namaskar, apka swagat hai";
+		return "html/" + MailConsts.TEMPLATE_COMPLETE_REGISTRAION;
 	}
 }

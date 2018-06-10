@@ -1,19 +1,18 @@
 package com.jk.pustakalaya.util.mail;
 
-import java.sql.Date;
-import java.util.Arrays;
+import java.io.StringWriter;
 import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.stereotype.Component;
+import org.springframework.context.support.AbstractResourceBasedMessageSource;
+import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import com.jk.pustakalaya.util.DateUtils;
+import com.jk.pustakalaya.util.MailConsts;
 
-@Component
+@Service
 public class MailTemplateServiceImpl implements MailTemplateService {
 	@Autowired
 	private TemplateEngine templateEngine;
@@ -22,16 +21,27 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 	private MailService mailService;
 
 	@Autowired
-	ResourceBundleMessageSource bundle;
+	private AbstractResourceBasedMessageSource bundle;
+
+	private static final String TEMPLATE_PREFIX = "html/";
 
 	@Override
-	public boolean sendMail(String templateName, String recipients, String subjectKey, Map<String, Object> params, Locale locale) {
+	public boolean sendMail(String templateName, String recipients, String subjectKey, Map<String, Object> paramMap, Locale locale) {
 		final Context context = new Context(locale);
+		Object[] subjectParams = null;
 
-		setParamsToContext(context, params);
+		if (paramMap != null) {
+			setParamsToContext(context, paramMap);
+			subjectParams = (Object[]) paramMap.get(MailConsts.SUBJECT_PARAMETERS);
+		}
 
-		final String msgBody = templateEngine.process(templateName, context);
-		final String subject = bundle.getMessage(subjectKey, null, locale);
+		final String subject = bundle.getMessage(subjectKey, subjectParams, locale);
+		final StringWriter writer = new StringWriter();
+		String template = TEMPLATE_PREFIX + templateName;
+
+		templateEngine.process(template, context, writer);
+
+		final String msgBody = writer.toString();
 
 		return mailService.sendMail(recipients, subject, msgBody);
 	}
@@ -42,21 +52,6 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 		for (Map.Entry<String, Object> entry: map.entrySet()) {
 			String key = entry.getKey();
 			Object value = entry.getValue();
-
-			if (value == null) {
-				ctx.setVariable(key, value);
-				continue; // no need to go further
-			}
-
-			// transform date into string
-			if (Date.class.isAssignableFrom(value.getClass())) {
-				value = DateUtils.dateString((Date) value);
-			}
-
-			// transform array into list
-			if (value.getClass().isArray()) {
-				value = Arrays.asList(value);
-			}
 
 			ctx.setVariable(key, value);
 		}

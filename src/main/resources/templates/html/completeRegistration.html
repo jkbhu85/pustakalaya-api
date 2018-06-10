@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title th:text="#{registration.subject}"></title>
+</head>
+
+<body>
+	<p th:text="#{greetings.user}"></p>
+	
+	<p th:text="#{registration.text.line1}"></p>
+	
+	<p>
+		<a href="http://www.example.com/" th:href="${registerationLink}" th:text="#{registration.link.text}">Click here</a>
+	</p>
+	
+	<p th:text="#{registration.text.line2(#{registration.expires.days}, #{registration.expires.hours})}"></p>
+	
+	<div>
+		<p>
+			<span th:text="#{thanks}"></span><br/>
+			<span th:text="#{pustakalaya.team}"></span><br/>
+			<span th:text="#{contact.mail}"></span><br/>
+			<span th:text="#{contact.number}"></span>
+		</p>
+	</div>
+	
+</body>
+</html>

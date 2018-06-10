@@ -23,7 +23,7 @@ public class DbConfig {
 
 	@Bean
 	public DataSource dataSource() throws IOException {
-		String dbPropsFilePath = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.pathSeparator + dbPropsFileName;
+		String dbPropsFilePath = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + dbPropsFileName;
 
 		log.info("Database properties file path: {}", dbPropsFilePath);
 

@@ -56,6 +56,8 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 		web
 			.ignoring()
 				.antMatchers("/api/login")
+				.antMatchers("/test/*")
+				.antMatchers("/**")
 				.and()
 			;
 	}

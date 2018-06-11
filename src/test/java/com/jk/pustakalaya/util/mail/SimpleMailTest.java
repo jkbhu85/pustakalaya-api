@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.Date;
 
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class SimpleMailTest {
 	private static MailService mailer;
@@ -15,7 +14,7 @@ public class SimpleMailTest {
 		mailer = new MailServiceImpl();
 	}
 
-	@Test
+	//@Test
 	public void sendMail() {
 		boolean sent = mailer.sendMail("jk.bhu85@gmail.com", "Test Subject", "Hi Jitendra\n\nThis is some test text.\n\nRegards\nPustakalaya\n" + new Date());
 

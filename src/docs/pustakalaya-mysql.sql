@@ -262,7 +262,7 @@ INSERT INTO LibUser VALUES
 commit;
 
 -- code added on 24/05/2018
--- not yet executed in db
+-- add aws instance on 12/06/2018
 
 CREATE TABLE NewUser (
 	id            VARCHAR(40) NOT NULL,

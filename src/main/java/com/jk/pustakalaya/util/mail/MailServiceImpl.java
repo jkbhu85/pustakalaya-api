@@ -1,5 +1,6 @@
 package com.jk.pustakalaya.util.mail;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -27,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.jk.pustakalaya.config.App;
+import com.jk.pustakalaya.util.AutoClose;
 import com.jk.pustakalaya.util.CryptUtils;
 import com.jk.pustakalaya.util.FileUtils;
 
@@ -37,13 +39,14 @@ import com.jk.pustakalaya.util.FileUtils;
  *
  */
 
-public class MailServiceImpl implements MailService {
+public class MailServiceImpl implements MailService, Closeable {
 	private static Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
 
 	@Value("mail.props.file")
 	private String mailPropsFileName = "mail.properties";
 
 	private Session session;
+	private Transport transport;
 	private String zipFilePath;
 
 	public MailServiceImpl() throws Exception {
@@ -77,6 +80,12 @@ public class MailServiceImpl implements MailService {
 			this.session = Session.getDefaultInstance(mailProps);
 		}
 
+		transport = session.getTransport();
+		LOG.debug("Connecting transport...");
+		transport.connect();
+		LOG.debug("Transport connected");
+
+		AutoClose.register(this);
 		LOG.debug("Mailer was initialized successfully.");
 	}
 
@@ -135,7 +144,7 @@ public class MailServiceImpl implements MailService {
 			msg.setContent(multipart);
 
 			LOG.debug("Mail prepared, about to send to: {}", recipients);
-			Transport.send(msg);
+			transport.sendMessage(msg, msg.getAllRecipients());
 			LOG.debug("Mail was sent successfully to {}.", recipients);
 			return true;
 		} catch (Exception e) {
@@ -150,6 +159,17 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public boolean sendMail(String recipients, String subject, String message) {
 		return sendMail(recipients, subject, message, null);
+	}
+
+	@Override
+	public void close() {
+		if (transport != null) {
+			try {
+				transport.close();
+			} catch (Exception e) {
+				LOG.error("Error while closing mail transport.{}", e);
+			}
+		}
 	}
 
 }

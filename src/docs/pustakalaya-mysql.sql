@@ -265,14 +265,16 @@ commit;
 -- not yet executed in db
 
 CREATE TABLE NewUser (
+	id            VARCHAR(40) NOT NULL,
 	email         VARCHAR(80) NOT NULL,
 	firstName     VARCHAR(30) NOT NULL,
 	lastName      VARCHAR(30),
 	locale        CHAR(5) NOT NULL,
-	securityKey   VARCHAR(16) NOT NULL,
 	createdOn     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	expiresOn     TIMESTAMP NOT NULL,
 	acCreatedByFk BIGINT NOT NULL,
-	PRIMARY KEY (email),
-    FOREIGN KEY (acCreatedByFk) REFERENCES LibUser (id)
+	roleFk        SMALLINT NOT NULL,
+	PRIMARY KEY (id),
+    FOREIGN KEY (acCreatedByFk) REFERENCES LibUser (id),
+    FOREIGN KEY (roleFk) REFERENCES UserRole (id)
 );

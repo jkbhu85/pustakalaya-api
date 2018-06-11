@@ -3,6 +3,13 @@ package com.jk.pustakalaya.util;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+/**
+ * This is a temporary class to test some of the functionality of encryption and
+ * decryption implemented in this project.
+ * 
+ * @author Jitendra
+ *
+ */
 public class PasswordUtil {
 	public static void main(String[] args) {
 		try {

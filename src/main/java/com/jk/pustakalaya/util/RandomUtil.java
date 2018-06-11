@@ -3,6 +3,12 @@ package com.jk.pustakalaya.util;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
+/**
+ * Utility class that facilitates to work with random numbers.
+ * 
+ * @author Jitendra
+ *
+ */
 public final class RandomUtil {
 	private static final SecureRandom GENERATOR = new SecureRandom();
 	private static final int POSITIVE_MASK = 0x7f;

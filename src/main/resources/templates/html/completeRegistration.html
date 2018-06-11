@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8"/>
-	<title th:text="#{registration.subject}"></title>
+	<title th:text="#{registration.subject(${subjectParameters})}"></title>
 </head>
 
 <body>
-	<p th:text="#{greetings.user}"></p>
+	<p th:text="#{greetings(${userName})}"></p>
 	
 	<p th:text="#{registration.text.line1}"></p>
 	
@@ -14,7 +14,7 @@
 		<a href="http://www.example.com/" th:href="${registerationLink}" th:text="#{registration.link.text}">Click here</a>
 	</p>
 	
-	<p th:text="#{registration.text.line2(#{registration.expires.days}, #{registration.expires.hours})}"></p>
+	<p th:text="#{registration.text.line2(${registrationExpires})}"></p>
 	
 	<div>
 		<p>

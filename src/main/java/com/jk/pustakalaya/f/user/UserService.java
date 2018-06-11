@@ -13,13 +13,15 @@ public interface UserService {
 
 	void addUser(String email, String firstName, String lastName, String localeStr);
 
-	/*
-	void lockAccount(Long id);
+	default void lockAccount(Long id) {
+	}
 
-	void revokeAccount(Long id);
+	default void revokeAccount(Long id) {
+	}
 
-	void activateAccount(Long id);
+	default void activateAccount(Long id) {
+	}
 
-	void deleteAccount(Long id);
-	*/
+	default void deleteAccount(Long id) {
+	}
 }

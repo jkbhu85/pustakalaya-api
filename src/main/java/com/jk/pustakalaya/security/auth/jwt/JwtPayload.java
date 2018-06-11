@@ -1,5 +1,11 @@
 package com.jk.pustakalaya.security.auth.jwt;
 
+/**
+ * This class represents payload in JWT.
+ *
+ * @author Jitendra
+ *
+ */
 public class JwtPayload {
 	public static final String PAYLOAD_KEY_ID = "id";
 	public static final String PAYLOAD_KEY_NAME = "name";
@@ -11,13 +17,20 @@ public class JwtPayload {
 	private String email;
 	private String role;
 
-	public JwtPayload() {}
+	public JwtPayload() {
+	}
 
 	/**
+	 * Creates an instance with the speicified values.
+	 *
 	 * @param id
+	 *            unique id of the user
 	 * @param name
+	 *            name of the user
 	 * @param email
-	 * @param roles
+	 *            email of the user
+	 * @param role
+	 *            role of the user
 	 */
 	public JwtPayload(String id, String name, String email, String role) {
 		super();
@@ -27,8 +40,6 @@ public class JwtPayload {
 		this.role = role;
 	}
 
-
-
 	/**
 	 * @return the id
 	 */
@@ -37,7 +48,8 @@ public class JwtPayload {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -51,7 +63,8 @@ public class JwtPayload {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -65,7 +78,8 @@ public class JwtPayload {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email
+	 *            the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -79,12 +93,11 @@ public class JwtPayload {
 	}
 
 	/**
-	 * @param role the role to set
+	 * @param role
+	 *            the role to set
 	 */
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-
 
 }

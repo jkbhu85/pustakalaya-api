@@ -1,5 +1,11 @@
 package com.jk.pustakalaya.config;
 
+/**
+ * This class provides application specific values.
+ *
+ * @author Jitendra
+ *
+ */
 public final class App {
 	private App() {
 	}
@@ -14,7 +20,7 @@ public final class App {
 
 	/**
 	 * Returns path of the project configuration directory.
-	 * 
+	 *
 	 * @return path of the project configuration directory
 	 */
 	public static String configDirPath() {
@@ -23,7 +29,7 @@ public final class App {
 
 	/**
 	 * Returns URL for the specified URI.
-	 * 
+	 *
 	 * @param uri
 	 *            the speicified uri.
 	 * @return URL for the specified URI
@@ -34,7 +40,7 @@ public final class App {
 
 	/**
 	 * Returns registration link expiration duration in hours.
-	 * 
+	 *
 	 * @return registration link expiration duration in hours
 	 */
 	public static int registrationLinkExpireDuration() {
@@ -43,7 +49,7 @@ public final class App {
 
 	/**
 	 * Returns internet domain of the application.
-	 * 
+	 *
 	 * @return internet domain of the application
 	 */
 	public static String appDomain() {

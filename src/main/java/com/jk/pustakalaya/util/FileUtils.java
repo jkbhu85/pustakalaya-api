@@ -17,6 +17,12 @@ import java.util.zip.Deflater;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+/**
+ * This class provides methods to work with files.
+ *
+ * @author Jitendra
+ *
+ */
 public final class FileUtils {
 	private static final AtomicLong ID_GENERATOR = new AtomicLong();
 	private static final String TMP_DIR_PATH = System.getProperty("java.io.tmpdir");
@@ -214,13 +220,8 @@ public final class FileUtils {
 
 		// @formatter:off
 
-		String zipFilePath =
-				new StringBuffer()
-				.append(TMP_DIR_PATH)
-				.append(File.separator + "attachments_")
-				.append(Math.abs(ID_GENERATOR.incrementAndGet()))
-				.append(".zip")
-				.toString();
+		String zipFilePath = new StringBuffer().append(TMP_DIR_PATH).append(File.separator + "attachments_")
+				.append(Math.abs(ID_GENERATOR.incrementAndGet())).append(".zip").toString();
 
 		// @formatter:on
 
@@ -265,7 +266,8 @@ public final class FileUtils {
 					throw new Exception("The file does not exist. Path: " + file.getAbsolutePath());
 				if (file.isDirectory())
 					throw new Exception(
-							"The path represents a directory and hence can not be included into zip file. Path: " + file.getAbsolutePath());
+							"The path represents a directory and hence can not be included into zip file. Path: "
+									+ file.getAbsolutePath());
 				if (!file.canRead())
 					throw new Exception("The file can not be read. Path: " + file.getAbsolutePath());
 
@@ -343,12 +345,13 @@ public final class FileUtils {
 
 	/**
 	 * Returns a list of {@link File} objects corressponding to file paths specified
-	 * in {@code filePaths} or {@code null} if {@filePaths} is {@code null}.
+	 * in {@code filePaths} or {@code null} if {@code filePaths} is {@code null}.
 	 *
 	 * @param filePaths
 	 *            list of file paths
 	 * @return a list of {@link File} objects corressponding to file paths specified
-	 *         in {@code filePaths} or {@code null} if {@filePaths} is {@code null}
+	 *         in {@code filePaths} or {@code null} if {@code filePaths} is
+	 *         {@code null}
 	 */
 	public static List<File> toFiles(List<String> filePaths) {
 		if (filePaths == null)
@@ -363,13 +366,14 @@ public final class FileUtils {
 		return files;
 	}
 
-
-	public static void writeToFile(byte[] contents, String filePath) throws Exception{
+	public static void writeToFile(byte[] contents, String filePath) throws Exception {
 		File file = new File(filePath);
 
 		if (file.exists()) {
-			if (file.isDirectory()) throw new Exception("Can not write to a directory. Path: " + file.getAbsolutePath());
-			if (!file.canWrite()) throw new Exception("No write permission. Path: " + file.getAbsolutePath());
+			if (file.isDirectory())
+				throw new Exception("Can not write to a directory. Path: " + file.getAbsolutePath());
+			if (!file.canWrite())
+				throw new Exception("No write permission. Path: " + file.getAbsolutePath());
 		}
 
 		OutputStream out = new BufferedOutputStream(new FileOutputStream(file));

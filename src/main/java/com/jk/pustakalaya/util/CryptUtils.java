@@ -17,6 +17,12 @@ import javax.crypto.spec.SecretKeySpec;
 
 import com.jk.pustakalaya.config.App;
 
+/**
+ * This class provides methods for encryption and decryption.
+ *
+ * @author Jitendra
+ *
+ */
 public final class CryptUtils {
 	private static final String DES_CIPHER_TRANSFORMATION = "DES/ECB/PKCS5Padding";
 	private static final String KEY_GENERATION_ALGORITHM_DES = "DES";
@@ -36,19 +42,24 @@ public final class CryptUtils {
 
 	/**
 	 * Returns decrypted contents of file. If {@code absolutePath} is {@code false},
-	 * {@code fileName} is considered a file name and the file location is
-	 * the directory which is same as value of {@link App.NAME_ENV_VAR_CONFIG}.
+	 * {@code fileName} is considered a file name and the file location is the
+	 * directory which is same as value of {@link App#NAME_ENV_VAR_CONFIG}.
 	 *
-	 * @param fileName name or path of the file
-	 * @param absolutePath indicates if the path is an aboslute path
+	 * @param fileName
+	 *            name or path of the file
+	 * @param absolutePath
+	 *            indicates if the path is an aboslute path
 	 * @return decrypted contents of file
-	 * @throws Exception if error occurres in the process
+	 * @throws Exception
+	 *             if error occurres in the process
 	 */
 	public static byte[] decryptFromFile(String fileName, boolean absolutePath) throws Exception {
 		String path;
 
-		if (absolutePath) path = fileName;
-		else path = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + fileName;
+		if (absolutePath)
+			path = fileName;
+		else
+			path = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + fileName;
 
 		byte[] encrypted = FileUtils.getBytes(path);
 		byte[] decrypted = decrypt(encrypted);

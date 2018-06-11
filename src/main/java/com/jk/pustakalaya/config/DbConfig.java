@@ -14,6 +14,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+/**
+ * This class configures database connectivity.
+ *
+ * @author Jitendra
+ *
+ */
 @Configuration
 public class DbConfig {
 	private static final Logger log = LoggerFactory.getLogger(DbConfig.class);
@@ -21,6 +27,13 @@ public class DbConfig {
 	@Value("${db.props.file}")
 	private String dbPropsFileName;
 
+	/**
+	 * Returns data source to be used by this application.
+	 *
+	 * @return data source to be used by this application
+	 * @throws IOException
+	 *             if there is problem reading properties from file
+	 */
 	@Bean
 	public DataSource dataSource() throws IOException {
 		String dbPropsFilePath = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + dbPropsFileName;

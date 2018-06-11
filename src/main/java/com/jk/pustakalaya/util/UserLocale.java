@@ -35,14 +35,14 @@ public class UserLocale {
 	 * {@code null} or empty.
 	 *
 	 * @param localeStr
-	 *            string containing language and country(optional) separated by '-'
-	 *            or '_'
+	 *            string containing language and country(optional) separated by "-"
+	 *            or "_"
 	 * @return a locale object either with language or with language and country
 	 *         provided in {@code localeStr} or {@code null} if {@code localeStr} is
 	 *         {@code null} or empty
 	 * @throws RuntimeException
-	 *             if {@code localeStr} contains more than one separators (i.e. '-'
-	 *             or '_')
+	 *             if {@code localeStr} contains more than one separators (i.e. "-"
+	 *             or "_")
 	 */
 	public static Locale toLocale(String localeStr) throws RuntimeException {
 		if (localeStr == null || localeStr.isEmpty())
@@ -69,13 +69,13 @@ public class UserLocale {
 	 * Sets locale for current user as specified in {@code localeStr}.
 	 *
 	 * @param localeStr
-	 *            string containing language and country(optional) separated by '-'
-	 *            or '_'
+	 *            string containing language and country(optional) separated by "-"
+	 *            or "_"
 	 * @throws RuntimeException
-	 *             if {@code localeStr} contains more than one separators (i.e. '-'
-	 *             or '_')
+	 *             if {@code localeStr} contains more than one separators (i.e. "-"
+	 *             or "_")
 	 *
-	 * @see {@link #toLocale(String)}
+	 * @see #toLocale(String)
 	 */
 	public static void setUserLocale(String localeStr) throws RuntimeException {
 		setUserLocale(toLocale(localeStr));

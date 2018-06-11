@@ -47,8 +47,8 @@ public final class AutoClose {
 	}
 
 	/**
-	 * Register to be closed on application shutdown. Calling this method has no
-	 * effect if shut down activity has started.
+	 * Registers the specified object for autoclose on application shutdown. Calling
+	 * this method has no effect if shut down activity has started.
 	 *
 	 * @param closeable
 	 *            the specified object to register
@@ -60,9 +60,9 @@ public final class AutoClose {
 	}
 
 	/**
-	 * Unregister from auto close on application shutdown. This method has no effect
-	 * if {@code closeable} was not registered. Also calling this method has no
-	 * effect if shut down activity has started.
+	 * Unregisters the specified object from autoclose on application shutdown. This
+	 * method has no effect if {@code closeable} was not registered. Also calling
+	 * this method has no effect if shut down activity has started.
 	 *
 	 * @param closeable
 	 *            the specified object to unregister

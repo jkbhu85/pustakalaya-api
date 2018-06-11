@@ -5,7 +5,7 @@ import java.security.SecureRandom;
 
 /**
  * Utility class that facilitates to work with random numbers.
- * 
+ *
  * @author Jitendra
  *
  */
@@ -22,8 +22,8 @@ public final class RandomUtil {
 	 *
 	 * @param len
 	 *            number of digits in the hexadecimal number
-	 * @returna string of length {@code len} which is a hexadcimal representation of
-	 *          a cryptographically secured non-negative integer
+	 * @return a string of length {@code len} which is a hexadcimal representation
+	 *         of a cryptographically secured non-negative integer
 	 */
 	public static String getNoramlizedRandomHex(int len) {
 		if ((len & 1) == 1) {

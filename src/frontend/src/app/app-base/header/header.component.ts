@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../app-security/auth.service';
 import { Observable ,  Subscription } from 'rxjs';
 import { UserInfo, UserRole } from '../../models';
+import { AppTranslateService } from '../../services/app-translate.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,8 @@ export class HeaderComponent implements OnInit {
   private userSubscription: Subscription;
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    public translate: AppTranslateService
   ) {}
 
   ngOnInit() {
@@ -34,6 +36,12 @@ export class HeaderComponent implements OnInit {
 
   hasRole(role: string) {
     return this.authService.userHasRole(UserRole[role]);
+  }
+
+  onChangeLang(event: Event) {
+    let ele:any = event.target;
+    let locale = ele.value;
+    this.translate.setUserLocale(locale);
   }
 
 }

@@ -278,3 +278,10 @@ CREATE TABLE NewUser (
     FOREIGN KEY (acCreatedByFk) REFERENCES LibUser (id),
     FOREIGN KEY (roleFk) REFERENCES UserRole (id)
 );
+
+
+-- code added on 12/06/2018
+ALTER TABLE ptk.LibUser ADD COLUMN (locale VARCHAR(5));
+
+update ptk.LibUser set locale='hi_IN' WHERE id=1;
+update ptk.LibUser set locale='en_US' WHERE id=2;

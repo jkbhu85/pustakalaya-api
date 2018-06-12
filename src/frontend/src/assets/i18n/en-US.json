@@ -13,7 +13,8 @@
     "assignBook": "Assign book",
     "user": "User",
     "addUser": "Add user",
-    "modifyUser": "Modify user"
+    "modifyUser": "Modify user",
+    "login": "Login"
   },
   "login": {
     "title": "Login",
@@ -43,16 +44,24 @@
   "profile": {
     "firstName": "First name",
     "lastName": "Last name",
-    "email": "Email"
+    "email": "Email",
+    "locale": "Locale"
   },
   "user": {
     "add": {
       "vld": {
         "firstNameRequired": "First name is required",
+        "firstNameMaxLength": "Maximum {{firstNameMaxLen}} character are allowed",
         "lastNameRequired": "Last name is require",
+        "lastNameMaxLength": "Maximum {{lastNameMaxLen}} character are allowed",
         "emailRequired": "Email is required",
-        "emailInvalid": "Email is invalid"
+        "emailInvalid": "Email is invalid",
+        "localeRequired": "Locale is required"
       }
     }
+  },
+  "langs": {
+    "enUS": "English (US)",
+    "hiIN": "Hindi (Bharat)"
   }
 }

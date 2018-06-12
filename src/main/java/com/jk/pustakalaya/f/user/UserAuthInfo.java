@@ -25,7 +25,7 @@ public class UserAuthInfo {
 	@Column(name = "emailUk")
 	private String email;
 
-	@Column(name="unsuccessfulTries")
+	@Column(name = "unsuccessfulTries")
 	private int unsuccessfulTries;
 
 	@Column(name = "passwordHash")
@@ -50,6 +50,9 @@ public class UserAuthInfo {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "accountStatusFk")
 	private UserAcStatus accountStatus;
+
+	@Column(name = "locale")
+	private String localeValue;
 
 	public UserAuthInfo() {
 	}
@@ -126,12 +129,49 @@ public class UserAuthInfo {
 		return id;
 	}
 
+	/**
+	 * @return the unsuccessfulTries
+	 */
+	public int getUnsuccessfulTries() {
+		return unsuccessfulTries;
+	}
+
+	/**
+	 * @param unsuccessfulTries
+	 *            the unsuccessfulTries to set
+	 */
+	public void setUnsuccessfulTries(int unsuccessfulTries) {
+		this.unsuccessfulTries = unsuccessfulTries;
+	}
+
+	/**
+	 * @return the localeValue
+	 */
+	public String getLocaleValue() {
+		return localeValue;
+	}
+
+	/**
+	 * @param localeValue
+	 *            the localeValue to set
+	 */
+	public void setLocaleValue(String localeValue) {
+		this.localeValue = localeValue;
+	}
+
+	/**
+	 * @param firstName
+	 *            the firstName to set
+	 */
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 	@Override
 	public String toString() {
-		return "UserAuthInfo [id=" + id + ", email=" + email + ", passwordHash=" + passwordHash + ", passwordSalt="
-				+ passwordSalt + ", passwordVersion=" + passwordVersion + ", securityQuestion=" + securityQuestion
-				+ ", securityAnswer=" + securityAnswer + ", role=" + role.getName() + ", accountStatus="
-				+ accountStatus.getName() + "]";
+		return "UserAuthInfo [id=" + id + ", firstName=" + firstName + ", email=" + email + ", unsuccessfulTries=" + unsuccessfulTries
+				+ ", passwordVersion=" + passwordVersion + ", role=" + role.getName() + ", accountStatus=" + accountStatus.getName()
+				+ ", localeValue=" + localeValue + "]";
 	}
 
 }

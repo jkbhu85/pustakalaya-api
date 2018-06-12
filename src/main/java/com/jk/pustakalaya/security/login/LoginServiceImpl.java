@@ -132,6 +132,7 @@ public class LoginServiceImpl implements LoginService {
 		payload.setEmail(authInfo.getEmail());
 		payload.setName(authInfo.getFirstName());
 		payload.setRole(authInfo.getRole());
+		payload.setLocale(authInfo.getLocaleValue());
 
 		return payload;
 	}

@@ -7,15 +7,11 @@ package com.jk.pustakalaya.security.auth.jwt;
  *
  */
 public class JwtPayload {
-	public static final String PAYLOAD_KEY_ID = "id";
-	public static final String PAYLOAD_KEY_NAME = "name";
-	public static final String PAYLOAD_KEY_EMAIL = "email";
-	public static final String PAYLOAD_KEY_ROLE = "role";
-
 	private String id;
 	private String name;
 	private String email;
 	private String role;
+	private String locale;
 
 	public JwtPayload() {
 	}
@@ -31,13 +27,16 @@ public class JwtPayload {
 	 *            email of the user
 	 * @param role
 	 *            role of the user
+	 * @param locale
+	 *            locale string of the user in LANGUAGE_COUNTRY format.
 	 */
-	public JwtPayload(String id, String name, String email, String role) {
+	public JwtPayload(String id, String name, String email, String role, String locale) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.role = role;
+		this.locale = locale;
 	}
 
 	/**
@@ -100,4 +99,19 @@ public class JwtPayload {
 		this.role = role;
 	}
 
+	/**
+	 * @return the locale
+	 */
+	public String getLocale() {
+		return locale;
+	}
+
+	/**
+	 * @param locale the locale to set
+	 */
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	
 }

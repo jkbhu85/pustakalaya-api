@@ -15,6 +15,13 @@ import javax.persistence.Table;
 @Entity
 @Table(name="UserRole")
 public class UserRole {
+	/**
+	 * Default user role to take when creating a new user.
+	 * 
+	 * <p>The current default role is MEMBER.</p>
+	 */
+	public static final int DEFAULT_USER_ROLE = 3;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
@@ -29,6 +36,10 @@ public class UserRole {
 
 	public Integer getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jk.pustakalaya.config.App;
+import com.jk.pustakalaya.model.UserRole;
 import com.jk.pustakalaya.util.MailConsts;
 import com.jk.pustakalaya.util.UuidUtils;
 import com.jk.pustakalaya.util.mail.MailTemplateService;
@@ -30,7 +31,7 @@ public class NewUserServiceImpl implements NewUserService {
 	@Override
 	public void addNewUser(NewUser newUser) {
 		newUser.setId(UuidUtils.generate());
-
+		newUser.getRole().setId(UserRole.DEFAULT_USER_ROLE);
 		repo.saveNewUser(newUser);
 		
 		sendMail(newUser);

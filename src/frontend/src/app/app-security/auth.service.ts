@@ -3,6 +3,7 @@ import { UserInfo, UserRole } from '../models';
 import { Router } from '@angular/router';
 import { NotificationService } from '../notifications/notification.service';
 import { BehaviorSubject ,  Observable } from 'rxjs';
+import { AppTranslateService } from '../services/app-translate.service';
 
 const HOME_PAGE = '/home';
 const LOGIN_PAGE = '/login';
@@ -25,8 +26,10 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    private notiService: NotificationService
+    private notiService: NotificationService,
+    private translate: AppTranslateService
   ) {
+    console.log("AuthService created");
     this.restore();
   }
 
@@ -97,6 +100,7 @@ export class AuthService {
     }
 
     this.updateUser(user);
+
     this.storage.setItem(this.userLabel, JSON.stringify(user));
   }
 
@@ -107,6 +111,9 @@ export class AuthService {
     this.storage.removeItem(this.userLabel);
   }
 
+  /**
+   * Changes the login status and informs all the subscribers.
+   */
   private updateLoginStatus() {
     this.loggedIn = (this.user ? true : false);
     this.loggedIn$.next(this.loggedIn);
@@ -115,11 +122,16 @@ export class AuthService {
   private updateUser(newUser: UserInfo) {
     this.user = newUser;
     this.user$.next(this.user);
+    if (newUser != null) {
+      this.translate.setUserLocale(this.user.locale);
+    }
   }
 
 
-  // restore user from storage if application reloads
-  // remove all information if JWT expired already.
+  /**
+   * Restores user from storage if application reloads.
+   * Removes all information if JWT expired already.
+   */
   private restore() {
     let userJson = this.storage.getItem(this.userLabel);
 

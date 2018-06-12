@@ -15,6 +15,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 
 public class JwtUtil {
+	public static final String PAYLOAD_KEY_ID = "id";
+	public static final String PAYLOAD_KEY_NAME = "name";
+	public static final String PAYLOAD_KEY_EMAIL = "email";
+	public static final String PAYLOAD_KEY_ROLE = "role";
+	public static final String PAYLOAD_KEY_LOCALE = "locale";
+	
 	private static Logger log = LoggerFactory.getLogger(JwtUtil.class);
 	private static final JwtUtilHelper helper = new JwtUtilHelper();
 
@@ -49,10 +55,11 @@ public class JwtUtil {
 
 			Builder builder =
 					jwtBuilder
-						.withClaim(JwtPayload.PAYLOAD_KEY_ID, payload.getId())
-						.withClaim(JwtPayload.PAYLOAD_KEY_NAME, payload.getName())
-						.withClaim(JwtPayload.PAYLOAD_KEY_EMAIL, payload.getEmail())
-						.withClaim(JwtPayload.PAYLOAD_KEY_ROLE, payload.getRole())
+						.withClaim(PAYLOAD_KEY_ID, payload.getId())
+						.withClaim(PAYLOAD_KEY_NAME, payload.getName())
+						.withClaim(PAYLOAD_KEY_EMAIL, payload.getEmail())
+						.withClaim(PAYLOAD_KEY_ROLE, payload.getRole())
+						.withClaim(PAYLOAD_KEY_LOCALE, payload.getLocale())
 						.withIssuedAt(issuedAt)
 						.withExpiresAt(expiresAt);
 
@@ -66,10 +73,11 @@ public class JwtUtil {
 
 			JwtPayload payload =
 					new JwtPayload(
-							jwt.getClaim(JwtPayload.PAYLOAD_KEY_ID).asString(),
-							jwt.getClaim(JwtPayload.PAYLOAD_KEY_NAME).asString(),
-							jwt.getClaim(JwtPayload.PAYLOAD_KEY_EMAIL).asString(),
-							jwt.getClaim(JwtPayload.PAYLOAD_KEY_ROLE).asString()
+							jwt.getClaim(PAYLOAD_KEY_ID).asString(),
+							jwt.getClaim(PAYLOAD_KEY_NAME).asString(),
+							jwt.getClaim(PAYLOAD_KEY_EMAIL).asString(),
+							jwt.getClaim(PAYLOAD_KEY_ROLE).asString(),
+							jwt.getClaim(PAYLOAD_KEY_LOCALE).asString()
 							);
 
 			return payload;

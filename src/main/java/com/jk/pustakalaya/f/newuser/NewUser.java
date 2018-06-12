@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.jk.pustakalaya.f.user.User;
 import com.jk.pustakalaya.model.UserRole;
 
 /**
@@ -36,9 +37,9 @@ public class NewUser {
 	@JoinColumn(name = "roleFk")
 	private UserRole role;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "acCreatedByFk")
-	private Long acCreatedBy;
+	private User acCreatedBy;
 
 	/**
 	 * Default constructor.
@@ -110,11 +111,11 @@ public class NewUser {
 		this.expiresOn = expiresOn;
 	}
 
-	public Long getAcCreatedBy() {
+	public User getAcCreatedBy() {
 		return acCreatedBy;
 	}
 
-	public void setAcCreatedBy(Long acCreatedBy) {
+	public void setAcCreatedBy(User acCreatedBy) {
 		this.acCreatedBy = acCreatedBy;
 	}
 

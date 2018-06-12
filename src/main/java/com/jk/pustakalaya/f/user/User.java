@@ -69,6 +69,8 @@ public class User {
 	@OneToMany(mappedBy="user")
 	@JsonIgnore
 	private List<Address> addressList = new ArrayList<>();
+	
+	private String localeValue;
 
 	public User() {
 	}
@@ -169,4 +171,52 @@ public class User {
 		return country.getIsdCode();
 	}
 
+	/**
+	 * @return the country
+	 */
+	public Country getCountry() {
+		return country;
+	}
+
+	/**
+	 * @param country the country to set
+	 */
+	public void setCountry(Country country) {
+		this.country = country;
+	}
+
+	/**
+	 * @return the imagePath
+	 */
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	/**
+	 * @param imagePath the imagePath to set
+	 */
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	/**
+	 * @return the localeValue
+	 */
+	public String getLocaleValue() {
+		return localeValue;
+	}
+
+	/**
+	 * @param localeValue the localeValue to set
+	 */
+	public void setLocaleValue(String localeValue) {
+		this.localeValue = localeValue;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
 }

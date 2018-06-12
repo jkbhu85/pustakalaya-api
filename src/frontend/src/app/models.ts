@@ -77,6 +77,11 @@ export class UserInfo {
     email: string;
 
     /**
+     * Locale of user.
+     */
+    locale: string;
+
+    /**
      * time at which token will expire.
      */
     exp: number;

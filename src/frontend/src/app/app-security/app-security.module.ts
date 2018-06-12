@@ -10,6 +10,8 @@ import { RoleAdminGaurd } from './role-admin-gaurd';
 import { RoleLibrianGaurd } from './role-librarian-gaurd';
 import { ProfileCompleteGaurd } from './profile-complete-gaurd';
 import { ProfileIncompleteGaurd } from './gaurds/profile-incomplete-gaurd';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './token-interceptor';
 
 @NgModule({
   imports: [
@@ -27,7 +29,12 @@ import { ProfileIncompleteGaurd } from './gaurds/profile-incomplete-gaurd';
     RoleAdminGaurd,
     RoleLibrianGaurd,
     ProfileCompleteGaurd,
-    ProfileIncompleteGaurd
+    ProfileIncompleteGaurd,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ]
 })
 export class AppSecurityModule { }

@@ -27,7 +27,6 @@ public class CorsFilter implements Filter {
 	private static Logger log = LoggerFactory.getLogger(CorsFilter.class);
 
     public CorsFilter() {
-    	System.err.println("-------- CorsFilter created --------");
     	log.info("-------- CorsFilter created --------");
     }
 
@@ -44,8 +43,9 @@ public class CorsFilter implements Filter {
 		System.out.println("Request origin: " + origin);
 
 		res.setHeader("Access-Control-Allow-Origin", origin);
+		log.info("Origin: " + origin);
 		//res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,PATCH,DELETE,OPTIONS");
-		res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+		res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authentication");
 
 		// pass the request along the filter chain
 		chain.doFilter(request, response);

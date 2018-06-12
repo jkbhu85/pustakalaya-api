@@ -3,6 +3,7 @@ package com.jk.pustakalaya.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -53,11 +55,21 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
+		RequestMatcher reqm = new RequestMatcher() {
+			
+			@Override
+			public boolean matches(HttpServletRequest request) {
+				String method = request.getMethod();
+				
+				return ("OPTIONS".equalsIgnoreCase(method));
+			}
+		};
+		
 		web
 			.ignoring()
 				.antMatchers("/api/login")
-				.antMatchers("/test/*")
-				.antMatchers("/**")
+				.antMatchers("/error")
+				.requestMatchers(reqm)
 				.and()
 			;
 	}

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-10 col-lg-6">
-    <form class="card mb-4" [formGroup]="addUserForm">
+    <form class="card mb-5" [formGroup]="addUserForm" (submit)="onSubmit()">
       <h2 class="card-header h4">{{'navbar.addUser' | translate}}</h2>
 
       <div class="card-body">
@@ -12,6 +12,7 @@
 
               <div class="text-danger" *ngIf="(firstName.touched || firstName.dirty) && firstName.errors">
                 <div *ngIf="firstName.errors.required">{{'user.add.vld.firstNameRequired' | translate}}</div>
+                <div *ngIf="firstName.errors.maxlength">{{'user.add.vld.firstNameMaxLength' | translate:param}}</div>
               </div>
             </div>
           </div>
@@ -23,6 +24,7 @@
               
               <div class="text-danger" *ngIf="(lastName.touched || lastName.dirty) && lastName.errors">
                 <div *ngIf="lastName.errors.required">{{'user.add.vld.lastNameRequired' | translate}}</div>
+                <div *ngIf="lastName.errors.maxlength">{{'user.add.vld.lastNameMaxLength' | translate:param}}</div>
               </div>
             </div>
           </div>
@@ -38,6 +40,20 @@
             <div *ngIf="!email.errors.required && email.errors.email">{{'user.add.vld.emailInvalid' | translate}}</div>
           </div>
         </div>
+
+        <div class="form-group">
+          <label for="locale">{{'profile.locale' | translate}}</label>
+          <select id="locale" class="form-control" [formControl]="locale">
+            <option value="hi_IN">{{'langs.hiIN' | translate}}</option>
+            <option value="en_US">{{'langs.enUS' | translate}}</option>
+          </select>
+          
+          <div class="text-danger" *ngIf="(locale.touched || locale.dirty) && locale.errors">
+            <div *ngIf="firstName.locale.required">{{'user.add.vld.localeRequired' | translate}}</div>
+          </div>
+        </div>
+
+        <div class="text-danger" *ngIf="showError">{{errorText$ | async}}</div>
       </div> <!-- .card-body -->
 
       <div class="card-footer">
@@ -47,7 +63,7 @@
           </div>
 
           <div class="col-md-6 mb-md-0">
-            <button class="btn btn-block btn-secondary" [disabled]="submitted">{{'common.reset' | translate}}</button>
+            <button class="btn btn-block btn-secondary" [disabled]="submitted" (click)="reset()">{{'common.reset' | translate}}</button>
           </div>
         </div>
       </div>

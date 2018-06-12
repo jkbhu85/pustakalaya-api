@@ -1,11 +1,13 @@
 package com.jk.pustakalaya.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import com.jk.pustakalaya.config.App;
+
 /**
- * This is a temporary class to test some of the functionality of encryption and
- * decryption implemented in this project.
+ * This class is used to encrypt and generate base64 string of a password.
  * 
  * @author Jitendra
  *
@@ -13,8 +15,9 @@ import java.util.Properties;
 public class PasswordUtil {
 	public static void main(String[] args) {
 		try {
+			String configDirPath = App.configDirPath();
 			Properties props = new Properties();
-			props.load(new FileInputStream("/home/jitendra/dev/ptk_config/mail.properties"));
+			props.load(new FileInputStream(configDirPath + File.separator + "mail.properties"));
 			String key = props.getProperty("ptk.mail.encryption.key");
 			String iv = props.getProperty("ptk.mail.encryption.iv");
 			String pwd = "";

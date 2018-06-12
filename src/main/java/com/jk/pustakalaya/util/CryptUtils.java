@@ -33,6 +33,7 @@ public final class CryptUtils {
 	private static final String AES_CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding";
 	private static final String ALGORITHM_AES = "AES";
 
+	// prevent instantiation
 	private CryptUtils() {
 	}
 
@@ -88,6 +89,15 @@ public final class CryptUtils {
 		return encryptedSource;
 	}
 
+	/**
+	 * Returns base64 string of encrypted {@code source}.
+	 * 
+	 * @param source the value to encrypt
+	 * @param initialVector 16 byte string
+	 * @param key 32 byte string
+	 * @return base64 string of encrypted {@code source}
+	 * @throws Exception if a problem occurs during encryption 
+	 */
 	public static String encryptIntoBase64(String source, String initialVector, String key) throws Exception {
 		return Base64.getEncoder().encodeToString(encrypt(source.getBytes(), initialVector, key));
 	}

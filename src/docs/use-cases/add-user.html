@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pustakalaya Use Cases Document</title>
+    <link type="text/css" rel="stylesheet" href="./css/common.css" />
+</head>
+
+<body>
+	<header id="header"></header>
+	
+    <div class="main-content">
+        <div class="use-case" id="add-user">
+            <h2>Add User</h2>
+            <p>Adding a user is a two step process.</p>
+			
+            <ol>
+                <li>Requester adds user with a few details.</li>
+                <li>User completes the registration process by filling a form.</li>
+            </ol>
+
+            <h3>Terminology</h3>
+            <table class="terminology">
+                <tbody>
+                    <tr>
+                        <td>User</td>
+                        <td>User to be added</td>
+                    </tr>
+                    <tr>
+                        <td>Requester</td>
+                        <td>The account using which the user is being added</td>
+                    </tr>
+                </tbody>
+            </table>
+			
+			<hr/>
+			<h2>Step 1: Requester adds user with a few details</h2>
+
+            <h3>Required</h3>
+            <ul>
+                <li>first name</li>
+                <li>last name</li>
+                <li>email</li>
+                <li>locale</li>
+            </ul>
+
+            <h3>Proconditions</h3>
+            <ul>
+                <li>Requester must have priviledge of 'librarian' or above.</li>
+                <li>All fields must be valid.</li>
+            </ul>
+
+            <h3>Success scenario</h3>
+            <ol>
+                <li>User is added to the system.</li>
+                <li>User is sent a mail containing a link to complete registration process.</li>
+            </ol>
+
+            <h3>Failure scenario</h3>
+            <ul>
+                <li><p>Requester is not authenticated.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Requester is not authorized.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li><p>Preconditions do not met.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li><p>Storage system was inaccessible.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li><p>Mail could not be sent to the user.</p>
+                    <ul>
+                        <li>Delete user from the system.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Response</h3>
+            <p>Return a brief response.</p>
+            <dl class="response">
+                <dt>Requester is not authenticated.</dt>
+                <dd>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </dd>
+                <dt>Requester is not authorized.</dt>
+                <dd>
+                    <ul>
+                        <li></li>
+                    </ul>
+                </dd>
+                <dt>User was added successfully.</dt>
+                <dd>
+                    <ul>
+                        <li>0:SUCCESS_NEWUSER_ADD(200)</li>
+                    </ul>
+                </dd>
+
+                <dt>Preconditions do not met.</dt>
+                <dd>
+                    <ul>
+                        <li>11:ERROR_NEWUSER_ADD_INVALID_[FIRST_INVALID_FIELD_NAME](200)</li>
+                    </ul>
+                </dd>
+
+                <dt>Mail could not be sent to the user.</dt>
+                <dd>
+                    <ul>
+                        <li>ERROR_NEWUSER_ADD_EMAIL_NOT_SENT(200)</li>
+                    </ul>
+                </dd>
+
+                <dt>Storage system was inaccessible.</dt>
+                <dd>
+                    <ul>
+                        <li>ERROR_NEWUSER_ADD_DB_INACCESSIBLE(500)</li>
+                    </ul>
+                </dd>
+                <dt>Any other error</dt>
+                <dd>ERROR_NEWUSER_ADD_UNKNOWN(500)</dd>
+            </dl>
+			
+			<hr/>
+			
+			
+			<h2>Step 2: User completes the registration process by filling a form</h2>
+			<hr/>
+        </div>
+		
+    </div>
+	
+	<footer id="footer"></footer>
+	
+	<script src="./js/header.js"></script>
+	<script src="./js/footer.js"></script>
+</body>
+
+</html>

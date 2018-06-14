@@ -1,5 +1,8 @@
 package com.jk.pustakalaya.f.newuser;
 
+
+import com.jk.pustakalaya.app.ValidationFailedException;
+
 /**
  * Service class for entity {@link NewUser}.
  * 
@@ -8,12 +11,14 @@ package com.jk.pustakalaya.f.newuser;
  */
 public interface NewUserService {
 	/**
-	 * Add the {@code newUser} to database.
+	 * Add the specified user to the system.
 	 * 
 	 * @param newUser
 	 *            the specfied user to add
+	 *            
+	 * @throws ValidationException if the specified user data fails validation
 	 */
-	void addNewUser(NewUser newUser);
+	void addNewUser(NewUser newUser) throws ValidationFailedException;
 
 	/**
 	 * Returns the new user identified by {@code id}. Returns {@code null} if no

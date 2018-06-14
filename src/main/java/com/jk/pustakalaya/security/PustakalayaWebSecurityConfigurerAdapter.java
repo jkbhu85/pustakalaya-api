@@ -55,7 +55,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		RequestMatcher reqm = new RequestMatcher() {
+		RequestMatcher optionsRequest = new RequestMatcher() {
 			
 			@Override
 			public boolean matches(HttpServletRequest request) {
@@ -69,8 +69,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 			.ignoring()
 				.antMatchers("/api/login")
 				.antMatchers("/error")
-				.requestMatchers(reqm)
-				.and()
+				.requestMatchers(optionsRequest)
 			;
 	}
 

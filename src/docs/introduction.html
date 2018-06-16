@@ -1,40 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>Pustakalaya: Introduction</title>
-  <link type="text/css" rel="stylesheet" href="css/pustakalaya-global.css"/>
+  <link type="text/css" rel="stylesheet" href="./css/pustakalaya.css" />
 </head>
 
 <body>
-  <header>
-    <h1>Pustakalaya: Introduction</h1>
-  </header>
+  <header id="header"></header>
 
   <nav></nav>
 
-  <div id="main-content">
+  <div class="main-content">
     <noscript>
-      This website does not work without JavaScript. Please enable JavaScript or use a browser
-      that supports JavaScript.
+      This website does not work without JavaScript. Please enable JavaScript or use a browser that supports JavaScript.
     </noscript>
 
+    <h2>Introduction</h2>
 
     <p>
       <strong>Pustakalya</strong> is an online library management system.
     </p>
     <p>
-      This system has four user roles namely <em>admin</em>, <em>librarian</em>, <em>member</em> 
-      and <em>none</em>.
+      This system has four user roles namely
+      <em>admin</em>,
+      <em>librarian</em>,
+      <em>member</em>
+      and
+      <em>none</em>.
     </p>
-        
+
     <p>
       The following are roles and their activities:
     </p>
 
-    
+
     <dl>
-      <dt><strong>none</strong></dt>
+      <dt>
+        <strong>none</strong>
+      </dt>
       <dd>
         <ul>
           <li>no priviledges</li>
@@ -43,7 +48,9 @@
     </dl>
 
     <dl>
-      <dt><strong>member</strong></dt>
+      <dt>
+        <strong>member</strong>
+      </dt>
       <dd>
         <ul>
           <li>add/update profile picture</li>
@@ -55,50 +62,60 @@
     </dl>
 
     <dl>
-      <dt><strong>librarian</strong></dt>
+      <dt>
+        <strong>librarian</strong>
+      </dt>
       <dd>
         <ul>
-          <li>register/remove/revoke <em>member</em></li>
+          <li>register/remove/revoke
+            <em>member</em>
+          </li>
           <li>add/remove book</li>
           <li>issue/collect book</li>
-          <li>A <em>librarian</em> is also a <em>member</em>.</li>
+          <li>A
+            <em>librarian</em> is also a
+            <em>member</em>.</li>
         </ul>
       </dd>
     </dl>
 
     <dl>
-      <dt><strong>admin</strong></dt>
+      <dt>
+        <strong>admin</strong>
+      </dt>
       <dd>
         <ul>
           <li>register/remove/revoke "librarian"</li>
-          <li>An <em>admin</em> is also a <em>librarian</em>.</li>
+          <li>An
+            <em>admin</em> is also a
+            <em>librarian</em>.</li>
         </ul>
       </dd>
     </dl>
 
-    <p>This system has following two objects:</p>
+    <p>This system has two entities:</p>
     <dl>
-      <dt>user</dt>
+      <dt>User</dt>
       <dd>
         <ul>
           <li>Email (also works as username)</li>
           <li>Password</li>
           <li>Name</li>
-          <li>Addresses</li>
+          <li>Address</li>
           <li>Mobile number</li>
           <li>Photo</li>
           <li>Date of birth</li>
           <li>Gender</li>
           <li>Role</li>
+          <li>Locale</li>
         </ul>
       </dd>
     </dl>
 
     <dl>
-      <dt>book</dt>
+      <dt>Book</dt>
       <dd>
         <ul>
-          <li>book</li>
           <li>Title</li>
           <li>Authors</li>
           <li>Publisher</li>
@@ -112,7 +129,9 @@
     </dl>
   </div>
 
-  <script src="js/nav.js"></script>
+  <footer id="footer"></footer>
+
   <script src="js/global.js"></script>
 </body>
+
 </html>

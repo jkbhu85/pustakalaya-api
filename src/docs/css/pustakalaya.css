@@ -1,0 +1,257 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: "Fira Sans", "Segoe UI", Ubuntu, sans-serif;
+  width: 80%;
+  min-width: 1046px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #222219;
+  font-size: 1rem;
+  background-color: #eeeeea;
+  box-shadow: 0 0 0.3rem #666;
+}
+.back-button a {
+  color: #866;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 2rem;
+}
+.back-button a:before {
+  content: '←';
+  padding-right: 0.3rem;
+}
+noscript {
+  background-color: #d30;
+  color: #fff;
+  padding: 1.5rem;
+  display: block;
+  margin: -1.5rem;
+  margin-bottom: 20px;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Serif', 'Cambria', serif;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: .5em;
+  color: #333;
+}
+p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2.1rem;
+}
+h3 {
+  font-size: 1.7rem;
+}
+h4 {
+  font-size: 1.4rem;
+}
+h5 {
+  font-size: 1.2rem;
+}
+h6 {
+  font-size: 1rem;
+}
+code {
+  font-size: 1rem;
+}
+code.url {
+  padding: .15rem;
+}
+code.pattern {
+  color: #006400;
+  background-color: #e0ece0;
+  word-break: unset;
+  word-wrap: unset;
+  overflow-wrap: unset;
+  -webkit-hyphens: unset;
+  -moz-hyphens: unset;
+  -ms-hyphens: unset;
+  hyphens: unset;
+  padding: .15rem;
+}
+.use-case hr {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  height: 0;
+  border: 0;
+  border-top: 0.06rem solid #ccc;
+}
+#header {
+  background: #404;
+  color: #dcd;
+  padding: 1.5rem 2rem;
+}
+.main-content {
+  background-color: #fff;
+  padding: 2rem;
+}
+#footer {
+  background: #f4f4f0;
+  color: #444441;
+  padding: 1rem 0;
+  font-size: 0.85rem;
+}
+#header h1 {
+  margin: 0;
+  padding: 0;
+}
+#header h1 a {
+  color: #f7e0f7;
+  text-decoration: none;
+}
+ul, ol, dl, table {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+li {
+  margin-bottom: .5rem;
+}
+.db-table-wrapper {
+  margin-left: -.7rem;
+  margin-right: -.7rem;
+}
+.db-table {
+  border-collapse: collapse;
+  border: .07rem solid #ccc;
+  border-left: 0;
+  border-right: 0;
+  caption-side: top;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+.db-table>tbody>tr:nth-of-type(even) {
+  background: #f3f3f0;
+}
+.db-table-name {
+  padding: .5rem 1.5rem;
+  font-size: 1.1em;
+  color: #444441;
+}
+.db-table span span {
+  font-weight: bold;
+}
+.db-table th {
+  border-bottom: .07rem solid #ccc;
+  border-left: .07rem solid #ccc;
+  padding: .7rem;
+  color: #474747;
+  text-align: left;
+}
+.db-table th:first-of-type {
+  border-left: 0;
+}
+.field-name {
+  width: 27%;
+}
+.field-desc {
+  width: 30%;
+}
+.db-table td {
+  padding: .5rem .7rem;
+}
+.toc {
+  list-style: square;
+}
+.toc>li {
+  margin-bottom: 0.4rem;
+}
+.toc>li>a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: darkcyan;
+}
+.error-codes {
+  margin-bottom: 2rem;
+}
+.error-codes>dt>code {
+  font-weight: bold;
+}
+.interpretation {
+  border-collapse: collapse;
+}
+.interpretation th {
+  text-align: left;
+}
+.interpretation-wrapper {
+  margin-left: -.5rem;
+  margin-right: -.5rem;
+}
+.interpretation th, .interpretation td {
+  padding: .5rem .5rem;
+}
+.interpretation>thead>tr {
+  border-bottom: .07px solid #ddd;
+  border-top: .07px solid #ddd;
+}
+.interpretation>tbody>tr {
+  border-bottom: .07px solid #eee;
+}
+.terminology {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+}
+.terminology>tbody>tr>td {
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+.terminology>tbody>tr>td:first-of-type {
+  padding-right: 1rem;
+}
+.endpoint-table {
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+}
+.endpoint-table td {
+  padding: 5px;
+}
+.note {
+  border-left: .2rem solid darkgoldenrod;
+  padding: .7rem;
+  border-radius: 0.14rem;
+  background: #fafaea;
+}
+.response dt {
+  font-style: italic;
+}
+.field-table-wrapper {
+  margin-left: -.7rem;
+  margin-right: -.7rem;
+}
+.field-table {
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+.field-table th {
+  border-bottom: .07rem solid #ccc;
+  border-left: .07rem solid #ccc;
+  padding: .7rem;
+  color: #474747;
+  text-align: left;
+}
+.field-table th:first-of-type {
+  border-left: 0;
+}
+.field-table thead tr th {
+  text-align: left;
+}
+.field-table>thead>tr {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+.field-table>tbody>tr {
+  border-bottom: 1px solid #ddd;
+}
+.field-table th, .field-table td {
+  padding: .7rem;
+}

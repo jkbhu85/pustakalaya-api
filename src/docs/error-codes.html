@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pustakalaya | Error Codes</title>
+    <link type="text/css" rel="stylesheet" href="./css/pustakalaya.css" />
+    <style>
+        code {
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header"></header>
+
+    <nav></nav>
+
+    <div class="main-content">
+        <noscript>
+            This website does not work without JavaScript. Please enable JavaScript or use a browser that supports JavaScript.
+        </noscript>
+
+        <h2>Error Codes</h2>
+        <p>These codes can be sent with resposne messages from API endpoint to client. These codes are meant to be sent with
+            HTTP response code
+            <code>200</code>.</p>
+
+        <h3>Successful responses</h3>
+        <dl class="error-codes">
+            <dt>
+                <code>10</code>
+            </dt>
+            <dd>
+                <p>Operation is successful</p>
+            </dd>
+        </dl>
+
+        <h3>Security related responses</h3>
+        <dl class="error-codes">
+            <dt>
+                <code>21</code>
+            </dt>
+            <dd>
+                <p>Invalid credentials (logging in)</p>
+            </dd>
+
+            <dt>
+                <code>22</code>
+            </dt>
+            <dd>
+                <p>Account locked</p>
+            </dd>
+
+            <dt>
+                <code>23</code>
+            </dt>
+            <dd>
+                <p>Access revoked</p>
+            </dd>
+
+            <dt>
+                <code>24</code>
+            </dt>
+            <dd>
+                <p>Password didn't match (other than logging in)</p>
+            </dd>
+
+            <dt>
+                <code>25</code>
+            </dt>
+            <dd>
+                <p>Security answer didn't match</p>
+            </dd>
+        </dl>
+
+        <h3>Validation related</h3>
+        <dl class="error-codes">
+            <dt>
+                <code>31</code>
+            </dt>
+            <dd>
+                <p>Value too large</p>
+                <div class="interpretation-wrapper">
+                    <table class="interpretation">
+                        <thead>
+                            <tr>
+                                <th>Date type</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>number</td>
+                                <td>value of numer</td>
+                            </tr>
+                            <tr>
+                                <td>string</td>
+                                <td>length of string</td>
+                            </tr>
+                            <tr>
+                                <td>date</td>
+                                <td>forward then the system was expecting</td>
+                            </tr>
+                            <tr>
+                                <td>file</td>
+                                <td>Size of the file</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </dd>
+
+            <dt>
+                <code>32</code>
+            </dt>
+            <dd>
+                <p>Value too small or empty (for empty file, use code 37)</p>
+                <div class="interpretation-wrapper">
+                    <table class="interpretation">
+                        <thead>
+                            <tr>
+                                <th>Date type</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>number</td>
+                                <td>value of numer</td>
+                            </tr>
+                            <tr>
+                                <td>string</td>
+                                <td>length of string</td>
+                            </tr>
+                            <tr>
+                                <td>date</td>
+                                <td>backward then the system was expecting</td>
+                            </tr>
+                            <tr>
+                                <td>file</td>
+                                <td>Size of the file</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </dd>
+
+            <dt>
+                <code>33</code>
+            </dt>
+            <dd>
+                <p>Invalid format</p>
+            </dd>
+
+            <dt>
+                <code>34</code>
+            </dt>
+            <dd>
+                <p>Unsupported file extension</p>
+            </dd>
+
+            <dt>
+                <code>35</code>
+            </dt>
+            <dd>
+                <p>Value already exists</p>
+            </dd>
+
+            <dt>
+                <code>36</code>
+            </dt>
+            <dd>
+                <p>Resource has expired</p>
+            </dd>
+
+            <dt>
+                <code>37</code>
+            </dt>
+            <dd>
+                <p>Empty file</p>
+            </dd>
+        </dl>
+
+        <h3>System related</h3>
+        <dl class="error-codes">
+            <dt>
+                <code>41</code>
+            </dt>
+            <dd>
+                <p>System unavailable</p>
+            </dd>
+
+            <dt>
+                <code>42</code>
+            </dt>
+            <dd>
+                <p>Mail could not be sent</p>
+            </dd>
+        </dl>
+
+        <h3>Unsuccessful responses</h3>
+        <dl class="error-codes">
+            <dt>
+                <code>51</code>
+            </dt>
+            <dd>
+                <p>Operation unsuccessful</p>
+            </dd>
+
+            <dt>
+                <code>52</code>
+            </dt>
+            <dd>
+                <p>Unknown error (The system did not anticipate this error.)</p>
+            </dd>
+
+            <dt>
+                <code>53</code>
+            </dt>
+            <dd>
+                <p>Limit exceeded</p>
+            </dd>
+
+            <dt>
+                <code>54</code>
+            </dt>
+            <dd>
+                <p>Resource does not exist</p>
+            </dd>
+        </dl>
+
+    </div>
+
+    <footer id="footer"></footer>
+
+    <script src="js/global.js"></script>
+</body>
+
+</html>

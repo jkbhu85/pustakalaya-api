@@ -8,12 +8,10 @@
  */
  
 DROP DATABASE IF EXISTS ptk;
-
 CREATE DATABASE ptk;
 
-USE ptk;
 
-CREATE TABLE Country (
+CREATE TABLE ptk.Country (
     id      SMALLINT NOT NULL AUTO_INCREMENT,
     name    VARCHAR(50) NOT NULL,
     isdCode VARCHAR(4),
@@ -22,28 +20,28 @@ CREATE TABLE Country (
 );
 
 
-CREATE TABLE UserRole (
+CREATE TABLE ptk.UserRole (
 	id   SMALLINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(24) NOT NULL,
     PRIMARY KEY (id)
 );
 
 
-CREATE TABLE UserAccountStatus (
+CREATE TABLE ptk.UserAccountStatus (
     id   SMALLINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(24) NOT NULL,
     PRIMARY KEY (id)
 );
 
 
-CREATE TABLE BookInstanceStatus (
+CREATE TABLE ptk.BookInstanceStatus (
 	id   SMALLINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(24) NOT NULL,
     PRIMARY KEY (id)
 );
 
 
-CREATE TABLE LibUser (
+CREATE TABLE ptk.LibUser (
     id                BIGINT NOT NULL AUTO_INCREMENT,
     roleFk            SMALLINT NOT NULL,
     accountStatusFk   SMALLINT NOT NULL,
@@ -72,7 +70,27 @@ CREATE TABLE LibUser (
 );
 
 
-CREATE TABLE Address (
+ALTER TABLE ptk.LibUser ADD COLUMN (locale CHAR(5));
+
+
+CREATE TABLE ptk.NewUser (
+	id            VARCHAR(40) NOT NULL,
+	emailUk       VARCHAR(80) NOT NULL,
+	firstName     VARCHAR(30) NOT NULL,
+	lastName      VARCHAR(30),
+	locale        CHAR(5) NOT NULL,
+	createdOn     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	expiresOn     TIMESTAMP NOT NULL,
+	acCreatedByFk BIGINT NOT NULL,
+	roleFk        SMALLINT NOT NULL,
+	PRIMARY KEY (id),
+    UNIQUE (emailUk),
+    FOREIGN KEY (acCreatedByFk) REFERENCES LibUser (id),
+    FOREIGN KEY (roleFk) REFERENCES UserRole (id)
+);
+
+
+CREATE TABLE ptk.Address (
     id        BIGINT NOT NULL AUTO_INCREMENT,
     userFk    BIGINT NOT NULL,
     line1     VARCHAR(50),
@@ -87,7 +105,7 @@ CREATE TABLE Address (
 );
 
 
-CREATE TABLE UserAccountStatusHistory (
+CREATE TABLE ptk.UserAccountStatusHistory (
     id          BIGINT NOT NULL AUTO_INCREMENT,
     userAccountStatusFk SMALLINT NOT NULL,
     userFk      BIGINT NOT NULL,
@@ -99,7 +117,7 @@ CREATE TABLE UserAccountStatusHistory (
 );
 
 
-CREATE TABLE UserRoleHistory (
+CREATE TABLE ptk.UserRoleHistory (
     id             BIGINT NOT NULL AUTO_INCREMENT,
     userFk         BIGINT NOT NULL,
     roleFk         SMALLINT NOT NULL,
@@ -113,7 +131,7 @@ CREATE TABLE UserRoleHistory (
 );
 
 
-CREATE TABLE UserInfo (
+CREATE TABLE ptk.UserInfo (
 	userFk       BIGINT NOT NULL,
 	acCreatedByFk  BIGINT NOT NULL,
 	currentUserRoleHistoryFk      BIGINT NOT NULL,
@@ -125,7 +143,7 @@ CREATE TABLE UserInfo (
 );
 
 
-CREATE TABLE Book (
+CREATE TABLE ptk.Book (
     id          BIGINT NOT NULL AUTO_INCREMENT,
     title       VARCHAR(150) NOT NULL,
     author      VARCHAR(250) NOT NULL,
@@ -141,7 +159,7 @@ CREATE TABLE Book (
 );
 
 
-CREATE TABLE BookInstance (
+CREATE TABLE ptk.BookInstance (
     id              BIGINT NOT NULL AUTO_INCREMENT,
     bookFk          BIGINT NOT NULL,
     statusFk        TINYINT NOT NULL,
@@ -157,7 +175,7 @@ CREATE TABLE BookInstance (
 );
 
 
-CREATE TABLE BookInstanceHistory (
+CREATE TABLE ptk.BookInstanceHistory (
 	id              BIGINT NOT NULL AUTO_INCREMENT,
 	instanceFk      BIGINT NOT NULL,
 	statusFk        TINYINT NOT NULL,
@@ -170,7 +188,7 @@ CREATE TABLE BookInstanceHistory (
 );
 
 
-CREATE TABLE BookAssignmentHistory (
+CREATE TABLE ptk.BookAssignmentHistory (
     id             BIGINT NOT NULL AUTO_INCREMENT,
     bookInstanceFk BIGINT NOT NULL,
     issuedToFk     BIGINT NOT NULL,
@@ -189,33 +207,33 @@ CREATE TABLE BookAssignmentHistory (
 );
 
 
-INSERT INTO Country VALUES(NULL, 'India', '+91', 'IN');
-INSERT INTO Country VALUES(NULL, 'Nepal', '+977', 'NP');
-INSERT INTO Country VALUES(NULL, 'Sri Lanka', '+94', 'SL');
-INSERT INTO Country VALUES(NULL, 'Bhutan', '+975', 'BT');
-INSERT INTO Country VALUES(NULL, 'United States', '+1', 'US');
+INSERT INTO ptk.Country VALUES(NULL, 'India', '+91', 'IN');
+INSERT INTO ptk.Country VALUES(NULL, 'Nepal', '+977', 'NP');
+INSERT INTO ptk.Country VALUES(NULL, 'Sri Lanka', '+94', 'SL');
+INSERT INTO ptk.Country VALUES(NULL, 'Bhutan', '+975', 'BT');
+INSERT INTO ptk.Country VALUES(NULL, 'United States', '+1', 'US');
 
 
 
-INSERT INTO UserRole VALUES(NULL, 'ADMIN');
-INSERT INTO UserRole VALUES(NULL, 'LIBRARIAN');
-INSERT INTO UserRole VALUES(NULL, 'MEMBER');
-INSERT INTO UserRole VALUES(NULL, 'NONE');
+INSERT INTO ptk.UserRole VALUES(NULL, 'ADMIN');
+INSERT INTO ptk.UserRole VALUES(NULL, 'LIBRARIAN');
+INSERT INTO ptk.UserRole VALUES(NULL, 'MEMBER');
+INSERT INTO ptk.UserRole VALUES(NULL, 'NONE');
 
 
-INSERT INTO UserAccountStatus VALUES(NULL, 'ACTIVE');
-INSERT INTO UserAccountStatus VALUES(NULL, 'CLOSED');
-INSERT INTO UserAccountStatus VALUES(NULL, 'REVOKED');
-INSERT INTO UserAccountStatus VALUES(NULL, 'LOCKED');
-INSERT INTO UserAccountStatus VALUES(NULL, 'INCOMPLETE');
+INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'ACTIVE');
+INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'CLOSED');
+INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'REVOKED');
+INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'LOCKED');
+INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'INCOMPLETE');
 
 
-INSERT INTO BookInstanceStatus VALUES(NULL, 'ISSUED');
-INSERT INTO BookInstanceStatus VALUES(NULL, 'AVAILABLE');
-INSERT INTO BookInstanceStatus VALUES(NULL, 'UNAVAILABLE');
-INSERT INTO BookInstanceStatus VALUES(NULL, 'REMOVED');
+INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'ISSUED');
+INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'AVAILABLE');
+INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'UNAVAILABLE');
+INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'REMOVED');
 
-INSERT INTO LibUser VALUES
+INSERT INTO ptk.LibUser VALUES
 (NULL -- id
 ,1 -- role
 ,1 -- account status
@@ -235,9 +253,10 @@ INSERT INTO LibUser VALUES
 , NULL -- image path
 , 8 -- book quota
 , sysdate() -- time of creation
+, 'hi_IN' -- locale of user
 );
 
-INSERT INTO LibUser VALUES
+INSERT INTO ptk.LibUser VALUES
 (NULL -- id
 ,3 -- role
 ,1 -- account status
@@ -257,31 +276,7 @@ INSERT INTO LibUser VALUES
 , NULL -- image path
 , 4 -- book quota
 , sysdate() -- time of creation
+, 'en_US' -- locale of user
 );
 
 commit;
-
--- code added on 24/05/2018
--- add aws instance on 12/06/2018
-
-CREATE TABLE NewUser (
-	id            VARCHAR(40) NOT NULL,
-	email         VARCHAR(80) NOT NULL,
-	firstName     VARCHAR(30) NOT NULL,
-	lastName      VARCHAR(30),
-	locale        CHAR(5) NOT NULL,
-	createdOn     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	expiresOn     TIMESTAMP NOT NULL,
-	acCreatedByFk BIGINT NOT NULL,
-	roleFk        SMALLINT NOT NULL,
-	PRIMARY KEY (id),
-    FOREIGN KEY (acCreatedByFk) REFERENCES LibUser (id),
-    FOREIGN KEY (roleFk) REFERENCES UserRole (id)
-);
-
-
--- code added on 12/06/2018
-ALTER TABLE ptk.LibUser ADD COLUMN (locale VARCHAR(5));
-
-update ptk.LibUser set locale='hi_IN' WHERE id=1;
-update ptk.LibUser set locale='en_US' WHERE id=2;

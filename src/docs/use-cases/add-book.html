@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pustakalaya | Use Case | Add Book</title>
+    <link type="text/css" rel="stylesheet" href="../css/pustakalaya.css" />
+</head>
+
+<body>
+    <header id="header"></header>
+
+    <div class="main-content">
+        <div class="back-button">
+            <a href="./toc-uses-cases.html">Back</a>
+        </div>
+        <div class="use-case" id="add-book">
+            <h2>Add Book</h2>
+            <p>
+                In this system, a book is an interesting entity. There can be many copies
+                of a book. All copies have exact same information. Even though all copies
+                are separate entities. To handle this scenario, details of the book are
+                stored (referred to as <em>book</em> here after) and each copy of the book
+                (referred to as <em>book instance</em>) stored separately shares the details
+                of the book.
+            </p>
+
+            <p>
+                A book has follwoing attributes:
+            </p>
+
+            <ul>
+                <li>Book title</li>
+                <li>Book authors</li>
+                <li>Edition</li>
+                <li>Price</li>
+                <li>Number of pages</li>
+                <li>ISBN</li>
+                <li>Publication</li>
+            </ul>
+
+            <p>
+                Any two books that have any of the above attribute different considered as 
+                distinct books in this system.
+            </p>
+
+            <p>There are following scenarios while a adding a book:</p>
+            <ol>
+                <li>No copies of the book were added before in the system.</li>
+                <li>The book has been added before, we need to add more copies of the book.</li>
+            </ol>
+
+            <hr/>
+
+            <h2>Scenario 1: No copies of the book were added before in the system.</h2>
+
+            <h3>API Endpoint</h3>
+            <table class="endpoint-table">
+                <tbody>
+                    <tr>
+                        <td>URI</td>
+                        <td>
+                            <code class="url">ptk/book</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Http Method</td>
+                        <td>POST</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Required</h3>
+            <div class="field-table-wrapper">
+                <table class="field-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Data&nbsp;type</th>
+                            <th>Description</th>
+                            <th>Validation constraints</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>title</td>
+                            <td>string</td>
+                            <td>Required</td>
+                            <td>Length must be between 1-150.</td>
+                        </tr>
+                        <tr>
+                            <td>authors</td>
+                            <td>string</td>
+                            <td>Optional</td>
+                            <td>Length can be maximum 250 characters.</td>
+                        </tr>
+                        <tr>
+                            <td>edition</td>
+                            <td>number</td>
+                            <td>Optional</td>
+                            <td>Can be a non-negative integer.</td>
+                        </tr>
+                        <tr>
+                            <td>price</td>
+                            <td>number</td>
+                            <td>Required</td>
+                            <td>Must be a non-negative decimal of size 9,2.</td>
+                        </tr>
+                        <tr>
+                            <td>numberOfPages</td>
+                            <td>number</td>
+                            <td>Required</td>
+                            <td>Must be an integer between 1-99999.</td>
+                        </tr>
+                        <tr>
+                            <td>isbn</td>
+                            <td>string</td>
+                            <td>Optional</td>
+                            <td>Length can be maximum 17 characters.</td>
+                        </tr>
+                        <tr>
+                            <td>publication</td>
+                            <td>string</td>
+                            <td>Optional</td>
+                            <td>Length can be maximum 100 characters.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <h3>Procondition</h3>
+            <ul>
+                <li>Requester is authenticated.</li>
+                <li>Requester must have priviledge of 'librarian' or above.</li>
+                <li>All fields must be valid.</li>
+            </ul>
+        </div>
+
+        <div class="back-button">
+            <a href="./toc-uses-cases.html">Back</a>
+        </div>
+    </div>
+
+    <footer id="footer"></footer>
+
+    <script src="../js/global.js"></script>
+</body>
+
+</html>

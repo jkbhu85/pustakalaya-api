@@ -81,6 +81,8 @@ code.pattern {
 .use-case hr {
   margin-top: 2rem;
   margin-bottom: 2rem;
+  margin-left: -.7rem;
+  margin-right: -.7rem;
   height: 0;
   border: 0;
   border-top: 0.06rem solid #ccc;
@@ -231,12 +233,12 @@ li {
   border-collapse: collapse;
   margin-bottom: 2rem;
   width: 100%;
+  border-top: .07rem solid #777;
+  border-bottom: .07rem solid #777;
 }
 .field-table th {
-  border-bottom: .07rem solid #ccc;
-  border-left: .07rem solid #ccc;
-  padding: .7rem;
-  color: #474747;
+  border-bottom: .07rem solid #777;
+  color: #333;
   text-align: left;
 }
 .field-table th:first-of-type {
@@ -245,13 +247,6 @@ li {
 .field-table thead tr th {
   text-align: left;
 }
-.field-table>thead>tr {
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
-.field-table>tbody>tr {
-  border-bottom: 1px solid #ddd;
-}
 .field-table th, .field-table td {
-  padding: .7rem;
+  padding: .5rem .7rem;
 }

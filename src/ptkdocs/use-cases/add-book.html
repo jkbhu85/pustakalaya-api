@@ -33,15 +33,15 @@
                 <li>Book title</li>
                 <li>Book authors</li>
                 <li>Edition</li>
-                <li>Price</li>
-                <li>Number of pages</li>
                 <li>ISBN</li>
                 <li>Publication</li>
+                <li>Price</li>
+                <li>Number of pages</li>
+                <li>No. of volumes (if book is in multiple volumes)</li>
             </ul>
 
             <p>
-                Any two books that have any of the above attribute different considered as 
-                distinct books in this system.
+                Any two books with distinct ISBNs are considered distinct.
             </p>
 
             <p>There are following scenarios while a adding a book:</p>
@@ -83,22 +83,16 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td>bookCategory</td>
+                            <td>number</td>
+                            <td>Required</td>
+                            <td>Valid category defined in the system.</td>
+                        </tr>
+                        <tr>
                             <td>title</td>
                             <td>string</td>
                             <td>Required</td>
                             <td>Length must be between 1-150.</td>
-                        </tr>
-                        <tr>
-                            <td>authors</td>
-                            <td>string</td>
-                            <td>Optional</td>
-                            <td>Length can be maximum 250 characters.</td>
-                        </tr>
-                        <tr>
-                            <td>edition</td>
-                            <td>number</td>
-                            <td>Optional</td>
-                            <td>Can be a non-negative integer.</td>
                         </tr>
                         <tr>
                             <td>price</td>
@@ -113,6 +107,18 @@
                             <td>Must be an integer between 1-99999.</td>
                         </tr>
                         <tr>
+                            <td>authors</td>
+                            <td>string</td>
+                            <td>Optional</td>
+                            <td>Length can be maximum 250 characters.</td>
+                        </tr>
+                        <tr>
+                            <td>edition</td>
+                            <td>number</td>
+                            <td>Optional</td>
+                            <td>Can be a non-negative integer.</td>
+                        </tr>
+                        <tr>
                             <td>isbn</td>
                             <td>string</td>
                             <td>Optional</td>
@@ -123,6 +129,12 @@
                             <td>string</td>
                             <td>Optional</td>
                             <td>Length can be maximum 100 characters.</td>
+                        </tr>
+                        <tr>
+                            <td>noOfVolumes</td>
+                            <td>number</td>
+                            <td>Optional</td>
+                            <td>Must be an integer between 1-999</td>
                         </tr>
                     </tbody>
                 </table>

@@ -12,20 +12,12 @@ function loadHeader() {
 
     if (header) {
         const url = window.location.href;
-        const docPos = url.indexOf('/docs/') + 1;
-        let depth = 0;
+        const searchKey = '/ptkdocs/';
+        const docPos = url.indexOf(searchKey) + 1;
 
-        for (let i = docPos; i < url.length; i++) {
-            if (url[i] === '/') ++depth;
-        }
+        const newUrl = url.substr(0, url.indexOf(searchKey) + searchKey.length) + 'index.html';
 
-        let prefix = '';
-
-        for (i = 2; i <= depth; i++) {
-            prefix += '../';
-        }
-
-        header.innerHTML = '<h1><a href="' + prefix + 'index.html">Pustakalaya</a></h1>';
+        header.innerHTML = '<h1><a href="' + newUrl + '">Pustakalaya</a></h1>';
     }
 }
 

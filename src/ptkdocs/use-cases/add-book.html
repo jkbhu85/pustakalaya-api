@@ -17,12 +17,10 @@
         <div class="use-case" id="add-book">
             <h2>Add Book</h2>
             <p>
-                In this system, a book is an interesting entity. There can be many copies
-                of a book. All copies have exact same information. Even though all copies
-                are separate entities. To handle this scenario, details of the book are
-                stored (referred to as <em>book</em> here after) and each copy of the book
-                (referred to as <em>book instance</em>) stored separately shares the details
-                of the book.
+                In a library system, many copies of a book exist. Even though these copies are separate entities, they share some information.
+                The shared information is referred to as
+                <em>book</em> (in this document) and information associated only with the copy of the book is referred to as
+                <em>book instance</em>.
             </p>
 
             <p>
@@ -34,10 +32,15 @@
                 <li>Book authors</li>
                 <li>Edition</li>
                 <li>ISBN</li>
+                <li>Category (system defined)</li>
+            </ul>
+
+            <p>A book instance has following attributes:</p>
+            <ul>
                 <li>Publication</li>
                 <li>Price</li>
                 <li>Number of pages</li>
-                <li>No. of volumes (if book is in multiple volumes)</li>
+                <li>volume (if book is in multiple volumes)</li>
             </ul>
 
             <p>
@@ -131,7 +134,13 @@
                             <td>Length can be maximum 100 characters.</td>
                         </tr>
                         <tr>
-                            <td>noOfVolumes</td>
+                            <td>volume</td>
+                            <td>number</td>
+                            <td>Optional</td>
+                            <td>Must be an integer between 0-999</td>
+                        </tr>
+                        <tr>
+                            <td>noOfCopies</td>
                             <td>number</td>
                             <td>Optional</td>
                             <td>Must be an integer between 1-999</td>
@@ -141,12 +150,457 @@
             </div>
 
 
-            <h3>Procondition</h3>
+            <h3>Precondition</h3>
+            <ul>
+                <li>Requester is authenticated.</li>
+                <li>Requester must have priviledge of 'librarian' or above.</li>
+                <li>A book with same ISBN number and volume does not exist in the system.</li>
+                <li>All fields must be valid.</li>
+            </ul>
+
+
+            <h3>Success scenario</h3>
+            <ol>
+                <li>
+                    <p>The book is added with following extra data.</p>
+                    <ul>
+                        <li>an abstract id</li>
+                        <li>timestamp of current time</li>
+                        <li>primary key of the requester</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>The book instance is added with following extra data. Number of entries will be equal to the value of
+                        <code>noOfCopies</code>.</p>
+                    <ul>
+                        <li>a separate abstract id for each copy</li>
+                        <li>primary key of the book</li>
+                        <li>primary key of the requester</li>
+                        <li>timestamp of current time</li>
+                        <li>a specified book instance status</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Failure scenario</h3>
+            <ul>
+                <li>
+                    <p>Requester is not authenticated.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Requester is not authorized.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Date is invalid.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Storage system is inaccessible.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Response</h3>
+            <p>
+                Return a brief response. Numbers in parenthesis are
+                <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>
+                to be used to send response. Numbers followed by a ':' are
+                <a href="../error-codes.html">error codes</a>.
+            </p>
+            <dl class="response">
+                <dt>Requester is not authenticated.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHENTICATED (401)</p>
+                </dd>
+
+                <dt>Requester is not authorized.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHORIZED (403)</p>
+                </dd>
+
+                <dt>Book with the specified ISBN and volume already exists.</dt>
+                <dd>
+                    <p>35:ERROR_DUPLICATE_BOOK (200)</p>
+                </dd>
+
+                <dt>Data is invalid.</dt>
+                <dd>
+                    <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                    <p class="note">Send appropriate response code.</p>
+                </dd>
+
+                <dt>Storage system was inaccessible.</dt>
+                <dd>
+                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                </dd>
+
+                <dt>Any other error</dt>
+                <dd>
+                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                </dd>
+
+                <dt>Book was added successfully.</dt>
+                <dd>
+                    <p>10:SUCCESS_BOOK_ADDED (200)</p>
+                </dd>
+            </dl>
+            <hr/>
+
+            <h2>Scenario 2: The book has been added before, we need to add more copies of the book.</h2>
+
+
+            <h3>API Endpoint</h3>
+            <table class="endpoint-table">
+                <tbody>
+                    <tr>
+                        <td>URI</td>
+                        <td>
+                            <code class="url">ptk/book/&lt;book_isbn&gt;</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Http Method</td>
+                        <td>POST</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <h3>Required</h3>
+            <div class="field-table-wrapper">
+                <table class="field-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Data&nbsp;type</th>
+                            <th>Description</th>
+                            <th>Validation constraints</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&lt;book_isbn&gt;</td>
+                            <td>string</td>
+                            <td>Required</td>
+                            <td>Must be a valid ISBN registered in the system.</td>
+                        </tr>
+                        <tr>
+                            <td>price</td>
+                            <td>number</td>
+                            <td>Required</td>
+                            <td>Must be a non-negative decimal of size 9,2.</td>
+                        </tr>
+                        <tr>
+                            <td>numberOfPages</td>
+                            <td>number</td>
+                            <td>Required</td>
+                            <td>Must be an integer between 1-99999.</td>
+                        </tr>
+                        <tr>
+                            <td>publication</td>
+                            <td>string</td>
+                            <td>Optional</td>
+                            <td>Length can be maximum 100 characters.</td>
+                        </tr>
+                        <tr>
+                            <td>volume</td>
+                            <td>number</td>
+                            <td>Optional</td>
+                            <td>Must be an integer between 0-999</td>
+                        </tr>
+                        <tr>
+                            <td>noOfCopies</td>
+                            <td>number</td>
+                            <td>Optional</td>
+                            <td>Must be an integer between 1-999</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <h3>Precondition</h3>
             <ul>
                 <li>Requester is authenticated.</li>
                 <li>Requester must have priviledge of 'librarian' or above.</li>
                 <li>All fields must be valid.</li>
             </ul>
+
+
+            <h3>Success scenario</h3>
+            <ol>
+                <li>
+                    <p>The book instance is added with following extra data. Number of entries will be equal to the value of
+                        <code>noOfCopies</code>.</p>
+                    <ul>
+                        <li>a separate abstract id for each copy</li>
+                        <li>primary key of the book (obtain using ISBN)</li>
+                        <li>primary key of the requester</li>
+                        <li>timestamp of current time</li>
+                        <li>a specified book instance status</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h3>Failure scenario</h3>
+            <ul>
+                <li>
+                    <p>Requester is not authenticated.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Requester is not authorized.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Date is invalid.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Storage system is inaccessible.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Any other error.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Response</h3>
+            <p>
+                Return a brief response. Numbers in parenthesis are HTTP response codes to be used to send response. Numbers followed by
+                a ':' are error codes.
+            </p>
+            <dl class="response">
+                <dt>Requester is not authenticated.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHENTICATED (401)</p>
+                </dd>
+
+                <dt>Requester is not authorized.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHORIZED (403)</p>
+                </dd>
+
+                <dt>ISBN does not exist.</dt>
+                <dd>
+                    <p>54:ERROR_DOES_NOT_EXIST (200)</p>
+                </dd>
+
+                <dt>Data is invalid.</dt>
+                <dd>
+                    <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                    <p class="note">Send appropriate response code.</p>
+                </dd>
+
+                <dt>Storage system was inaccessible.</dt>
+                <dd>
+                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                </dd>
+
+                <dt>Any other error</dt>
+                <dd>
+                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                </dd>
+
+                <dt>Book was added successfully.</dt>
+                <dd>
+                    <p>10:SUCCESS_BOOK_ADDED (200)</p>
+                </dd>
+            </dl>
+            <hr/>
+
+
+            <h2>Get book details using ISBN.</h2>
+
+            <h3>API Endpoint</h3>
+            <table class="endpoint-table">
+                <tbody>
+                    <tr>
+                        <td>URI</td>
+                        <td>
+                            <code class="url">ptk/book</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Http Method</td>
+                        <td>GET</td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+            <h3>Required</h3>
+            <div class="field-table-wrapper">
+                <table class="field-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Data&nbsp;type</th>
+                            <th>Description</th>
+                            <th>Validation constraints</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>bookIsbn</td>
+                            <td>string</td>
+                            <td>Required</td>
+                            <td>Must be a valid ISBN registered in the system.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            <h3>Precondition</h3>
+            <ul>
+                <li>Requester is authenticated.</li>
+                <li>Requester must have priviledge of 'librarian' or above.</li>
+                <li>All fields must be valid.</li>
+            </ul>
+
+
+            <h3>Success scenario</h3>
+            <ol>
+                <li>
+                    <p>Follwoing details of the book are fetched.</p>
+                    <ul>
+                        <li>title</li>
+                        <li>authors</li>
+                        <li>edition</li>
+                        <li>added on</li>
+                        <li>ISBN</li>
+                    </ul>
+                </li>
+            </ol>
+
+
+            <h3>Failure scenario</h3>
+            <ul>
+                <li>
+                    <p>Requester is not authenticated.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Requester is not authorized.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Date is invalid.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Storage system is inaccessible.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Response</h3>
+            <p>
+                Return a brief response. Numbers in parenthesis are HTTP response codes to be used to send response. Numbers followed by
+                a ':' are error codes.
+            </p>
+            <dl class="response">
+                <dt>Requester is not authenticated.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHENTICATED (401)</p>
+                </dd>
+
+                <dt>Requester is not authorized.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHORIZED (403)</p>
+                </dd>
+
+                <dt>ISBN does not exist.</dt>
+                <dd>
+                    <p>54:ERROR_DOES_NOT_EXIST (200)</p>
+                </dd>
+
+                <dt>Data is invalid.</dt>
+                <dd>
+                    <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                    <p class="note">Send appropriate response code.</p>
+                </dd>
+
+                <dt>Storage system was inaccessible.</dt>
+                <dd>
+                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                </dd>
+
+                <dt>Any other error</dt>
+                <dd>
+                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                </dd>
+
+                <dt>Book details were fetched.</dt>
+                <dd>
+                    <p>Return book details as JSON (200).</p>
+                    <div class="json-data-wrapper">
+                        <table class="json-data">
+                            <thead>
+                                <tr>
+                                    <th>JSON field name</th>
+                                    <th>Book detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>title</td>
+                                    <td>title</td>
+                                </tr>
+                                <tr>
+                                    <td>authors</td>
+                                    <td>authors</td>
+                                </tr>
+                                <tr>
+                                    <td>edition</td>
+                                    <td>edition</td>
+                                </tr>
+                                <tr>
+                                    <td>addedOn</td>
+                                    <td>added on</td>
+                                </tr>
+                                <tr>
+                                    <td>isbn</td>
+                                    <td>ISBN</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </dd>
+            </dl>
+            <hr/>
         </div>
 
         <div class="back-button">

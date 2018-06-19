@@ -177,25 +177,28 @@ li {
 .error-codes>dt>code {
   font-weight: bold;
 }
-.interpretation {
+.interpretation,
+.json-data{
   border-collapse: collapse;
+  border-bottom: .14rem solid #444;
+  border-top: .14rem solid #444;
 }
-.interpretation th {
+.interpretation th,
+.json-data th {
   text-align: left;
 }
-.interpretation-wrapper {
+.interpretation-wrapper,
+.json-data-wrapper {
   margin-left: -.5rem;
   margin-right: -.5rem;
 }
-.interpretation th, .interpretation td {
+.interpretation th, .interpretation td,
+.json-data th, .json-data td {
   padding: .5rem .5rem;
 }
-.interpretation>thead>tr {
-  border-bottom: .07px solid #ddd;
-  border-top: .07px solid #ddd;
-}
-.interpretation>tbody>tr {
-  border-bottom: .07px solid #eee;
+.interpretation > thead > tr,
+.json-data > thead > tr {
+  border-bottom: .14rem solid #444;
 }
 .terminology {
   margin-top: 0;
@@ -233,11 +236,11 @@ li {
   border-collapse: collapse;
   margin-bottom: 2rem;
   width: 100%;
-  border-top: .07rem solid #777;
-  border-bottom: .07rem solid #777;
+  border-top: .13rem solid #444;
+  border-bottom: .14rem solid #444;
 }
 .field-table th {
-  border-bottom: .07rem solid #777;
+  border-bottom: .14rem solid #444;
   color: #333;
   text-align: left;
 }

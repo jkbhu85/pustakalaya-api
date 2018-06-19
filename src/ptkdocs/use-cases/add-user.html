@@ -192,7 +192,7 @@
 
                 <dt>User with the specified email is already registered.</dt>
                 <dd>
-                    <p>35:ERROR_DUPLICATE_EMAIL</p>
+                    <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
                 </dd>
 
                 <dt>Data is invalid.</dt>
@@ -480,7 +480,16 @@
 
             <h3>Success scenario</h3>
             <ul>
-                <li>Details of partial registration are fetched from system using registrationId.</li>
+                <li>
+                    <p>Details of partial registration are fetched from system using registration_id.</p>
+                    <ul>
+                        <li>first name</li>
+                        <li>last name</li>
+                        <li>email</li>
+                        <li>locale</li>
+                        <li>account created by</li>
+                    </ul>
+                </li>
             </ul>
 
             <h3>Failure scenario</h3>
@@ -525,13 +534,42 @@
 
                 <dt>User data was fetched.</dt>
                 <dd>
-                    <p>
-                        With HTTP response code 200, send the details in JSON format.
-                        For field names to be sent see Step 1: Requester adds user with a few details.
-                    </p>
+                    <p>Return user details as JSON (200).</p>
+                    <div class="json-data-wrapper">
+                        <table class="json-data">
+                            <thead>
+                                <tr>
+                                    <th>JSON field name</th>
+                                    <th>User detail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>firstName</td>
+                                    <td>first name</td>
+                                </tr>
+                                <tr>
+                                    <td>lastName</td>
+                                    <td>last name</td>
+                                </tr>
+                                <tr>
+                                    <td>email</td>
+                                    <td>email</td>
+                                </tr>
+                                <tr>
+                                    <td>locale</td>
+                                    <td>locale</td>
+                                </tr>
+                                <tr>
+                                    <td>acCreatedBy</td>
+                                    <td>account created by</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </dd>
             </dl>
-            
+            <hr/>
         </div>
 
         <div class="back-button">

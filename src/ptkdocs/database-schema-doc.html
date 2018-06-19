@@ -184,6 +184,44 @@
     </div>
 
 
+
+    <div class="db-table-wrapper">
+      <table class="db-table">
+        <caption class="db-table-name">
+          <span>Database Table:
+            <span>BookCategory</span>
+          </span>
+        </caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>id</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>primary key</td>
+          </tr>
+
+          <tr>
+            <td>category</td>
+            <td>string</td>
+            <td>1</td>
+            <td>24</td>
+            <td>not null</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
     <div class="db-table-wrapper">
       <table class="db-table">
         <caption class="db-table-name">
@@ -767,7 +805,7 @@
           </tr>
 
           <tr>
-            <td>author</td>
+            <td>authors</td>
             <td>string</td>
             <td>-</td>
             <td>250</td>
@@ -783,21 +821,6 @@
           </tr>
 
           <tr>
-            <td>price</td>
-            <td>number</td>
-            <td>-</td>
-            <td>9,2</td>
-            <td>can not be negative</td>
-          </tr>
-          <tr>
-            <td>number_of_pages</td>
-            <td>number</td>
-            <td>-</td>
-            <td>5</td>
-            <td>greater than 0</td>
-          </tr>
-
-          <tr>
             <td>isbn</td>
             <td>string</td>
             <td>-</td>
@@ -806,11 +829,11 @@
           </tr>
 
           <tr>
-            <td>publication</td>
-            <td>string</td>
-            <td>-</td>
-            <td>100</td>
-            <td>-</td>
+              <td>category</td>
+              <td>number</td>
+              <td>-</td>
+              <td>-</td>
+              <td>not null, foreign key (BookCategory)</td>
           </tr>
 
           <tr>
@@ -868,12 +891,45 @@
           </tr>
 
           <tr>
+            <td>price</td>
+            <td>number</td>
+            <td>-</td>
+            <td>9,2</td>
+            <td>can not be negative</td>
+          </tr>
+
+          <tr>
+            <td>number_of_pages</td>
+            <td>number</td>
+            <td>-</td>
+            <td>5</td>
+            <td>greater than 0</td>
+          </tr>
+
+          <tr>
+            <td>publication</td>
+            <td>string</td>
+            <td>-</td>
+            <td>100</td>
+            <td>-</td>
+          </tr>
+
+          <tr>
+            <td>volume</td>
+            <td>number</td>
+            <td>-</td>
+            <td>3</td>
+            <td>non-negative integer, default '0'</td>
+          </tr>
+
+          <tr>
             <td>status_fk</td>
             <td>number</td>
             <td>-</td>
             <td>-</td>
             <td>not null, foreign key (BookInstanceStatus)</td>
           </tr>
+
           <tr>
             <td>added_by_fk</td>
             <td>number</td>
@@ -881,6 +937,7 @@
             <td>-</td>
             <td>not null, foreign key (LibUser)</td>
           </tr>
+
           <tr>
             <td>removed_by_fk</td>
             <td>number</td>
@@ -888,6 +945,7 @@
             <td>-</td>
             <td>foreign key (LibUser)</td>
           </tr>
+
           <tr>
             <td>reason_of_removal</td>
             <td>string</td>
@@ -895,6 +953,7 @@
             <td>200</td>
             <td>-</td>
           </tr>
+
           <tr>
             <td>added_on</td>
             <td>timestamp</td>
@@ -902,6 +961,7 @@
             <td>-</td>
             <td>not null</td>
           </tr>
+
           <tr>
             <td>removed_on</td>
             <td>timestamp</td>
@@ -1004,18 +1064,6 @@
         </tbody>
       </table>
     </div>
-
-    <!--
-
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td>-</td>
-          </tr>
-
-    -->
 
   </div>
   <!-- #main-cotent -->

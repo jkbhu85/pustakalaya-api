@@ -20,9 +20,9 @@
     <h2>Database Schema</h2>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>Country</span>
           </span>
@@ -73,9 +73,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>UserRole</span>
           </span>
@@ -110,9 +110,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>UserAccountStatus</span>
           </span>
@@ -147,9 +147,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>BookInstanceStatus</span>
           </span>
@@ -185,9 +185,9 @@
 
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>BookCategory</span>
           </span>
@@ -222,9 +222,54 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
+          <span>Database Table:
+            <span>Currency</span>
+          </span>
+        </caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>id</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>primary key</td>
+          </tr>
+          <tr>
+            <td>currency_code</td>
+            <td>string</td>
+            <td>3</td>
+            <td>3</td>
+            <td>unique, not null</td>
+          </tr>
+          <tr>
+            <td>description</td>
+            <td>string</td>
+            <td>-</td>
+            <td>50</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>LibUser</span>
           </span>
@@ -243,7 +288,7 @@
             <td>id</td>
             <td>number</td>
             <td>-</td>
-            <td>7</td>
+            <td>-</td>
             <td>primary key</td>
           </tr>
 
@@ -300,7 +345,7 @@
             <td>number</td>
             <td>-</td>
             <td>-</td>
-            <td>default is '0', number of times login failed due to incorrect password</td>
+            <td>default is '0'</td>
           </tr>
 
           <tr>
@@ -403,9 +448,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>NewUser</span>
           </span>
@@ -496,9 +541,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>Address</span>
           </span>
@@ -589,9 +634,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>UserAccountStatusHistory</span>
           </span>
@@ -650,9 +695,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>UserRoleHistory</span>
           </span>
@@ -719,9 +764,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>UserInfo</span>
           </span>
@@ -771,9 +816,9 @@
       </table>
     </div>
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>Book</span>
           </span>
@@ -857,9 +902,9 @@
 
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>BookInstance</span>
           </span>
@@ -896,6 +941,14 @@
             <td>-</td>
             <td>9,2</td>
             <td>can not be negative</td>
+          </tr>
+
+          <tr>
+            <td>currency_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>not null, foreign key (Currency)</td>
           </tr>
 
           <tr>
@@ -974,9 +1027,9 @@
     </div>
 
 
-    <div class="db-table-wrapper">
-      <table class="db-table">
-        <caption class="db-table-name">
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
           <span>Database Table:
             <span>BookAssignmentHistory</span>
           </span>

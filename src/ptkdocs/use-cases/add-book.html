@@ -39,6 +39,7 @@
             <ul>
                 <li>Publication</li>
                 <li>Price</li>
+                <li>Currency</li>
                 <li>Number of pages</li>
                 <li>volume (if book is in multiple volumes)</li>
             </ul>
@@ -102,6 +103,12 @@
                             <td>number</td>
                             <td>Required</td>
                             <td>Must be a non-negative decimal of size 9,2.</td>
+                        </tr>
+                        <tr>
+                            <td>currency</td>
+                            <td>number</td>
+                            <td>Required</td>
+                            <td>Valid currency defined in the system.</td>
                         </tr>
                         <tr>
                             <td>numberOfPages</td>
@@ -208,6 +215,12 @@
                         <li>Do nothing.</li>
                     </ul>
                 </li>
+                <li>
+                    <p>Any other error.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
             </ul>
 
             <h3>Response</h3>
@@ -246,7 +259,7 @@
 
                 <dt>Any other error</dt>
                 <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                    <p>41:ERROR_UNKNOWN (200)</p>
                 </dd>
 
                 <dt>Book was added successfully.</dt>
@@ -299,6 +312,12 @@
                             <td>number</td>
                             <td>Required</td>
                             <td>Must be a non-negative decimal of size 9,2.</td>
+                        </tr>
+                        <tr>
+                            <td>currency</td>
+                            <td>number</td>
+                            <td>Required</td>
+                            <td>Valid currency defined in the system.</td>
                         </tr>
                         <tr>
                             <td>numberOfPages</td>
@@ -420,7 +439,7 @@
 
                 <dt>Any other error</dt>
                 <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                    <p>41:ERROR_UNKNOWN (200)</p>
                 </dd>
 
                 <dt>Book was added successfully.</dt>
@@ -524,6 +543,12 @@
                         <li>Do nothing.</li>
                     </ul>
                 </li>
+                <li>
+                    <p>Any other error.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
             </ul>
 
             <h3>Response</h3>
@@ -560,7 +585,7 @@
 
                 <dt>Any other error</dt>
                 <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                    <p>41:ERROR_UNKNOWN (200)</p>
                 </dd>
 
                 <dt>Book details were fetched.</dt>

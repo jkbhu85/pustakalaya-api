@@ -170,6 +170,12 @@
                         <li>Delete user from the system.</li>
                     </ul>
                 </li>
+                <li>
+                    <p>Any other error.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
             </ul>
 
             <h3>Response</h3>
@@ -213,7 +219,7 @@
 
                 <dt>Any other error</dt>
                 <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                    <p>41:ERROR_UNKNOWN (200)</p>
                 </dd>
 
                 <dt>User was added successfully.</dt>
@@ -391,6 +397,18 @@
             <h3>Failure scenario</h3>
             <ul>
                 <li>
+                    <p>Requester is not authenticated.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
+                    <p>Requester is not authorized.</p>
+                    <ul>
+                        <li>Do nothing.</li>
+                    </ul>
+                </li>
+                <li>
                     <p>Data is invalid.</p>
                     <ul>
                         <li>Do nothing.</li>
@@ -415,6 +433,20 @@
                 a ':' are error codes.
             </p>
             <dl class="response">
+                <dt>Requester is not authenticated.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHENTICATED (401)</p>
+                </dd>
+
+                <dt>Requester is not authorized.</dt>
+                <dd>
+                    <p>ERROR_NOT_AUTHORIZED (403)</p>
+                </dd>
+
+                <dt>User with the specified email is already registered.</dt>
+                <dd>
+                    <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
+                </dd>
                 <dt>Data is invalid.</dt>
                 <dd>
                     <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
@@ -428,7 +460,7 @@
 
                 <dt>Any other error</dt>
                 <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                    <p>41:ERROR_UNKNOWN (200)</p>
                 </dd>
 
                 <dt>User was added successfully.</dt>
@@ -529,7 +561,7 @@
 
                 <dt>Any other error</dt>
                 <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                    <p>41:ERROR_UNKNOWN (200)</p>
                 </dd>
 
                 <dt>User data was fetched.</dt>

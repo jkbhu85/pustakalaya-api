@@ -14,10 +14,14 @@ function loadHeader() {
         const url = window.location.href;
         const searchKey = '/ptkdocs/';
         const docPos = url.indexOf(searchKey) + 1;
+        const urlPrefix = url.substr(0, url.indexOf(searchKey) + searchKey.length);
 
-        const newUrl = url.substr(0, url.indexOf(searchKey) + searchKey.length) + 'index.html';
+        const newUrl =  urlPrefix + 'index.html';
+        const imgUrl = urlPrefix + 'img/saraswati.png';
+        // image url: https://pngimg.com/download/41911
+        //document.body.style.backgroundImage = 'url("' + imgUrl + '")';
 
-        header.innerHTML = '<h1><a href="' + newUrl + '">Pustakalaya</a></h1>';
+        header.innerHTML = '<div><a href="' + newUrl + '"><img src="' + imgUrl + '"/>Pustakalaya</a></div>';
     }
 }
 

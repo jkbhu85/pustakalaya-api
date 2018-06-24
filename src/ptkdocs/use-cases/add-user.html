@@ -14,595 +14,573 @@
         <div class="back-button">
             <a href="./toc-uses-cases.html">Back</a>
         </div>
-        <div class="use-case" id="add-user">
-            <h2>Add User</h2>
-            <p>Adding a user is a two step process.</p>
 
-            <ol>
-                <li>Requester adds user with a few details (partial registration).</li>
-                <li>User completes the registration process by filling a form.</li>
-            </ol>
 
-            <p>To complete the step 2, one more component is required to get the details of partial registration.</p>
+        <h1>Add User</h1>
+        <p>Adding a user is a two step process.</p>
 
-            <h3>Terminology</h3>
-            <table class="terminology">
+        <ol>
+            <li>Requester adds user with a few details (partial registration).</li>
+            <li>User completes the registration process by filling a form.</li>
+        </ol>
+
+        <p>To complete the step 2, one more component is required to get the details of partial registration.</p>
+
+        <h3>Terminology</h3>
+        <table class="ptk-table-simple">
+            <tbody>
+                <tr>
+                    <td>User</td>
+                    <td>User to be added</td>
+                </tr>
+                <tr>
+                    <td>Requester</td>
+                    <td>The account using which the user is being added</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr/>
+        <h2>Step 1: Requester adds user with a few details</h2>
+        <p>This step is referred to as partial registration.</p>
+
+        <h3>API Endpoint</h3>
+        <table class="ptk-table-simple">
+            <tbody>
+                <tr>
+                    <td>URI</td>
+                    <td>
+                        <code class="url">ptk/newUser</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Http Method</td>
+                    <td>POST</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Required</h3>
+        <div class="ptk-table-wrapper">
+            <table class="ptk-table full-width">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Data&nbsp;type</th>
+                        <th>Description</th>
+                        <th>Validation constraints</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
-                        <td>User</td>
-                        <td>User to be added</td>
+                        <td>firstName</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Length must be between 1-30</td>
                     </tr>
                     <tr>
-                        <td>Requester</td>
-                        <td>The account using which the user is being added</td>
+                        <td>lastName</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Length must be between 1-30</td>
                     </tr>
-                </tbody>
-            </table>
-
-            <hr/>
-            <h2>Step 1: Requester adds user with a few details</h2>
-            <p>This step is referred to as partial registration.</p>
-
-            <h3>API Endpoint</h3>
-            <table class="endpoint-table">
-                <tbody>
                     <tr>
-                        <td>URI</td>
-                        <td>
-                            <code class="url">ptk/newUser</code>
+                        <td>email</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Must pass the regular expression:
+                            <code class="pattern">^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$</code>
                         </td>
                     </tr>
                     <tr>
-                        <td>Http Method</td>
-                        <td>POST</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Required</h3>
-            <div class="ptk-table-wrapper">
-                <table class="ptk-table full-width">
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Data&nbsp;type</th>
-                            <th>Description</th>
-                            <th>Validation constraints</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>firstName</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Length must be between 1-30</td>
-                        </tr>
-                        <tr>
-                            <td>lastName</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Length must be between 1-30</td>
-                        </tr>
-                        <tr>
-                            <td>email</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Must pass the regular expression:
-                                <code class="pattern">^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>locale</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Valid value of format
-                                <code class="nc">language_country</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>acCreatedBy</td>
-                            <td>number</td>
-                            <td>Required</td>
-                            <td>A valid user of the system who is also referred to as requester.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>Precondition</h3>
-            <ul>
-                <li>Requester is authenticated.</li>
-                <li>Requester must have priviledge of 'librarian' or above.</li>
-                <li>All fields must be valid.</li>
-                <li>A user with the specified email does not exist in the system.</li>
-                <li>If the user was partially registered priviously with the same email, old user data must be deleted.</li>
-            </ul>
-
-            <h3>Success scenario</h3>
-            <ol>
-                <li>
-                    <p>User is added to the system with following extra data.</p>
-                    <ul>
-                        <li>a registration id</li>
-                        <li>a timestamp of current time</li>
-                        <li>a specified role</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>User is sent a mail containing a link to complete registration process. The language of the mail should
-                        be as specified in locale.</p>
-                    <p>The link to complete registration should be in the following format:</p>
-                    <div>
-                        <pre>https://&lt;app-domain&gt;/user/register/&lt;registration_id&gt;</pre>
-                    </div>
-                </li>
-            </ol>
-
-            <h3>Failure scenario</h3>
-            <ul>
-                <li>
-                    <p>Requester is not authenticated.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Requester is not authorized.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Data is invalid.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Storage system was inaccessible.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Mail could not be sent to the user.</p>
-                    <ul>
-                        <li>Delete user from the system.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Any other error.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3>Response</h3>
-            <p>
-                Return a brief response. Numbers in parenthesis are
-                <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>
-                to be used to send response. Numbers followed by a ':' are
-                <a href="../error-codes.html">error codes</a>.
-            </p>
-            <dl class="response">
-                <dt>Requester is not authenticated.</dt>
-                <dd>
-                    <p>ERROR_NOT_AUTHENTICATED (401)</p>
-                </dd>
-
-                <dt>Requester is not authorized.</dt>
-                <dd>
-                    <p>ERROR_NOT_AUTHORIZED (403)</p>
-                </dd>
-
-                <dt>User with the specified email is already registered.</dt>
-                <dd>
-                    <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
-                </dd>
-
-                <dt>Data is invalid.</dt>
-                <dd>
-                    <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
-                    <p class="note">Send appropriate response code.</p>
-                </dd>
-
-                <dt>Mail could not be sent to the user.</dt>
-                <dd>
-                    <p>42:ERROR_EMAIL_NOT_SENT (200)</p>
-                </dd>
-
-                <dt>Storage system was inaccessible.</dt>
-                <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
-                </dd>
-
-                <dt>Any other error</dt>
-                <dd>
-                    <p>41:ERROR_UNKNOWN (200)</p>
-                </dd>
-
-                <dt>User was added successfully.</dt>
-                <dd>
-                    <p>10:SUCCESS_NEWUSER_ADDED (200)</p>
-                </dd>
-            </dl>
-
-            <h3>Postcondition</h3>
-            <p>
-                The link sent in email to complete registration process has a specified expiration time. If the user does not registers himself/herself
-                within that duration. His/her details must be removed from the system.
-            </p>
-
-            <hr/>
-
-
-            <h2>Step 2: User completes the registration process by filling a form</h2>
-            <h3>API Endpoint</h3>
-            <table class="endpoint-table">
-                <tbody>
-                    <tr>
-                        <td>URI</td>
-                        <td>
-                            <code class="url">ptk/newUser/&lt;registration_id&gt;</code>
+                        <td>locale</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Valid value of format
+                            <code class="nc">language_country</code>
                         </td>
                     </tr>
                     <tr>
-                        <td>Http Method</td>
-                        <td>POST</td>
+                        <td>acCreatedBy</td>
+                        <td>number</td>
+                        <td>Required</td>
+                        <td>A valid user of the system who is also referred to as requester.</td>
                     </tr>
                 </tbody>
             </table>
-
-            <h3>Required</h3>
-            <div class="ptk-table-wrapper">
-                <table class="ptk-table full-width">
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Data&nbsp;type</th>
-                            <th>Description</th>
-                            <th>Validation constraints</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>registrationId</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Id has not expired</td>
-                        </tr>
-                        <tr>
-                            <td>firstName</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Length must be between 1-30</td>
-                        </tr>
-                        <tr>
-                            <td>lastName</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Length must be between 1-30</td>
-                        </tr>
-                        <tr>
-                            <td>gender</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>M or F or O</td>
-                        </tr>
-                        <tr>
-                            <td>dateOfBirth</td>
-                            <td>date</td>
-                            <td>Required</td>
-                            <td>In the format DD/MM/YYYY (day/month/year). Date should be in the range [today minus 100] years
-                                to [today minus 3] years.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>mobile</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>
-                                Must pass the regular expression
-                                <code class="pattern">[1-9][0-9]{9}</code>.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>isdCode</td>
-                            <td>number</td>
-                            <td>Required</td>
-                            <td>A valid country id</td>
-                        </tr>
-                        <tr>
-                            <td>locale</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Valid value of format
-                                <code>language_country</code>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>password</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Length must be between 6-12.</td>
-                        </tr>
-                        <tr>
-                            <td>confirmPassword</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Must be exactly same as password.</td>
-                        </tr>
-                        <tr>
-                            <td>securityQuestion</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Length must be between 6-100.</td>
-                        </tr>
-                        <tr>
-                            <td>securityAnswer</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Length must be between 4-50.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>Precondition</h3>
-            <ul>
-                <li>All fields must be valid.</li>
-            </ul>
-
-            <h3>Success scenario</h3>
-            <ul>
-                <li>
-                    <p>User details are added to the system with following extra data:</p>
-                    <ul>
-                        <li>an abstract id for this user</li>
-                        <li>hash generated from the password instead of the actual password</li>
-                        <li>a randomly generated salt</li>
-                        <li>a specified password version</li>
-                        <li>value of timestamp field that was saved at the time of partial registration</li>
-                        <li>value of acCreatedBy field saved at the time of partial registration</li>
-                        <li>a specified value for account status which marks the account as active</li>
-                        <li>to track user role history an entry with following is saved:
-                            <br/>
-                            <br/>
-                            <ul>
-                                <li>an abstract id for this entry</li>
-                                <li>primary key of the user</li>
-                                <li>primary key of the current role assigned to user</li>
-                                <li>primary key of the user represented by acCreatedBy field</li>
-                                <li>value of timestamp field that was saved at the time of partial registration</li>
-                                <li>summary saying 'Registration complete'</li>
-                            </ul>
-                        </li>
-                        <li>to track user account status history an entry with following is saved:
-                            <br/>
-                            <br/>
-                            <ul>
-                                <li>an abstract id for this entry</li>
-                                <li>primary key of the user</li>
-                                <li>primary key of the current account status assigned to user</li>
-                                <li>value of timestamp field that was saved at the time of partial registration</li>
-                                <li>summary saying 'Registration complete'</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li>A congratulatory mail is sent to the user's email address.</li>
-            </ul>
-
-            <h3>Failure scenario</h3>
-            <ul>
-                <li>
-                    <p>Requester is not authenticated.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Requester is not authorized.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Data is invalid.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Storage system was inaccessible.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Any other error.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-            </ul>
-            <h3>Response</h3>
-            <p>
-                Return a brief response. Numbers in parenthesis are HTTP response codes to be used to send response. Numbers followed by
-                a ':' are error codes.
-            </p>
-            <dl class="response">
-                <dt>Requester is not authenticated.</dt>
-                <dd>
-                    <p>ERROR_NOT_AUTHENTICATED (401)</p>
-                </dd>
-
-                <dt>Requester is not authorized.</dt>
-                <dd>
-                    <p>ERROR_NOT_AUTHORIZED (403)</p>
-                </dd>
-
-                <dt>User with the specified email is already registered.</dt>
-                <dd>
-                    <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
-                </dd>
-                <dt>Data is invalid.</dt>
-                <dd>
-                    <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
-                    <p class="note">Send appropriate response code.</p>
-                </dd>
-
-                <dt>Storage system was inaccessible.</dt>
-                <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
-                </dd>
-
-                <dt>Any other error</dt>
-                <dd>
-                    <p>41:ERROR_UNKNOWN (200)</p>
-                </dd>
-
-                <dt>User was added successfully.</dt>
-                <dd>
-                    <p>10:SUCCESS_USER_ADDED (200)</p>
-                </dd>
-            </dl>
-
-            <hr/>
-
-            <h2>Get details of partial registration</h2>
-            <h3>API Endpoint</h3>
-            <table class="endpoint-table">
-                <tbody>
-                    <tr>
-                        <td>URI</td>
-                        <td>
-                            <code class="url">ptk/newUser/&lt;registration_id&gt;</code>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Http Method</td>
-                        <td>GET</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>Required</h3>
-            <div class="ptk-table-wrapper">
-                <table class="ptk-table">
-                    <thead>
-                        <tr>
-                            <th>Field</th>
-                            <th>Data&nbsp;type</th>
-                            <th>Description</th>
-                            <th>Validation constraints</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>registrationId</td>
-                            <td>string</td>
-                            <td>Required</td>
-                            <td>Id exist and has not expired</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>Success scenario</h3>
-            <ul>
-                <li>
-                    <p>Details of partial registration are fetched from system using registration_id.</p>
-                    <ul>
-                        <li>first name</li>
-                        <li>last name</li>
-                        <li>email</li>
-                        <li>locale</li>
-                        <li>account created by</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3>Failure scenario</h3>
-            <ul>
-                <li>
-                    <p>Data is invalid.</p>
-                    <ul>
-                        <li>No action.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Storage system was inaccessible.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-                <li>
-                    <p>Any other error.</p>
-                    <ul>
-                        <li>Do nothing.</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3>Response</h3>
-            <dl class="response">
-                <dt>Data is invalid.</dt>
-                <dd>
-                    <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
-                    <p class="note">Send appropriate response code.</p>
-                </dd>
-
-                <dt>Storage system was inaccessible.</dt>
-                <dd>
-                    <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
-                </dd>
-
-                <dt>Any other error</dt>
-                <dd>
-                    <p>41:ERROR_UNKNOWN (200)</p>
-                </dd>
-
-                <dt>User data was fetched.</dt>
-                <dd>
-                    <p>Return user details as JSON (200).</p>
-                    <div class="ptk-table-wrapper">
-                        <table class="ptk-table">
-                            <thead>
-                                <tr>
-                                    <th>JSON field name</th>
-                                    <th>User detail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>firstName</td>
-                                    <td>first name</td>
-                                </tr>
-                                <tr>
-                                    <td>lastName</td>
-                                    <td>last name</td>
-                                </tr>
-                                <tr>
-                                    <td>email</td>
-                                    <td>email</td>
-                                </tr>
-                                <tr>
-                                    <td>locale</td>
-                                    <td>locale</td>
-                                </tr>
-                                <tr>
-                                    <td>acCreatedBy</td>
-                                    <td>account created by</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </dd>
-            </dl>
-            <hr/>
         </div>
+
+        <h3>Precondition</h3>
+        <ul>
+            <li>Requester is authenticated.</li>
+            <li>Requester must have priviledge of 'librarian' or above.</li>
+            <li>All fields must be valid.</li>
+            <li>A user with the specified email does not exist in the system.</li>
+            <li>If the user was partially registered priviously with the same email, old user data must be deleted.</li>
+        </ul>
+
+        <h3>Success scenario</h3>
+        <ol>
+            <li>
+                <p>User is added to the system with following extra data.</p>
+                <ul>
+                    <li>a registration id</li>
+                    <li>a timestamp of current time</li>
+                    <li>a specified role</li>
+                </ul>
+            </li>
+            <li>
+                <p>User is sent a mail containing a link to complete registration process. The language of the mail should be
+                    as specified in locale.</p>
+                <p>The link to complete registration should be in the following format:</p>
+                <div>
+                    <code class="url">https://&lt;app-domain&gt;/user/register/&lt;registration_id&gt;</code>
+                </div>
+            </li>
+        </ol>
+
+        <h3>Failure scenario</h3>
+        <ul>
+            <li>
+                <p>Requester is not authenticated.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Requester is not authorized.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Data is invalid.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Storage system was inaccessible.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Mail could not be sent to the user.</p>
+                <ul>
+                    <li>Delete user from the system.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Any other error.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Response</h3>
+        <p>
+            Return a brief response. Numbers in parenthesis are
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>
+            to be used to send response. Numbers followed by a ':' are
+            <a href="../error-codes.html">error codes</a>.
+        </p>
+        <dl class="response">
+            <dt>Requester is not authenticated.</dt>
+            <dd>
+                <p>ERROR_NOT_AUTHENTICATED (401)</p>
+            </dd>
+
+            <dt>Requester is not authorized.</dt>
+            <dd>
+                <p>ERROR_NOT_AUTHORIZED (403)</p>
+            </dd>
+
+            <dt>User with the specified email is already registered.</dt>
+            <dd>
+                <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
+            </dd>
+
+            <dt>Data is invalid.</dt>
+            <dd>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p class="note">Send appropriate response code.</p>
+            </dd>
+
+            <dt>Mail could not be sent to the user.</dt>
+            <dd>
+                <p>42:ERROR_EMAIL_NOT_SENT (200)</p>
+            </dd>
+
+            <dt>Storage system was inaccessible.</dt>
+            <dd>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+            </dd>
+
+            <dt>Any other error</dt>
+            <dd>
+                <p>41:ERROR_UNKNOWN (200)</p>
+            </dd>
+
+            <dt>User was added successfully.</dt>
+            <dd>
+                <p>10:SUCCESS_NEWUSER_ADDED (200)</p>
+            </dd>
+        </dl>
+
+        <h3>Postcondition</h3>
+        <p>
+            The link sent in email to complete registration process has a specified expiration time. If the user does not registers himself/herself
+            within that duration. His/her details must be removed from the system.
+        </p>
+
+        <hr/>
+
+
+        <h2>Step 2: User completes the registration process by filling a form</h2>
+        <h3>API Endpoint</h3>
+        <table class="ptk-table-simple">
+            <tbody>
+                <tr>
+                    <td>URI</td>
+                    <td>
+                        <code class="url">ptk/newUser/&lt;registration_id&gt;</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Http Method</td>
+                    <td>POST</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Required</h3>
+        <div class="ptk-table-wrapper">
+            <table class="ptk-table full-width">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Data&nbsp;type</th>
+                        <th>Description</th>
+                        <th>Validation constraints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>registrationId</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Id has not expired</td>
+                    </tr>
+                    <tr>
+                        <td>firstName</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Length must be between 1-30</td>
+                    </tr>
+                    <tr>
+                        <td>lastName</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Length must be between 1-30</td>
+                    </tr>
+                    <tr>
+                        <td>gender</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>M or F or O</td>
+                    </tr>
+                    <tr>
+                        <td>dateOfBirth</td>
+                        <td>date</td>
+                        <td>Required</td>
+                        <td>In the format DD/MM/YYYY (day/month/year). Date should be in the range [today minus 100] years to
+                            [today minus 3] years.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>mobile</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>
+                            Must pass the regular expression
+                            <code class="pattern">[1-9][0-9]{9}</code>.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>isdCode</td>
+                        <td>number</td>
+                        <td>Required</td>
+                        <td>A valid country id</td>
+                    </tr>
+                    <tr>
+                        <td>locale</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Valid value of format
+                            <code>language_country</code>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>password</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Length must be between 6-12.</td>
+                    </tr>
+                    <tr>
+                        <td>confirmPassword</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Must be exactly same as password.</td>
+                    </tr>
+                    <tr>
+                        <td>securityQuestion</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Length must be between 6-100.</td>
+                    </tr>
+                    <tr>
+                        <td>securityAnswer</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Length must be between 4-50.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Precondition</h3>
+        <ul>
+            <li>All fields must be valid.</li>
+        </ul>
+
+        <h3>Success scenario</h3>
+        <ul>
+            <li>
+                <p>User details are added to the system with following extra data:</p>
+                <ul>
+                    <li>an abstract id for this user</li>
+                    <li>hash generated from the password instead of the actual password</li>
+                    <li>a randomly generated salt</li>
+                    <li>a specified password version</li>
+                    <li>value of timestamp field that was saved at the time of partial registration</li>
+                    <li>value of acCreatedBy field saved at the time of partial registration</li>
+                    <li>a specified value for account status which marks the account as active</li>
+                    <li>to track user role history an entry with following is saved:
+                        <br/>
+                        <br/>
+                        <ul>
+                            <li>an abstract id for this entry</li>
+                            <li>primary key of the user</li>
+                            <li>primary key of the current role assigned to user</li>
+                            <li>primary key of the user represented by acCreatedBy field</li>
+                            <li>value of timestamp field that was saved at the time of partial registration</li>
+                            <li>summary saying 'Registration complete'</li>
+                        </ul>
+                    </li>
+                    <li>to track user account status history an entry with following is saved:
+                        <br/>
+                        <br/>
+                        <ul>
+                            <li>an abstract id for this entry</li>
+                            <li>primary key of the user</li>
+                            <li>primary key of the current account status assigned to user</li>
+                            <li>value of timestamp field that was saved at the time of partial registration</li>
+                            <li>summary saying 'Registration complete'</li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>A congratulatory mail is sent to the user's email address.</li>
+        </ul>
+
+        <h3>Failure scenario</h3>
+        <ul>
+            <li>
+                <p>Data is invalid.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Storage system was inaccessible.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Any other error.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+        </ul>
+        <h3>Response</h3>
+        <p>
+            Return a brief response. Numbers in parenthesis are HTTP response codes to be used to send response. Numbers followed by
+            a ':' are error codes.
+        </p>
+        <dl class="response">
+            <dt>User with the specified email is already registered.</dt>
+            <dd>
+                <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
+            </dd>
+            <dt>Data is invalid.</dt>
+            <dd>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p class="note">Send appropriate response code.</p>
+            </dd>
+
+            <dt>Storage system was inaccessible.</dt>
+            <dd>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+            </dd>
+
+            <dt>Any other error</dt>
+            <dd>
+                <p>41:ERROR_UNKNOWN (200)</p>
+            </dd>
+
+            <dt>User was added successfully.</dt>
+            <dd>
+                <p>10:SUCCESS_USER_ADDED (200)</p>
+            </dd>
+        </dl>
+
+        <hr/>
+
+        <h2>Get details of partial registration</h2>
+        <h3>API Endpoint</h3>
+        <table class="ptk-table-simple">
+            <tbody>
+                <tr>
+                    <td>URI</td>
+                    <td>
+                        <code class="url">ptk/newUser/&lt;registration_id&gt;</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Http Method</td>
+                    <td>GET</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Required</h3>
+        <div class="ptk-table-wrapper">
+            <table class="ptk-table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Data&nbsp;type</th>
+                        <th>Description</th>
+                        <th>Validation constraints</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>registrationId</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Id exist and has not expired</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Success scenario</h3>
+        <ul>
+            <li>
+                <p>Details of partial registration are fetched from system using registration_id.</p>
+                <ul>
+                    <li>first name</li>
+                    <li>last name</li>
+                    <li>email</li>
+                    <li>locale</li>
+                    <li>account created by</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Failure scenario</h3>
+        <ul>
+            <li>
+                <p>Data is invalid.</p>
+                <ul>
+                    <li>No action.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Storage system was inaccessible.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Any other error.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Response</h3>
+        <dl class="response">
+            <dt>Data is invalid.</dt>
+            <dd>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p class="note">Send appropriate response code.</p>
+            </dd>
+
+            <dt>Storage system was inaccessible.</dt>
+            <dd>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+            </dd>
+
+            <dt>Any other error</dt>
+            <dd>
+                <p>41:ERROR_UNKNOWN (200)</p>
+            </dd>
+
+            <dt>User data was fetched.</dt>
+            <dd>
+                <p>Return user details as JSON (200).</p>
+                <div class="ptk-table-wrapper">
+                    <table class="ptk-table">
+                        <thead>
+                            <tr>
+                                <th>JSON field name</th>
+                                <th>User detail</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>firstName</td>
+                                <td>first name</td>
+                            </tr>
+                            <tr>
+                                <td>lastName</td>
+                                <td>last name</td>
+                            </tr>
+                            <tr>
+                                <td>email</td>
+                                <td>email</td>
+                            </tr>
+                            <tr>
+                                <td>locale</td>
+                                <td>locale</td>
+                            </tr>
+                            <tr>
+                                <td>acCreatedBy</td>
+                                <td>account created by</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </dd>
+        </dl>
+        <hr/>
 
         <div class="back-button">
             <a href="./toc-uses-cases.html">Back</a>

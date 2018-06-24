@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.jk.pustakalaya.util.DateUtils;
+import com.jk.ptk.util.DateUtils;
 
 public class DateUtilsTest {
 	// day, month, year, hour, minute, second

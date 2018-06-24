@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jk.pustakalaya.PustakalayaApplication;
-import com.jk.pustakalaya.f.user.UserRepository;
+import com.jk.ptk.PustakalayaApplication;
+import com.jk.ptk.f.user.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=PustakalayaApplication.class)

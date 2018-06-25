@@ -1,3 +1,0 @@
- - Create the class JwtAuthenticationToken extends AbstractAuthenticationToken 
- - Create the class JwtAuthenticationException extends AuthenticationException
- - Create the class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter

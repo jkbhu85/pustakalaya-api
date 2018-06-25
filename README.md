@@ -1,6 +1,6 @@
 # Pustakalaya
 
-"Pustakalya" is an online library management system.
+Pustakalaya is an online library management system.
 
 # Documentation
 

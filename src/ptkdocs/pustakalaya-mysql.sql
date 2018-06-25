@@ -1,7 +1,8 @@
 /*
- * This SQL is for MySQL database.
- * 
- * Database name: ptk
+ * Project: Pustakalaya
+ * Project link: https://github.com/optimus29/pustakalaya
+ * Database schema: https://github.com/optimus29/pustakalaya/blob/master/src/ptkdocs/database-schema-doc.html
+ * Database: MySQL 5.6
  *
  * @author Jitendra Kumar
  *
@@ -41,6 +42,21 @@ CREATE TABLE ptk.BookInstanceStatus (
 );
 
 
+CREATE TABLE ptk.BookCategory (
+	id       SMALLINT NOT NULL AUTO_INCREMENT,
+    category VARCHAR(24) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE ptk.Currency (
+	id            SMALLINT NOT NULL AUTO_INCREMENT,
+    currency_code VARCHAR(24) NOT NULL,
+    description   VARCHAR(50) NOT NULL,
+    countryFk    SMALLINT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (countryFk) REFERENCES Country (id)
+);
+
 CREATE TABLE ptk.LibUser (
     id                BIGINT NOT NULL AUTO_INCREMENT,
     roleFk            SMALLINT NOT NULL,
@@ -61,16 +77,16 @@ CREATE TABLE ptk.LibUser (
     imagePath         VARCHAR(100),
     bookQuota         TINYINT,
     createdOn         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    locale            CHAR(5) NOT NULL,
+	acCreatedByFk     BIGINT,
     PRIMARY KEY (id),
     UNIQUE (emailUk),
     UNIQUE (mobileUk),
+    FOREIGN KEY (acCreatedByFk) REFERENCES LibUser (id),
     FOREIGN KEY (roleFk) REFERENCES UserRole (id),
     FOREIGN KEY (accountStatusFk) REFERENCES UserAccountStatus (id),
     FOREIGN KEY (isdCodeFk) REFERENCES Country (id)
 );
-
-
-ALTER TABLE ptk.LibUser ADD COLUMN (locale CHAR(5));
 
 
 CREATE TABLE ptk.NewUser (
@@ -110,7 +126,7 @@ CREATE TABLE ptk.UserAccountStatusHistory (
     userAccountStatusFk SMALLINT NOT NULL,
     userFk      BIGINT NOT NULL,
     createdOn   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    summary     VARCHAR(200),
+    comments    VARCHAR(200),
     PRIMARY KEY (id),
     FOREIGN KEY (userAccountStatusFk) REFERENCES UserAccountStatus (id),
     FOREIGN KEY (userFk) REFERENCES LibUser (id)
@@ -123,7 +139,7 @@ CREATE TABLE ptk.UserRoleHistory (
     roleFk         SMALLINT NOT NULL,
     assignedByFk   BIGINT NOT NULL,
     assignDate     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    summary        VARCHAR(200),
+    comments       VARCHAR(200),
     PRIMARY KEY (id),
     FOREIGN KEY (userFk) REFERENCES LibUser (id),
     FOREIGN KEY (roleFk) REFERENCES UserRole (id),
@@ -131,59 +147,53 @@ CREATE TABLE ptk.UserRoleHistory (
 );
 
 
-CREATE TABLE ptk.UserInfo (
-	userFk       BIGINT NOT NULL,
-	acCreatedByFk  BIGINT NOT NULL,
-	currentUserRoleHistoryFk      BIGINT NOT NULL,
-	currentUserAcStatusHistoryFk  BIGINT NOT NULL,
-	FOREIGN KEY (userFk) REFERENCES LibUser (id),
-    FOREIGN KEY (acCreatedByFk) REFERENCES LibUser (id),
-    FOREIGN KEY (currentUserRoleHistoryFk) REFERENCES UserRoleHistory (id),
-    FOREIGN KEY (currentUserAcStatusHistoryFk) REFERENCES UserAccountStatusHistory (id)
-);
-
-
 CREATE TABLE ptk.Book (
     id          BIGINT NOT NULL AUTO_INCREMENT,
     title       VARCHAR(150) NOT NULL,
-    author      VARCHAR(250) NOT NULL,
+    authors      VARCHAR(250) NOT NULL,
     edition     SMALLINT,
-    price       DECIMAL(9, 2 ) NOT NULL,
-    noOfPages   SMALLINT NOT NULL,
     isbn        VARCHAR(17),
-    publication VARCHAR(100),
+    categoryFk  SMALLINT,
     addedOn     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     addedByFk   BIGINT NOT NULL,
+    PRIMARY KEY (id),
     FOREIGN KEY (addedByFk) REFERENCES LibUser (id),
-    PRIMARY KEY (id)
+    FOREIGN KEY (categoryFk) REFERENCES BookCategory (id)
 );
 
 
 CREATE TABLE ptk.BookInstance (
     id              BIGINT NOT NULL AUTO_INCREMENT,
     bookFk          BIGINT NOT NULL,
-    statusFk        TINYINT NOT NULL,
+    price           DECIMAL(9, 2) NOT NULL,
+    currencyFk      SMALLINT NOT NULL,
+    noOfPages       SMALLINT NOT NULL,
+    publication     VARCHAR(100),
+    volume          SMALLINT DEFAULT 0,
+    statusFk        SMALLINT NOT NULL,
     addedByFk       BIGINT NOT NULL,
     addedOn         TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     removedByFk     BIGINT,
     removedOn       TIMESTAMP NULL,
-    reasonOfRemoval VARCHAR(200),
+    comments        VARCHAR(200),
     PRIMARY KEY (id),
     FOREIGN KEY (bookFk) REFERENCES Book (id),
     FOREIGN KEY (addedByFk) REFERENCES LibUser (id),
-    FOREIGN KEY (removedByFk) REFERENCES LibUser (id)
+    FOREIGN KEY (removedByFk) REFERENCES LibUser (id),
+    FOREIGN KEY (currencyFk) REFERENCES Currency (id)
 );
 
 
 CREATE TABLE ptk.BookInstanceHistory (
 	id              BIGINT NOT NULL AUTO_INCREMENT,
 	instanceFk      BIGINT NOT NULL,
-	statusFk        TINYINT NOT NULL,
+	statusFk        SMALLINT NOT NULL,
 	statusChangedBy BIGINT NOT NULL,
     statusChangeOn  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	comments        VARCHAR(200) NOT NULL,
+	comments        VARCHAR(150) NOT NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (instanceFk) REFERENCES BookInstance (id),
+    FOREIGN KEY (statusFk) REFERENCES BookInstanceStatus (id),
 	FOREIGN KEY (statusChangedBy) REFERENCES LibUser (id)
 );
 
@@ -197,7 +207,7 @@ CREATE TABLE ptk.BookAssignmentHistory (
     issuedOn       TIMESTAMP NOT NULL,
     expectedReturnDate DATE NOT NULL,
     returnDate     TIMESTAMP NULL,
-    amountFined    DECIMAL(9, 2 ),
+    amountFined    DECIMAL(9, 2),
     comments       VARCHAR(200),
     PRIMARY KEY (id),
     FOREIGN KEY (bookInstanceFk) REFERENCES BookInstance (id),
@@ -213,13 +223,16 @@ INSERT INTO ptk.Country VALUES(NULL, 'Sri Lanka', '+94', 'SL');
 INSERT INTO ptk.Country VALUES(NULL, 'Bhutan', '+975', 'BT');
 INSERT INTO ptk.Country VALUES(NULL, 'United States', '+1', 'US');
 
-
+INSERT INTO ptk.Currency VALUES(NULL, 'INR', 'Indian Rupee', (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN'));
+INSERT INTO ptk.Currency VALUES(NULL, 'NPR', 'Nepal Rupee', (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'NP'));
+INSERT INTO ptk.Currency VALUES(NULL, 'LKR', 'Sri Lanka Rupee', (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'SL'));
+INSERT INTO ptk.Currency VALUES(NULL, 'BTN', 'Ngultrum', (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'BT'));
+INSERT INTO ptk.Currency VALUES(NULL, 'USD', 'US Dollar', (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'US'));
 
 INSERT INTO ptk.UserRole VALUES(NULL, 'ADMIN');
 INSERT INTO ptk.UserRole VALUES(NULL, 'LIBRARIAN');
 INSERT INTO ptk.UserRole VALUES(NULL, 'MEMBER');
 INSERT INTO ptk.UserRole VALUES(NULL, 'NONE');
-
 
 INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'ACTIVE');
 INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'CLOSED');
@@ -227,21 +240,42 @@ INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'REVOKED');
 INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'LOCKED');
 INSERT INTO ptk.UserAccountStatus VALUES(NULL, 'INCOMPLETE');
 
-
 INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'ISSUED');
 INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'AVAILABLE');
 INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'UNAVAILABLE');
 INSERT INTO ptk.BookInstanceStatus VALUES(NULL, 'REMOVED');
 
-INSERT INTO ptk.LibUser VALUES
-(NULL -- id
-,1 -- role
-,1 -- account status
+INSERT INTO ptk.BookCategory VALUES(NULL, 'TEXTBOOK');
+INSERT INTO ptk.BookCategory VALUES(NULL, 'MAGAZINE');
+
+INSERT INTO ptk.LibUser
+(
+    roleFk,
+    accountStatusFk,
+    emailUk,
+    passwordHash,
+    passwordSalt,
+    passwordVersion,
+    securityQuestion,
+    securityAnswer,
+    dateOfBirth,
+    firstName,
+    lastName,
+    gender,
+    mobileUk,
+    isdCodeFk,
+    bookQuota,
+    createdOn,
+    locale
+)
+VALUES
+(
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'ADMIN') -- role
+, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'ACTIVE') -- account status
 , "krishna.murlidhar@m.com" -- email
 , "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
 , "abckdkdt" -- password salt
 , 1 -- password version
-, 0 -- unsuccessful tries
 , "The person i love" -- security question
 , "none" -- security answer
 , "1991-07-01" -- date of birth
@@ -249,22 +283,41 @@ INSERT INTO ptk.LibUser VALUES
 , "Murlidhar" -- last name
 , "M" -- gender
 , "9123456780" -- mobile
-, 1 -- isd country
-, NULL -- image path
+, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
 , 8 -- book quota
 , sysdate() -- time of creation
 , 'hi_IN' -- locale of user
 );
 
-INSERT INTO ptk.LibUser VALUES
-(NULL -- id
-,3 -- role
-,1 -- account status
+INSERT INTO ptk.LibUser
+(
+    roleFk,
+    accountStatusFk,
+    emailUk,
+    passwordHash,
+    passwordSalt,
+    passwordVersion,
+    securityQuestion,
+    securityAnswer,
+    dateOfBirth,
+    firstName,
+    lastName,
+    gender,
+    mobileUk,
+    isdCodeFk,
+    bookQuota,
+    createdOn,
+    locale,
+    acCreatedByFk
+)
+VALUES
+(
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'ADMIN') -- role
+, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'ACTIVE') -- account status
 , "jitendra.kumar@m.com" -- email
 , "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
 , "abckdkdt" -- password salt
 , 1 -- password version
-, 0 -- unsuccessful tries
 , "Who are you" -- security question
 , "unknown" -- security answer
 , "1991-07-10" -- date of birth
@@ -272,11 +325,11 @@ INSERT INTO ptk.LibUser VALUES
 , "Kumar" -- last name
 , "M" -- gender
 , "9123456784" -- mobile
-, 1 -- isd country
-, NULL -- image path
+, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
 , 4 -- book quota
 , sysdate() -- time of creation
 , 'en_US' -- locale of user
+, (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
 );
 
 commit;

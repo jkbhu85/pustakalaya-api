@@ -17,7 +17,7 @@
       This website does not work without JavaScript. Please enable JavaScript or use a browser that supports JavaScript.
     </noscript>
 
-    <h2>Database Schema</h2>
+    <h1>Database Schema</h1>
 
 
     <div class="ptk-table-wrapper">
@@ -261,6 +261,13 @@
             <td>50</td>
             <td></td>
           </tr>
+          <tr>
+            <td>country_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>not null, foreign key(Country)</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -443,6 +450,14 @@
             <td>5</td>
             <td>e.g. en_US</td>
           </tr>
+
+          <tr>
+            <td>ac_created_by_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>foreign key (LibUser)</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -474,7 +489,7 @@
           </tr>
 
           <tr>
-            <td>email</td>
+            <td>email_uk</td>
             <td>string</td>
             <td>3</td>
             <td>80</td>
@@ -567,7 +582,7 @@
           </tr>
 
           <tr>
-            <td>user_Fk</td>
+            <td>user_fk</td>
             <td>number</td>
             <td>-</td>
             <td>-</td>
@@ -753,7 +768,7 @@
           </tr>
 
           <tr>
-            <td>summary</td>
+            <td>comments</td>
             <td>string</td>
             <td>-</td>
             <td>200</td>
@@ -763,58 +778,6 @@
       </table>
     </div>
 
-
-    <div class="ptk-table-wrapper">
-      <table class="ptk-table full-width">
-        <caption class="ptk-table-name">
-          <span>Database Table:
-            <span>UserInfo</span>
-          </span>
-        </caption>
-        <thead>
-          <tr>
-            <th class="field-name">Field name</th>
-            <th class="field-type">Field type</th>
-            <th class="field-min-length">Min length</th>
-            <th class="field-max-length">Max length</th>
-            <th class="field-desc">Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>user_fk</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-            <td>primary key, foreign key (LibUser)</td>
-          </tr>
-
-          <tr>
-            <td>ac_created_by_fk</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-            <td>not null, foreign key (LibUser)</td>
-          </tr>
-
-          <tr>
-            <td>current_user_role_history_fk</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-            <td>not null, foreign key (UserRoleHistory)</td>
-          </tr>
-
-          <tr>
-            <td>current_user_ac_status_history_fk</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-            <td>not null, foreign key (UserAccountStatusHistory)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
     <div class="ptk-table-wrapper">
       <table class="ptk-table full-width">
@@ -874,7 +837,7 @@
           </tr>
 
           <tr>
-              <td>category</td>
+              <td>category_fk</td>
               <td>number</td>
               <td>-</td>
               <td>-</td>
@@ -992,22 +955,6 @@
           </tr>
 
           <tr>
-            <td>removed_by_fk</td>
-            <td>number</td>
-            <td>-</td>
-            <td>-</td>
-            <td>foreign key (LibUser)</td>
-          </tr>
-
-          <tr>
-            <td>reason_of_removal</td>
-            <td>string</td>
-            <td>-</td>
-            <td>200</td>
-            <td>-</td>
-          </tr>
-
-          <tr>
             <td>added_on</td>
             <td>timestamp</td>
             <td>-</td>
@@ -1016,11 +963,84 @@
           </tr>
 
           <tr>
+            <td>removed_by_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>foreign key (LibUser)</td>
+          </tr>
+
+          <tr>
             <td>removed_on</td>
             <td>timestamp</td>
             <td>-</td>
             <td>-</td>
             <td>-</td>
+          </tr>
+
+          <tr>
+            <td>comments</td>
+            <td>string</td>
+            <td>-</td>
+            <td>200</td>
+            <td>-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="ptk-table-wrapper">
+      <table class="ptk-table full-width">
+        <caption class="ptk-table-name">
+          <span>Database Table:
+            <span>BookInstanceHistory</span>
+          </span>
+        </caption>
+        <thead>
+          <tr>
+            <th class="field-name">Field name</th>
+            <th class="field-type">Field type</th>
+            <th class="field-min-length">Min length</th>
+            <th class="field-max-length">Max length</th>
+            <th class="field-desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>id</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>primary key</td>
+          </tr>
+          <tr>
+            <td>instance_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>not null, foreign key (BookInstance)</td>
+          </tr>
+          <tr>
+            <td>status_changed_by_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>not null, foreign key (LibUser)</td>
+          </tr>
+          <tr>
+            <td>status_changed_on</td>
+            <td>timestamp</td>
+            <td>-</td>
+            <td>-</td>
+            <td>not null</td>
+          </tr>
+          <tr>
+            <td>comments</td>
+            <td>string</td>
+            <td>-</td>
+            <td>150</td>
+            <td>not null</td>
           </tr>
         </tbody>
       </table>
@@ -1077,7 +1097,7 @@
 
           <tr>
             <td>issued_on</td>
-            <td>date</td>
+            <td>timestamp</td>
             <td>-</td>
             <td>-</td>
             <td>not null</td>

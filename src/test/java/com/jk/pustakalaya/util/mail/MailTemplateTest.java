@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.jk.pustakalaya.util.MailConsts;
+import com.jk.ptk.util.MailConsts;
+import com.jk.ptk.util.mail.MailTemplateService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

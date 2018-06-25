@@ -6,6 +6,9 @@ import java.util.Date;
 
 import org.junit.BeforeClass;
 
+import com.jk.ptk.util.mail.MailService;
+import com.jk.ptk.util.mail.MailServiceImpl;
+
 public class SimpleMailTest {
 	private static MailService mailer;
 

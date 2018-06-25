@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.f.country;
+package com.jk.ptk.f.country;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -12,8 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.jk.ptk.PustakalayaApplication;
-import com.jk.ptk.f.country.Country;
-import com.jk.ptk.f.country.CountryRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=PustakalayaApplication.class)

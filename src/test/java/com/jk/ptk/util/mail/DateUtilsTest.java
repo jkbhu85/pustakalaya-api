@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.util.mail;
+package com.jk.ptk.util.mail;
 
 import static org.junit.Assert.assertEquals;
 

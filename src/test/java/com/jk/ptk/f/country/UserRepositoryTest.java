@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.f.country;
+package com.jk.ptk.f.country;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

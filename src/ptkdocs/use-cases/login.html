@@ -37,7 +37,7 @@
                     <td>30 Minutes</td>
                 </tr>
                 <tr>
-                    <td>Payload</td>
+                    <td style="vertical-align:top">Payload</td>
                     <td>
                         <table class="ptk-table mb-0">
                             <thead>
@@ -136,7 +136,7 @@
             </li>
 
             <li>
-                <p>Reset number of unsuccessful tries to 0.</p>
+                <p>Reset number of unsuccessful tries to 0 (if step 1 is successful).</p>
             </li>
         </ol>
 
@@ -185,13 +185,23 @@
         <dl class="response">
             <dt>Login is unsuccessful</dt>
             <dd>
-                <p>2x:ERROR_LOGIN_UNSUCCESSFUL (200)</p>
+                <p>2x:ERROR_LOGIN_UNSUCCESSFUL (422)</p>
                 <p class="note">Send appropriate response code.</p>
+            </dd>
+
+            <dt>Storage system was inaccessible.</dt>
+            <dd>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
+            </dd>
+
+            <dt>Any other error</dt>
+            <dd>
+                <p>41:ERROR_UNKNOWN (500)</p>
             </dd>
 
             <dt>Login is successful</dt>
             <dd>
-
+                <p>Send a JWT with a specified expiration time and <em>payload</em> (200)</p>
             </dd>
         </dl>
 

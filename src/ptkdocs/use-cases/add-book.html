@@ -60,7 +60,7 @@
         <h2>Scenario 1: No copies of the book were added before in the system.</h2>
 
         <h3>API Endpoint</h3>
-        <table class="endpoint-table">
+        <table class="ptk-table-simple">
             <tbody>
                 <tr>
                     <td>URI</td>
@@ -244,23 +244,23 @@
 
             <dt>Book with the specified ISBN and volume already exists.</dt>
             <dd>
-                <p>35:ERROR_DUPLICATE_BOOK (200)</p>
+                <p>35:ERROR_DUPLICATE_BOOK (422)</p>
             </dd>
 
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (200)</p>
+                <p>41:ERROR_UNKNOWN (500)</p>
             </dd>
 
             <dt>Book was added successfully.</dt>
@@ -424,23 +424,23 @@
 
             <dt>ISBN does not exist.</dt>
             <dd>
-                <p>54:ERROR_DOES_NOT_EXIST (200)</p>
+                <p>54:ERROR_DOES_NOT_EXIST (422)</p>
             </dd>
 
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (200)</p>
+                <p>41:ERROR_UNKNOWN (500)</p>
             </dd>
 
             <dt>Book was added successfully.</dt>
@@ -570,23 +570,23 @@
 
             <dt>ISBN does not exist.</dt>
             <dd>
-                <p>54:ERROR_DOES_NOT_EXIST (200)</p>
+                <p>54:ERROR_DOES_NOT_EXIST (422)</p>
             </dd>
 
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (200)</p>
+                <p>41:ERROR_UNKNOWN (500)</p>
             </dd>
 
             <dt>Book details were fetched.</dt>

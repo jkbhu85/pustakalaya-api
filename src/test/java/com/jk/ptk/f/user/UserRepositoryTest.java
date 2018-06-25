@@ -1,4 +1,4 @@
-package com.jk.pustakalaya.f.user;
+package com.jk.ptk.f.user;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,9 +13,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jk.ptk.PustakalayaApplication;
-import com.jk.ptk.f.user.User;
-import com.jk.ptk.f.user.UserAuthInfo;
-import com.jk.ptk.f.user.UserRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes=PustakalayaApplication.class)

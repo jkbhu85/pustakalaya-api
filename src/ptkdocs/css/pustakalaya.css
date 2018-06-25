@@ -35,6 +35,9 @@ body {
   letter-spacing: .1rem;
   outline: none;
 }
+#header div a:hover {
+  background: none;
+}
 .main-content {
   background-color: #fcfcfa;
   padding: 2rem;
@@ -126,8 +129,12 @@ dl dt {
 .mb-0 {
   margin-bottom: 0 !important;
 }
+code, pre {
+  font-family: 'Fira Code', Consolas, monospace;
+  font-weight: normal;
+}
 code {
-  font-size: 1rem;
+  font-size: .9rem;
 }
 code.url {
   padding: .15rem;
@@ -220,8 +227,7 @@ hr {
 .note {
   border-left: .2rem solid darkgoldenrod;
   padding: .7rem;
-  border-radius: 0.14rem;
-  background: #fafaea;
+  background: #f4f4e7;
 }
 .response > dt {
   font-style: italic;

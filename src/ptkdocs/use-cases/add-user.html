@@ -199,28 +199,28 @@
 
             <dt>User with the specified email is already registered.</dt>
             <dd>
-                <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
+                <p>35:ERROR_DUPLICATE_EMAIL (422)</p>
             </dd>
 
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Mail could not be sent to the user.</dt>
             <dd>
-                <p>42:ERROR_EMAIL_NOT_SENT (200)</p>
+                <p>42:ERROR_EMAIL_NOT_SENT (422)</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (200)</p>
+                <p>41:ERROR_UNKNOWN (500)</p>
             </dd>
 
             <dt>User was added successfully.</dt>
@@ -361,8 +361,8 @@
                 <p>User details are added to the system with following extra data:</p>
                 <ul>
                     <li>an abstract id for this user</li>
-                    <li>hash generated from the password instead of the actual password</li>
                     <li>a randomly generated salt</li>
+                    <li>hash generated from the password and salt (generated in above step) instead of the actual password</li>
                     <li>a specified password version</li>
                     <li>value of timestamp field that was saved at the time of partial registration</li>
                     <li>value of acCreatedBy field saved at the time of partial registration</li>
@@ -424,22 +424,22 @@
         <dl class="response">
             <dt>User with the specified email is already registered.</dt>
             <dd>
-                <p>35:ERROR_DUPLICATE_EMAIL (200)</p>
+                <p>35:ERROR_DUPLICATE_EMAIL (422)</p>
             </dd>
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (200)</p>
+                <p>41:ERROR_UNKNOWN (500)</p>
             </dd>
 
             <dt>User was added successfully.</dt>
@@ -529,18 +529,18 @@
         <dl class="response">
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (200)</p>
+                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (200)</p>
+                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (200)</p>
+                <p>41:ERROR_UNKNOWN (500)</p>
             </dd>
 
             <dt>User data was fetched.</dt>

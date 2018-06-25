@@ -14,15 +14,46 @@ function loadHeader() {
         const url = window.location.href;
         const searchKey = '/ptkdocs/';
         const docPos = url.indexOf(searchKey) + 1;
-        const urlPrefix = url.substr(0, url.indexOf(searchKey) + searchKey.length);
 
+        const urlPrefix = url.substr(0, url.indexOf(searchKey) + searchKey.length);
         const newUrl =  urlPrefix + 'index.html';
-        const imgUrl = urlPrefix + 'img/saraswati.png';
-        // image url: https://pngimg.com/download/41911
-        //document.body.style.backgroundImage = 'url("' + imgUrl + '")';
+        
+        let imgPrefix = '';
+        let depth = findDepth(url, searchKey);
+
+        for (let i = 0; i < depth; i++) {
+            imgPrefix += '../';
+        }
+
+        if (imgPrefix.length === 0) imgPrefix = './';
+
+        const imgUrl = imgPrefix + 'img/saraswati.png';
+        // image source: https://pngimg.com/download/41911
 
         header.innerHTML = '<div><a href="' + newUrl + '"><img src="' + imgUrl + '"/>Pustakalaya</a></div>';
     }
+}
+
+function findDepth(url, startAfter) {
+    if (!url) return -1;
+
+    let start = 0;
+    if (startAfter && startAfter.length > 0 && url.indexOf(startAfter) > -1) {
+        start = url.indexOf(startAfter) + startAfter.length;
+    } else {
+        return 0;
+    }
+
+    let depth = 0;
+    while (start < url.length) {
+        
+        if (url[start] === '/') {
+            depth++;
+        }
+        start++;
+    }
+
+    return depth;
 }
 
 function loadFooter() {

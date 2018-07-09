@@ -100,12 +100,6 @@
                             <code class="nc">language_country</code>
                         </td>
                     </tr>
-                    <tr>
-                        <td>acCreatedBy</td>
-                        <td>number</td>
-                        <td>Required</td>
-                        <td>A valid user of the system who is also referred to as requester.</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -122,11 +116,12 @@
         <h3>Success scenario</h3>
         <ol>
             <li>
-                <p>User is added to the system with following extra data.</p>
+                <p>User is added to the system with following additional data.</p>
                 <ul>
                     <li>a registration id</li>
                     <li>a timestamp of current time</li>
                     <li>a specified role</li>
+                    <li>primary key of the requester</li>
                 </ul>
             </li>
             <li>

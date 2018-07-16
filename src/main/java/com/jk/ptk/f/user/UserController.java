@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jk.ptk.security.login.InvalidCredentialsException;
+
 @RestController("/api/user")
 public class UserController {
 	@Autowired
@@ -25,7 +27,11 @@ public class UserController {
 		String oldPassword = body.get("oldPassword");
 		String newPassword = body.get("newPassword");
 
-		service.updatePassword(id, oldPassword, newPassword);
+		try {
+			service.updatePassword(id, oldPassword, newPassword);
+		} catch (InvalidCredentialsException e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -36,6 +42,10 @@ public class UserController {
 		String question = body.get("question");
 		String answer = body.get("answer");
 
-		service.updateSecurityQuestion(id, password, question, answer);
+		try {
+			service.updateSecurityQuestion(id, password, question, answer);
+		} catch (InvalidCredentialsException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -65,10 +65,7 @@ noscript {
 }
 a, a:link, a:visited, a:active {
   text-decoration: none;
-  color: #aa2277;
-}
-a:hover {
-  background-color: rgba(170, 34, 119, .1);
+  color: #C2185B;
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Noto Serif', 'Cambria', serif;
@@ -199,23 +196,6 @@ hr {
 }
 .field-desc {
   width: 42%;
-}
-.toc {
-  list-style: none;
-}
-.toc > li {
-  position: relative;
-}
-.toc > li:before {
-  content: "";
-  width: .5rem;
-  height: .5rem;
-  background: #aa2277;
-  display: block;
-  position: absolute;
-  left: -1.2rem;
-  top: .33rem;
-  transform: rotate(45deg);
 }
 .error-codes {
   margin-bottom: 2rem;

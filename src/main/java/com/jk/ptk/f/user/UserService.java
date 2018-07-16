@@ -1,5 +1,7 @@
 package com.jk.ptk.f.user;
 
+import com.jk.ptk.security.login.InvalidCredentialsException;
+
 public interface UserService {
 	User getUser(Long id);
 
@@ -7,9 +9,9 @@ public interface UserService {
 
 	UserAuthInfo getUserAuthInfo(String email);
 
-	void updatePassword(Long id, String oldPassword, String newPassword);
+	void updatePassword(Long id, String oldPassword, String newPassword) throws InvalidCredentialsException;
 
-	void updateSecurityQuestion(Long id, String password, String question, String answer);
+	void updateSecurityQuestion(Long id, String password, String question, String answer) throws InvalidCredentialsException;
 
 	void addUser(String email, String firstName, String lastName, String localeStr);
 

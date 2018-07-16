@@ -27,6 +27,12 @@ public final class App {
 	private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
 	/**
+	 * Maximum number of tries with incorrect crdentials after which account is
+	 * locked.
+	 */
+	public static final int UNSUCCESSFUL_LOGIN_TRIES_THRESHOLD = 4;
+
+	/**
 	 * Environment variable name for project configuration directory path.
 	 */
 	public static final String NAME_ENV_VAR_CONFIG = "PTK_CONFIG";

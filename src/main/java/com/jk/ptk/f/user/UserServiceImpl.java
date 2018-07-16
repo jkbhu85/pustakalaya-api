@@ -3,8 +3,8 @@ package com.jk.ptk.f.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jk.ptk.security.InvalidCredentialsException;
 import com.jk.ptk.security.cred.CredentialsUtil;
+import com.jk.ptk.security.login.InvalidCredentialsException;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updatePassword(Long id, String oldPassword, String newPassword) {
+	public void updatePassword(Long id, String oldPassword, String newPassword) throws InvalidCredentialsException {
 		UserAuthInfo authInfo = repository.findUserAuthInfo(id);
 
 		if (authInfo == null)
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
 			repository.udpateUserAuthInfo(authInfo);
 		}
-		else throw new InvalidCredentialsException("Old password is invalid");
+		else throw new InvalidCredentialsException("Old password didn't match.");
 	}
 
 	private boolean isPasswordValid(String password, UserAuthInfo authInfo) {
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateSecurityQuestion(Long id, String password, String question, String answer) {
+	public void updateSecurityQuestion(Long id, String password, String question, String answer) throws InvalidCredentialsException {
 		UserAuthInfo authInfo = repository.findUserAuthInfo(id);
 
 		if (isPasswordValid(password, authInfo)) {
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
 
 			repository.udpateUserAuthInfo(authInfo);
 		}
-		else throw new InvalidCredentialsException("Password is invalid");
+		else throw new InvalidCredentialsException("Password didn't match.");
 	}
 
 	@Override

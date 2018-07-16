@@ -15,8 +15,6 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.jk.ptk.security.login.InvalidCredentialsException;
-
 public class PtkExceptionTranslationFilter extends GenericFilterBean {
 	private AuthenticationEntryPoint authEntryPoint;
 	private AccessDeniedHandler accessDeniedHandler;
@@ -45,9 +43,6 @@ public class PtkExceptionTranslationFilter extends GenericFilterBean {
 		}
 		catch (AccessDeniedException e) {
 			this.accessDeniedHandler.handle(req, res, e);
-		}
-		catch (InvalidCredentialsException e) {
-			res.sendError(399, e.getMessage());
 		}
 		catch (IOException | ServletException e) {
 			throw e;

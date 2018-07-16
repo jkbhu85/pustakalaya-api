@@ -1,7 +1,8 @@
 package com.jk.ptk.security.login;
 
-import org.springframework.http.ResponseEntity;
+import com.jk.ptk.security.auth.AccountLockedException;
+import com.jk.ptk.security.auth.AccountRevokedException;
 
 public interface LoginService {
-	ResponseEntity<String> login(LoginCredentials loginCred);
+	String login(LoginCredentials loginCred) throws InvalidCredentialsException, AccountLockedException, AccountRevokedException;
 }

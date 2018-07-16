@@ -16,7 +16,6 @@ import com.jk.ptk.app.App;
 
 
 public class JwtUtil {
-	public static final String PAYLOAD_KEY_ID = "id";
 	public static final String PAYLOAD_KEY_NAME = "name";
 	public static final String PAYLOAD_KEY_EMAIL = "email";
 	public static final String PAYLOAD_KEY_ROLE = "role";
@@ -57,7 +56,6 @@ public class JwtUtil {
 
 			Builder builder =
 					jwtBuilder
-						.withClaim(PAYLOAD_KEY_ID, payload.getId())
 						.withClaim(PAYLOAD_KEY_NAME, payload.getName())
 						.withClaim(PAYLOAD_KEY_EMAIL, payload.getEmail())
 						.withClaim(PAYLOAD_KEY_ROLE, payload.getRole())
@@ -75,7 +73,6 @@ public class JwtUtil {
 
 			JwtPayload payload =
 					new JwtPayload(
-							jwt.getClaim(PAYLOAD_KEY_ID).asString(),
 							jwt.getClaim(PAYLOAD_KEY_NAME).asString(),
 							jwt.getClaim(PAYLOAD_KEY_EMAIL).asString(),
 							jwt.getClaim(PAYLOAD_KEY_ROLE).asString(),

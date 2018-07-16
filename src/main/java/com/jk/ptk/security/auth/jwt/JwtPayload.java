@@ -7,7 +7,6 @@ package com.jk.ptk.security.auth.jwt;
  *
  */
 public class JwtPayload {
-	private String id;
 	private String name;
 	private String email;
 	private String role;
@@ -30,28 +29,12 @@ public class JwtPayload {
 	 * @param locale
 	 *            locale string of the user in LANGUAGE_COUNTRY format.
 	 */
-	public JwtPayload(String id, String name, String email, String role, String locale) {
+	public JwtPayload(String name, String email, String role, String locale) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.role = role;
 		this.locale = locale;
-	}
-
-	/**
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	/**

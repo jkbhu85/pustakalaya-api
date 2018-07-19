@@ -34,7 +34,7 @@ public class NewUserServiceImpl implements NewUserService, DataValidation<NewUse
 	public void addNewUser(NewUser newUser) throws ValidationFailedException {
 		// set required fields
 		newUser.setId(UuidUtils.generate());
-		newUser.getRole().setId(UserRole.DEFAULT_USER_ROLE);
+		newUser.setRole(UserRole.DEFAULT_USER_ROLE);
 		// validate fields
 		validate(newUser);
 		// store into db

@@ -1,4 +1,4 @@
-package com.jk.ptk.security.cred;
+package com.jk.ptk.security.login;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -8,6 +8,8 @@ public interface UserService {
 	UserAuthInfo getUserAuthInfo(Long id);
 
 	UserAuthInfo getUserAuthInfo(String email);
+	
+	void updateUserAuthInfo(UserAuthInfo authInfo);
 
 	void updatePassword(Long id, String oldPassword, String newPassword) throws InvalidCredentialsException;
 

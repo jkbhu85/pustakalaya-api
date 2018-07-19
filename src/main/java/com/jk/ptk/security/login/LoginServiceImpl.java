@@ -9,11 +9,8 @@ import com.jk.ptk.app.App;
 import com.jk.ptk.f.user.UserAuthInfo;
 import com.jk.ptk.f.user.UserService;
 import com.jk.ptk.model.UserAcStatus;
-import com.jk.ptk.security.auth.AccountLockedException;
-import com.jk.ptk.security.auth.AccountRevokedException;
 import com.jk.ptk.security.auth.jwt.JwtPayload;
 import com.jk.ptk.security.auth.jwt.JwtUtil;
-import com.jk.ptk.security.cred.CredentialsUtil;
 import com.jk.ptk.security.header.AuthHeaderValidator;
 
 @Component
@@ -66,6 +63,9 @@ public class LoginServiceImpl implements LoginService {
 			JwtPayload payload = getPayload(authInfo);
 			String jwt = JwtUtil.encode(payload);
 			jwt = authHeaderValidator.addValidationMarker(jwt);
+			authInfo.setUnsuccessfulTries(0);
+
+			service.updateUserAuthInfo(authInfo);
 
 			log.info("Authenticated user with username: {}", username);
 
@@ -76,8 +76,8 @@ public class LoginServiceImpl implements LoginService {
 			if (authInfo.getUnsuccessfulTries() == App.UNSUCCESSFUL_LOGIN_TRIES_THRESHOLD) {
 				authInfo.setAccountStatus(UserAcStatus.LOCKED);
 			}
-			
-			
+
+			service.updateUserAuthInfo(authInfo);	
 			
 			throw new InvalidCredentialsException();
 		}

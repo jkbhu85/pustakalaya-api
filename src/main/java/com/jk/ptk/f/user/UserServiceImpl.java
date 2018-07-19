@@ -3,7 +3,7 @@ package com.jk.ptk.f.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jk.ptk.security.cred.CredentialsUtil;
+import com.jk.ptk.security.login.CredentialsUtil;
 import com.jk.ptk.security.login.InvalidCredentialsException;
 
 @Component
@@ -67,6 +67,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void addUser(String email, String firstName, String lastName, String localeStr) {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void updateUserAuthInfo(UserAuthInfo authInfo) {
+		repository.udpateUserAuthInfo(authInfo);
+		
 	}
 
 }

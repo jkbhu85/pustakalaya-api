@@ -65,13 +65,13 @@ noscript {
 }
 a, a:link, a:visited, a:active {
   text-decoration: none;
-  color: #C2185B;
+  color: #283593;
 }
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Noto Serif', 'Cambria', serif;
   margin-top: 0;
   padding-top: 0;
   margin-bottom: .5em;
+  font-weight: 300;
 }
 h1, h2, h3, h4, h5, h6,
 strong, th {
@@ -135,12 +135,10 @@ code {
 }
 code.url {
   padding: .15rem;
-  color: #0000aa;
-  background-color: #e0e0ff;
+  color: #EF6C00;
 }
 code.pattern {
-  color: #006400;
-  background-color: #e0ece0;
+  color: #2E7D32;
   word-break: unset;
   word-wrap: unset;
   overflow-wrap: unset;
@@ -148,16 +146,16 @@ code.pattern {
   -moz-hyphens: unset;
   -ms-hyphens: unset;
   hyphens: unset;
-  padding: .15rem;
 }
-hr {
+hr {/*
   margin-top: 2rem;
   margin-bottom: 2rem;
   margin-left: -.7rem;
   margin-right: -.7rem;
   height: 0;
+  border-top: 0.06rem solid #fff;*/
+  margin-bottom: 2.5rem;
   border: 0;
-  border-top: 0.06rem solid #ccc;
 }
 .ptk-table-wrapper {
   margin-left: -.5rem;
@@ -166,27 +164,30 @@ hr {
 .ptk-table {
   border-collapse: collapse;
   caption-side: top;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 }
 .ptk-table-name {
   padding: .5rem;
   font-size: 1.1em;
   text-align: left;
+  color: #555555;
 }
 .ptk-table-name > span > span {
-  font-weight: bold;
-  color: #333;
+  font-weight: 400;
+  font-style: italic;
+  color: #222219;
 }
-.ptk-table > thead > tr {
-  border-bottom: .14rem solid #eee;
-  border-top: .14rem solid #eee;
+.ptk-table > thead > tr {/*
+  border-bottom: .07rem solid #ddd;
+  border-top: .07rem solid #ddd;*/
 }
-.ptk-table > tbody > tr {
-  border-bottom: .07rem solid #f2f2f2;
+.ptk-table > tbody > tr {/*
+  border-bottom: .07rem solid #f2f2f2;*/
 }
 .ptk-table > thead > tr > th {
-  padding: .7rem .5rem;
+  padding: .5rem;
   text-align: left;
+  font-weight: 300;
 }
 .ptk-table > tbody > tr > td {
   padding: .5rem;
@@ -204,9 +205,9 @@ hr {
   font-weight: bold;
   color: #333;
 }
-.note {
-  border-left: .2rem solid darkgoldenrod;
-  padding: .7rem;
+.note {/*
+  border-left: .2rem solid darkgoldenrod;*/
+  padding: .7rem 1rem;
   background: #f4f4e7;
 }
 .response > dt {

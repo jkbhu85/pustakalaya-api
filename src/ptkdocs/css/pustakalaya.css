@@ -10,18 +10,18 @@ body {
   color: #222219;
   font-size: 1rem;
   background-color: #f7f7f7;
-  box-shadow: 0 0 0.14rem #666;
+  box-shadow: 0 0 .14rem rgb(249, 168, 37, 0.5);
 }
 #header {
-  background: #404;
-  color: #dcd;
-  padding: 1.5rem 2rem;
-  line-height: 4rem;
+  background:#F9A825;
+  padding: .5rem 2rem;
+  line-height: 6.5rem;
 }
 #header img {
-  height: 4rem;
+  height: 6.5rem;
   vertical-align: bottom;
-  margin-right: 1rem;
+  margin-right: .5rem;
+  margin-left: -.85rem;
   display: inline-block;
 }
 #header div {
@@ -29,8 +29,8 @@ body {
   font-family: 'Noto Serif', 'Cambria', serif;
 }
 #header div a {
-  color: #ffff9f;
-  text-shadow: .07rem .07rem .07rem rgba(255,255,155,0.2);
+  color: rgba(255,255,255,.6);
+  text-shadow: .07rem 0 0 rgba(0,0,0,.1);
   text-decoration: none;
   letter-spacing: .1rem;
   outline: none;
@@ -132,6 +132,7 @@ code, pre {
 }
 code {
   font-size: .9rem;
+  font-weight: 300;
 }
 code.url {
   padding: .15rem;
@@ -177,12 +178,8 @@ hr {/*
   font-style: italic;
   color: #222219;
 }
-.ptk-table > thead > tr {/*
-  border-bottom: .07rem solid #ddd;
-  border-top: .07rem solid #ddd;*/
-}
-.ptk-table > tbody > tr {/*
-  border-bottom: .07rem solid #f2f2f2;*/
+.ptk-table > tbody > tr:nth-of-type(2n+1) {
+  background-color: #f4f4f0;
 }
 .ptk-table > thead > tr > th {
   padding: .5rem;

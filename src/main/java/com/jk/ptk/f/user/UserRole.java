@@ -1,4 +1,4 @@
-package com.jk.ptk.model;
+package com.jk.ptk.f.user;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -32,6 +32,25 @@ public class UserRole {
 	public static final UserRole LIBRARIAN = new UserRole();
 	public static final UserRole MEMBER = new UserRole();
 	public static final UserRole NONE = new UserRole();
+
+	public static final UserRole[] roles = { ADMIN, LIBRARIAN, MEMBER, NONE };
+
+	/**
+	 * Returns an object representing user role for the specified {@code roleId}. If
+	 * no role matching {@code roleId} exists then returns {@code null}.
+	 * 
+	 * @param roleId
+	 *            the specified user role id
+	 * @return an object representing user role for the specified {@code roleId} or
+	 *         returns {@code null} if no status matching {@code statusId} exists
+	 */
+	public static UserRole fromId(Integer roleId) {
+		for (UserRole r : roles) {
+			if (r.getId() == roleId) return r;
+		}
+
+		return null;
+	}
 
 	public static void init(EntityManager em) {
 		final String hql = "select r from UserRole r where r.name=:name";
@@ -96,4 +115,22 @@ public class UserRole {
 		return "UserRole [id=" + id + ", name=" + name + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		// return sum of hashcodes of id and name
+		return ((id == null) ? 0 : id.hashCode()) + ((name == null) ? 0 : name.hashCode());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+
+		UserRole other = (UserRole) obj;
+
+		if (id == null || name == null) return false;
+
+		return (id.equals(other.id) && name.equals(other.name));
+	}
 }

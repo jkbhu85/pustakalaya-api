@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jk.ptk.app.App;
+import com.jk.ptk.f.user.UserAcStatus;
 import com.jk.ptk.f.user.UserAuthInfo;
 import com.jk.ptk.f.user.UserService;
-import com.jk.ptk.model.UserAcStatus;
 import com.jk.ptk.security.auth.jwt.JwtPayload;
 import com.jk.ptk.security.auth.jwt.JwtUtil;
 import com.jk.ptk.security.header.AuthHeaderValidator;
@@ -38,15 +38,15 @@ public class LoginServiceImpl implements LoginService {
 		UserAuthInfo authInfo = service.getUserAuthInfo(username);
 
 		// no auth info found, throw exception
-		if (authInfo == null || authInfo.getAccountStatus().equals(UserAcStatus.CLOSED.getName())) {
+		if (authInfo == null || authInfo.getAccountStatus().equals(UserAcStatus.CLOSED)) {
 			throw new InvalidCredentialsException();
 		}
 
-		if (authInfo.getAccountStatus().equals(UserAcStatus.LOCKED.getName())) {
+		if (authInfo.getAccountStatus().equals(UserAcStatus.LOCKED)) {
 			throw new AccountLockedException();
 		}
 
-		if (authInfo.getAccountStatus().equals(UserAcStatus.REVOKED.getName())) {
+		if (authInfo.getAccountStatus().equals(UserAcStatus.REVOKED)) {
 			throw new AccountRevokedException();
 		}
 
@@ -75,6 +75,7 @@ public class LoginServiceImpl implements LoginService {
 			
 			if (authInfo.getUnsuccessfulTries() == App.UNSUCCESSFUL_LOGIN_TRIES_THRESHOLD) {
 				authInfo.setAccountStatus(UserAcStatus.LOCKED);
+				log.info("Locking the account {}", authInfo.getEmail());
 			}
 
 			service.updateUserAuthInfo(authInfo);	

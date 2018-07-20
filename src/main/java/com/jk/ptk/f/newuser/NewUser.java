@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.jk.ptk.f.user.User;
-import com.jk.ptk.model.UserRole;
+import com.jk.ptk.f.user.UserRole;
 
 /**
  * Represents a newly added user to the system. This user has only few details

@@ -44,7 +44,8 @@ public class Initializer {
 		File root = new File(path);
 
 		initializeDataLayer(root);
-
+		
+		log.info("All classes with annotation DataLayerInitialized are initialized.");
 	}
 	
 	private void initializeDataLayer(File root) {

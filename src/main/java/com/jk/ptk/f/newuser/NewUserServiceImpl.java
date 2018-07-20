@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.jk.ptk.app.App;
 import com.jk.ptk.app.DataValidation;
-import com.jk.ptk.app.ValidationFailedException;
-import com.jk.ptk.model.UserRole;
+import com.jk.ptk.app.ValidationException;
+import com.jk.ptk.f.user.UserRole;
 import com.jk.ptk.util.MailConsts;
 import com.jk.ptk.util.UuidUtils;
 import com.jk.ptk.util.mail.MailTemplateService;
@@ -31,7 +31,7 @@ public class NewUserServiceImpl implements NewUserService, DataValidation<NewUse
 	private MailTemplateService mailService;
 
 	@Override
-	public void addNewUser(NewUser newUser) throws ValidationFailedException {
+	public void addNewUser(NewUser newUser) throws ValidationException {
 		// set required fields
 		newUser.setId(UuidUtils.generate());
 		newUser.setRole(UserRole.DEFAULT_USER_ROLE);
@@ -61,7 +61,7 @@ public class NewUserServiceImpl implements NewUserService, DataValidation<NewUse
 	}
 
 	@Override
-	public void validate(NewUser obj) throws ValidationFailedException {
+	public void validate(NewUser obj) throws ValidationException {
 		// TODO Auto-generated method stub
 	}
 

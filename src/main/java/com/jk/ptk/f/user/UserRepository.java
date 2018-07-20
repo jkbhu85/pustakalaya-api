@@ -30,5 +30,6 @@ public class UserRepository {
 
 	public void udpateUserAuthInfo(UserAuthInfo userAuthInfo) {
 		em.merge(userAuthInfo);
+		em.flush();
 	}
 }

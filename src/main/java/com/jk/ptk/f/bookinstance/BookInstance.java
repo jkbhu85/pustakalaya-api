@@ -1,6 +1,8 @@
-package com.jk.ptk.model;
+package com.jk.ptk.f.bookinstance;
 
 import java.util.Date;
+
+import com.jk.ptk.f.book.Book;
 
 /**
  * Represents instance of book.

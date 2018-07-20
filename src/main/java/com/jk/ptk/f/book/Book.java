@@ -1,4 +1,4 @@
-package com.jk.ptk.model;
+package com.jk.ptk.f.book;
 
 /**
  * Represents book in database.

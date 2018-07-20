@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jk.ptk.app.ValidationFailedException;
+import com.jk.ptk.app.ValidationException;
 
 /**
  * REST controller for entity {@link NewUser}.
@@ -46,7 +46,7 @@ public class NewUserController {
 		try {
 			service.addNewUser(newUser);
 			rs = new ResponseEntity<>(MSG_SUCCESS_USER_ADD, HttpStatus.ACCEPTED);
-		} catch (ValidationFailedException e) {
+		} catch (ValidationException e) {
 			rs = new ResponseEntity<>(MSG_ERROR_USER_ADD + "_INVALID_" + e.getMessage(), HttpStatus.PRECONDITION_FAILED);
 		} catch (Exception e) {
 			rs = new ResponseEntity<>(MSG_ERROR_USER_ADD_UNKNOWN, HttpStatus.INTERNAL_SERVER_ERROR);

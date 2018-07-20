@@ -16,6 +16,10 @@
         <noscript>
             This website does not work without JavaScript. Please enable JavaScript or use a browser that supports JavaScript.
         </noscript>
+		
+        <div class="back-button">
+            <a href="./toc-uses-cases.html">Back</a>
+        </div>
 
         <h1>Login</h1>
         <p>Authentication and authorization is managed using
@@ -62,6 +66,14 @@
                                 <tr>
                                     <td>locale</td>
                                     <td>Locale of the user</td>
+                                </tr>
+                                <tr>
+                                    <td>iat</td>
+                                    <td>token issue time (seconds since epoch)</td>
+                                </tr>
+                                <tr>
+                                    <td>exp</td>
+                                    <td>token expire time (seconds since epoch)</td>
                                 </tr>
                             </tbody>
                         </table>

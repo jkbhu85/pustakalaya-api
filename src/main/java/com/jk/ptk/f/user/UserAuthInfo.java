@@ -9,9 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import com.jk.ptk.model.UserAcStatus;
-import com.jk.ptk.model.UserRole;
-
 @Entity
 @Table(name = "LibUser")
 @NamedQuery(name = "find_by_email", query = "select u from UserAuthInfo u where u.email=:email")
@@ -117,8 +114,8 @@ public class UserAuthInfo {
 		this.role = role;
 	}
 
-	public String getAccountStatus() {
-		return accountStatus.getName();
+	public UserAcStatus getAccountStatus() {
+		return accountStatus;
 	}
 
 	public void setAccountStatus(UserAcStatus accountStatus) {

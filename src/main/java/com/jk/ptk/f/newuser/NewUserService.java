@@ -1,7 +1,7 @@
 package com.jk.ptk.f.newuser;
 
 
-import com.jk.ptk.app.ValidationFailedException;
+import com.jk.ptk.app.ValidationException;
 
 /**
  * Service class for entity {@link NewUser}.
@@ -18,7 +18,7 @@ public interface NewUserService {
 	 *            
 	 * @throws ValidationException if the specified user data fails validation
 	 */
-	void addNewUser(NewUser newUser) throws ValidationFailedException;
+	void addNewUser(NewUser newUser) throws ValidationException;
 
 	/**
 	 * Returns the new user identified by {@code id}. Returns {@code null} if no

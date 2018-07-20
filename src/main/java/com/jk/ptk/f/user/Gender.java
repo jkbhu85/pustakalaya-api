@@ -1,4 +1,4 @@
-package com.jk.ptk.model;
+package com.jk.ptk.f.user;
 
 public final class Gender {
 	public static final String MALE = "M";

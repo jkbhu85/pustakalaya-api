@@ -1,4 +1,4 @@
-package com.jk.ptk.model;
+package com.jk.ptk.f.user;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -9,6 +9,12 @@ import javax.persistence.Table;
 import javax.persistence.TypedQuery;
 
 import com.jk.ptk.app.DataLayerInitialized;
+
+/**
+ * Represents user account status.
+ * @author Jitendra
+ *
+ */
 
 @Entity
 @Table(name = "UserAccountStatus")
@@ -49,32 +55,32 @@ public class UserAcStatus {
 		query = em.createQuery(hql, UserAcStatus.class);
 		query.setParameter("name", "ACTIVE");
 		acStatus = query.getSingleResult();
-		ACTIVE.setId(acStatus.getId());
-		ACTIVE.setName(acStatus.getName());
+		ACTIVE.id = acStatus.id;
+		ACTIVE.name = acStatus.name;
 
 		query = em.createQuery(hql, UserAcStatus.class);
 		query.setParameter("name", "LOCKED");
 		acStatus = query.getSingleResult();
-		LOCKED.setId(acStatus.getId());
-		LOCKED.setName(acStatus.getName());
+		LOCKED.id = acStatus.id;
+		LOCKED.name = acStatus.name;
 
 		query = em.createQuery(hql, UserAcStatus.class);
 		query.setParameter("name", "CLOSED");
 		acStatus = query.getSingleResult();
-		CLOSED.setId(acStatus.getId());
-		CLOSED.setName(acStatus.getName());
+		CLOSED.id = acStatus.id;
+		CLOSED.name = acStatus.name;
 
 		query = em.createQuery(hql, UserAcStatus.class);
 		query.setParameter("name", "REVOKED");
 		acStatus = query.getSingleResult();
-		REVOKED.setId(acStatus.getId());
-		REVOKED.setName(acStatus.getName());
+		REVOKED.id = acStatus.id;
+		REVOKED.name = acStatus.name;
 
 		query = em.createQuery(hql, UserAcStatus.class);
 		query.setParameter("name", "INCOMPLETE");
 		acStatus = query.getSingleResult();
-		INCOMPLETE.setId(acStatus.getId());
-		INCOMPLETE.setName(acStatus.getName());
+		INCOMPLETE.id = acStatus.id;
+		INCOMPLETE.name = acStatus.name;
 	}
 
 	@Id
@@ -93,12 +99,29 @@ public class UserAcStatus {
 		return name;
 	}
 
-	private void setId(Integer id) {
-		this.id = id;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
 	}
 
-	private void setName(String name) {
-		this.name = name;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		UserAcStatus other = (UserAcStatus) obj;
+		if (id == null) {
+			if (other.id != null) return false;
+		} else if (!id.equals(other.id)) return false;
+		if (name == null) {
+			if (other.name != null) return false;
+		} else if (!name.equals(other.name)) return false;
+		return true;
 	}
 
 	@Override

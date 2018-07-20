@@ -18,8 +18,6 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jk.ptk.f.address.Address;
 import com.jk.ptk.f.country.Country;
-import com.jk.ptk.model.UserAcStatus;
-import com.jk.ptk.model.UserRole;
 
 @Entity
 @Table(name="LibUser")

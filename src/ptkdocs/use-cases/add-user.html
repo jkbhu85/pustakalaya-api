@@ -24,18 +24,18 @@
             <li>User completes the registration process by filling a form.</li>
         </ol>
 
-        <p>To complete the step 2, one more component is required to get the details of partial registration.</p>
+        <p>To complete the step 2, one more component is required that gets the details of partial registration.</p>
 
         <h3>Terminology</h3>
         <table class="ptk-table-simple">
             <tbody>
                 <tr>
                     <td>User</td>
-                    <td>User to be added</td>
+                    <td>User to be added.</td>
                 </tr>
                 <tr>
                     <td>Requester</td>
-                    <td>The account using which the user is being added</td>
+                    <td>An existing user of the system.</td>
                 </tr>
             </tbody>
         </table>
@@ -97,7 +97,7 @@
                         <td>string</td>
                         <td>Required</td>
                         <td>Valid value of format
-                            <code class="nc">language_country</code>
+                            <code class="nc">language_country</code> (e.g. en_US)
                         </td>
                     </tr>
                 </tbody>
@@ -107,29 +107,30 @@
         <h3>Precondition</h3>
         <ul>
             <li>Requester is authenticated.</li>
-            <li>Requester must have priviledge of 'librarian' or above.</li>
+            <li>Requester must have priviledge of LIBRARIAN or above.</li>
             <li>All fields must be valid.</li>
             <li>A user with the specified email does not exist in the system.</li>
-            <li>If the user was partially registered priviously with the same email, old user data must be deleted.</li>
+            <li>If the user was partially registered priviously with the same email, old user data must be
+                deleted.</li>
         </ul>
 
         <h3>Success scenario</h3>
         <ol>
             <li>
-                <p>User is added to the system with following additional data.</p>
+                <p>User is added to the system with following the additional data.</p>
                 <ul>
-                    <li>a registration id</li>
+                    <li>a registration id (preferably a UUID)</li>
                     <li>a timestamp of current time</li>
-                    <li>a specified role</li>
+                    <li>a specified default role (preferably MEMBER)</li>
                     <li>primary key of the requester</li>
                 </ul>
             </li>
             <li>
-                <p>User is sent a mail containing a link to complete registration process. The language of the mail should be
-                    as specified in locale.</p>
-                <p>The link to complete registration should be in the following format:</p>
+                <p>User is sent a mail containing a link to complete registration process. The language
+                    of the mail should be the same as specified user locale. The link to complete registration
+                    should be in the following format.</p>
                 <div>
-                    <code class="url">https://&lt;app-domain&gt;/user/register/&lt;registration_id&gt;</code>
+                    <code class="url">https://&lt;app-domain&gt;/user/register?id=&lt;registration_id&gt;</code>
                 </div>
             </li>
         </ol>
@@ -163,13 +164,13 @@
             <li>
                 <p>Mail could not be sent to the user.</p>
                 <ul>
-                    <li>Delete user from the system.</li>
+                    <li>Delete user data from the system.</li>
                 </ul>
             </li>
             <li>
                 <p>Any other error.</p>
                 <ul>
-                    <li>Do nothing.</li>
+                    <li>Delete user data from the system if it was stored.</li>
                 </ul>
             </li>
         </ul>
@@ -178,59 +179,156 @@
         <p>
             Return a brief response. Numbers in parenthesis are
             <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>
-            to be used to send response. Numbers followed by a ':' are
-            <a href="../error-codes.html">error codes</a>.
+            and type of repsone content to be used to send response. Numbers followed by a ':' are
+            <a href="../error-codes.html">error codes</a>. Response type will always be
+            <code>application/json</code>.
         </p>
-        <dl class="response">
+        <dl class="response-list">
             <dt>Requester is not authenticated.</dt>
             <dd>
-                <p>ERROR_NOT_AUTHENTICATED (401)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>401</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_NOT_AUTHENTICATED"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>Requester is not authorized.</dt>
             <dd>
-                <p>ERROR_NOT_AUTHORIZED (403)</p>
-            </dd>
-
-            <dt>User with the specified email is already registered.</dt>
-            <dd>
-                <p>35:ERROR_DUPLICATE_EMAIL (422)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>403</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_NOT_AUTHORIZED"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
-                <p class="note">Send appropriate response code.</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>422</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_INVALID_FIELDS",
+    "errors": [
+        {
+            "fieldName": "&lt;EMAIL_FIELD_NAME&gt;",
+            "errorCode": 35
+        },
+        {
+            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
+            "errorCode": &lt;3x&gt;
+        }
+        ...
+    ]
+}</pre>
+                    </div>
+                </div>
+				
+                <p class="note">Send appropriate error code.</p>
             </dd>
 
             <dt>Mail could not be sent to the user.</dt>
             <dd>
-                <p>42:ERROR_EMAIL_NOT_SENT (422)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>422</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_EMAIL_NOT_SENT",
+    "errors": [
+        {
+            "fieldName": "&lt;EMAIL_FIELD_NAME&gt;",
+            "errorCode": 42
+        }
+    ]
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>500</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_SYSTEM_INACCESSIBLE"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (500)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>500</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_UNKNOWN"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>User was added successfully.</dt>
             <dd>
-                <p>10:SUCCESS_NEWUSER_ADDED (200)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>200</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "SUCCESS_NEWUSER_ADDED"
+}</pre>
+                    </div>
+                </div>
             </dd>
         </dl>
 
         <h3>Postcondition</h3>
         <p>
-            The link sent in email to complete registration process has a specified expiration time. If the user does not registers himself/herself
-            within that duration. His/her details must be removed from the system.
+            The link sent in email to complete registration process has a specified expiration time. If the user
+            does not registers himself/herself within that duration. His/her details must be removed
+            from the system.
         </p>
 
         <hr/>
+<!--
+                <div class="response">
+                    <div class="response-code">
+                        <span></span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+
+                        </pre>
+                    </div>
+                </div>
+-->
 
 
         <h2>Step 2: User completes the registration process by filling a form</h2>
@@ -290,8 +388,8 @@
                         <td>dateOfBirth</td>
                         <td>date</td>
                         <td>Required</td>
-                        <td>In the format DD/MM/YYYY (day/month/year). Date should be in the range [today minus 100] years to
-                            [today minus 3] years.
+                        <td>In the format DD/MM/YYYY (day/month/year). Date should be in the range [today
+                            minus 100] years to [today minus 3] years.
                         </td>
                     </tr>
                     <tr>
@@ -357,7 +455,8 @@
                 <ul>
                     <li>an abstract id for this user</li>
                     <li>a randomly generated salt</li>
-                    <li>hash generated from the password and salt (generated in above step) instead of the actual password</li>
+                    <li>hash generated from the password and salt (generated in above step) instead of the
+                        actual password</li>
                     <li>a specified password version</li>
                     <li>value of timestamp field that was saved at the time of partial registration</li>
                     <li>value of acCreatedBy field saved at the time of partial registration</li>
@@ -413,33 +512,76 @@
         </ul>
         <h3>Response</h3>
         <p>
-            Return a brief response. Numbers in parenthesis are HTTP response codes to be used to send response. Numbers followed by
-            a ':' are error codes.
+            Return a brief response. Numbers in parenthesis are HTTP response codes to be used to send response.
+            Numbers followed by a ':' are error codes.
         </p>
-        <dl class="response">
-            <dt>User with the specified email is already registered.</dt>
-            <dd>
-                <p>35:ERROR_DUPLICATE_EMAIL (422)</p>
-            </dd>
+        <dl class="response-list">
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>422</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_INVALID_FIELDS",
+    "errors": [
+        {
+            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
+            "errorCode": &lt;3x&gt;
+        }
+        ...
+    ]
+}</pre>
+                    </div>
+                </div>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>500</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_SYSTEM_INACCESSIBLE"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (500)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>500</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_UNKNOWN"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>User was added successfully.</dt>
             <dd>
-                <p>10:SUCCESS_USER_ADDED (200)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>200</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "SUCCESS_USER_ADDED"
+}</pre>
+                    </div>
+                </div>
             </dd>
         </dl>
 
@@ -521,58 +663,78 @@
         </ul>
 
         <h3>Response</h3>
-        <dl class="response">
+        <dl class="response-list">
             <dt>Data is invalid.</dt>
             <dd>
-                <p>3x:ERROR_INVALID_[FIRST_INVALID_FIELD_NAME] (422)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>422</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_INVALID_FIELDS",
+    "errors": [
+        {
+            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
+            "errorCode": &lt;3x&gt;
+        }
+        ...
+    ]
+}</pre>
+                    </div>
+                </div>
                 <p class="note">Send appropriate response code.</p>
             </dd>
 
             <dt>Storage system was inaccessible.</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>500</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_SYSTEM_INACCESSIBLE"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>Any other error</dt>
             <dd>
-                <p>41:ERROR_UNKNOWN (500)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>500</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_UNKNOWN"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
             <dt>User data was fetched.</dt>
             <dd>
-                <p>Return user details as JSON (200).</p>
-                <div class="ptk-table-wrapper">
-                    <table class="ptk-table">
-                        <thead>
-                            <tr>
-                                <th>JSON field name</th>
-                                <th>User detail</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>firstName</td>
-                                <td>first name</td>
-                            </tr>
-                            <tr>
-                                <td>lastName</td>
-                                <td>last name</td>
-                            </tr>
-                            <tr>
-                                <td>email</td>
-                                <td>email</td>
-                            </tr>
-                            <tr>
-                                <td>locale</td>
-                                <td>locale</td>
-                            </tr>
-                            <tr>
-                                <td>acCreatedBy</td>
-                                <td>account created by</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+				<div class="response">
+					<div class="response-code">
+						<span>200</span>
+					</div>
+					<div class="response-message">
+						<pre>
+{
+	"data": {
+		"firstName": "&lt;first_name&gt;",
+		"lastName": "&lt;last_name&gt;",
+		"email": "&lt;email&gt;",
+		"locale": "&lt;locale&gt;"
+	}
+}</pre>
+					</div>
+				</div>
             </dd>
         </dl>
         <hr/>
@@ -586,5 +748,16 @@
 
     <script src="../js/global.js"></script>
 </body>
+<!--
+<div class="response">
+    <div class="response-code">
+        <span></span>
+    </div>
+    <div class="response-message">
+        <pre>
 
+        </pre>
+    </div>
+</div>
+-->
 </html>

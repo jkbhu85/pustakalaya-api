@@ -3,10 +3,19 @@ package com.jk.ptk.f.address;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-public class AddressServiceImpl implements AddressService {
+import com.jk.ptk.app.DataValidation;
+import com.jk.ptk.app.ValidationException;
+
+/**
+ * An implementation of the {@code AddressService} type.
+ *
+ * @author Jitendra
+ *
+ */
+@Service
+public class AddressServiceImpl implements AddressService, DataValidation<Address> {
 	@Autowired
 	private AddressRepository repository;
 
@@ -16,13 +25,31 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public void addAddress(Long userId, Address address) {
-		repository.addAddress(userId, address);
+	public void addAddress(Address address) throws ValidationException {
+		validate(address);
+
+		repository.addAddress(address);
 	}
 
 	@Override
 	public void removeAddress(Address address) {
 		repository.removeAddress(address);
+	}
+
+	@Override
+	public Address getAddress(Long addressId) {
+		return repository.getAddress(addressId);
+	}
+
+	@Override
+	public void removeAddress(Long addressId) {
+		repository.removeAddress(addressId);
+	}
+
+	@Override
+	public void validate(Address obj) throws ValidationException {
+		// TODO Auto-generated method stub
+
 	}
 
 }

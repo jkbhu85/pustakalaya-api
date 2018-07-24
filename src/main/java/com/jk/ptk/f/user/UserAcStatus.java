@@ -1,5 +1,6 @@
 package com.jk.ptk.f.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,8 @@ import javax.persistence.TypedQuery;
 import com.jk.ptk.app.DataLayerInitialized;
 
 /**
- * Represents user account status.
+ * Represents a user account status.
+ *
  * @author Jitendra
  *
  */
@@ -32,7 +34,7 @@ public class UserAcStatus {
 	 * Returns an object representing user account status for the specified
 	 * {@code statusId}. If no status matching {@code statusId} exists then returns
 	 * {@code null}.
-	 * 
+	 *
 	 * @param statusId
 	 *            the specified user account status id
 	 * @return an object representing user account status for the specified
@@ -41,7 +43,8 @@ public class UserAcStatus {
 	 */
 	public static UserAcStatus fromId(Integer statusId) {
 		for (UserAcStatus s : acStatusArr) {
-			if (s.getId() == statusId) return s;
+			if (s.getId() == statusId)
+				return s;
 		}
 
 		return null;
@@ -86,6 +89,8 @@ public class UserAcStatus {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@Column(nullable = false)
 	private String name;
 
 	public UserAcStatus() {
@@ -99,7 +104,6 @@ public class UserAcStatus {
 		return name;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,16 +115,23 @@ public class UserAcStatus {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 		UserAcStatus other = (UserAcStatus) obj;
 		if (id == null) {
-			if (other.id != null) return false;
-		} else if (!id.equals(other.id)) return false;
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
 		if (name == null) {
-			if (other.name != null) return false;
-		} else if (!name.equals(other.name)) return false;
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
 		return true;
 	}
 

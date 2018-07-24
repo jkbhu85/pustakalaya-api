@@ -3,40 +3,54 @@ package com.jk.ptk.f.address;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.jk.ptk.f.user.User;
+/**
+ * Repository to perform CRUD operations for the instances of type
+ * {@link Address}.
+ *
+ * @author Jitendra
+ *
+ */
 
 @Repository
 @Transactional
 public class AddressRepository {
 	@Autowired
 	private EntityManager em;
-	
-	public List<Address> getAddresses(Long userId) {
-		User user = em.find(User.class, userId);
-		
-		if (user == null) return null;
-		
-		return user.getAddressList();
+
+	public Address getAddress(Long addressId) {
+		return em.find(Address.class, addressId);
 	}
-	
-	
-	public void addAddress(Long userId, Address address) {
-		User user = em.find(User.class, userId);
-		address.setUser(user);
-		user.addAddress(address);
-		
+
+	public List<Address> getAddresses(Long userId) {
+		TypedQuery<Address> query = em.createNamedQuery("address_by_user_id", Address.class);
+		query.setParameter(0, userId);
+
+		return query.getResultList();
+	}
+
+	public void addAddress(Address address) {
+		if (address == null)
+			return;
+
 		em.persist(address);
 	}
-	
+
 	public void removeAddress(Address address) {
-		User user = address.getUser();
-		user.removeAddress(address);
-		
+		if (address == null)
+			return;
+
 		em.remove(address);
+	}
+
+	public void removeAddress(Long addressId) {
+		Address addr = em.find(Address.class, addressId);
+
+		removeAddress(addr);
 	}
 }

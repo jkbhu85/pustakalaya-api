@@ -16,39 +16,39 @@ public class UserAuthInfo {
 	@Id
 	private Long id;
 
-	@Column(name = "firstName")
+	@Column(name = "firstName", nullable = false)
 	private String firstName;
 
-	@Column(name = "emailUk")
+	@Column(name = "emailUk", nullable = false, unique = true)
 	private String email;
 
 	@Column(name = "unsuccessfulTries")
 	private int unsuccessfulTries;
 
-	@Column(name = "passwordHash")
+	@Column(name = "passwordHash", nullable = false)
 	private String passwordHash;
 
-	@Column(name = "passwordSalt")
+	@Column(name = "passwordSalt", nullable = false)
 	private String passwordSalt;
 
 	@Column(name = "passwordVersion")
 	private int passwordVersion;
 
-	@Column(name = "securityQuestion")
+	@Column(name = "securityQuestion", nullable = false)
 	private String securityQuestion;
 
-	@Column(name = "securityAnswer")
+	@Column(name = "securityAnswer", nullable = false)
 	private String securityAnswer;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "roleFk")
+	@JoinColumn(name = "roleFk", nullable = false)
 	private UserRole role;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "accountStatusFk")
+	@JoinColumn(name = "accountStatusFk", nullable = false)
 	private UserAcStatus accountStatus;
 
-	@Column(name = "locale")
+	@Column(name = "locale", nullable = false)
 	private String localeValue;
 
 	public UserAuthInfo() {

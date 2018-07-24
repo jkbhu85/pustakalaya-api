@@ -11,53 +11,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.ptk.app.ValidationException;
+import com.jk.ptk.f.user.User;
+import com.jk.ptk.util.mail.MailNotSentException;
 
 /**
- * REST controller for entity {@link NewUser}.
- * 
+ * API endpoint to manipulate instances of type {@link NewUser}.
+ *
  * @author Jitendra
  *
  */
 
 @RestController
-@RequestMapping("/api/newUser")
+@RequestMapping("/ptk/newUser")
 public class NewUserController {
-	/*
-	 * msg format:
-	 * [SUCCESS|ERROR]_[ENTITY]_[OPERATION]_[SHORT_ERROR DESCRIPTION]
-	 */
-	private static final String MSG_SUCCESS_USER_ADD = "SUCCESS_NEWUSER_ADD";
-	private static final String MSG_ERROR_USER_ADD = "ERROR_NEWUSER_ADD";
-	private static final String MSG_ERROR_USER_ADD_UNKNOWN = "ERROR_NEWUSER_ADD_UNKNOWN";
-	
 	@Autowired
 	private NewUserService service;
 
 	/**
-	 * Adds a new user to the system.
-	 * 
+	 * Stores the specified instance to the storage.
+	 *
 	 * @param newUser
-	 *            the speicified user to add to system.
+	 *            the speicified instance to be stored
 	 */
 	@PostMapping
 	public ResponseEntity<String> addNewUser(@RequestBody NewUser newUser) {
-		ResponseEntity<String> rs;
-		
+		ResponseEntity<String> response;
+
 		try {
+			User acCreatedBy = null;
+			newUser.setAcCreatedBy(acCreatedBy);
+
 			service.addNewUser(newUser);
-			rs = new ResponseEntity<>(MSG_SUCCESS_USER_ADD, HttpStatus.ACCEPTED);
+
+			response = new ResponseEntity<>("10:SUCCESS_NEWUSER_ADDED", HttpStatus.ACCEPTED);
 		} catch (ValidationException e) {
-			rs = new ResponseEntity<>(MSG_ERROR_USER_ADD + "_INVALID_" + e.getMessage(), HttpStatus.PRECONDITION_FAILED);
+			response = new ResponseEntity<>(e.getErrorCode() + ":ERROR_INVALID_" + e.getFieldName(), HttpStatus.UNPROCESSABLE_ENTITY);
+		} catch (MailNotSentException e) {
+			response = new ResponseEntity<>("42:ERROR_EMAIL_NOT_SENT", HttpStatus.UNPROCESSABLE_ENTITY);
 		} catch (Exception e) {
-			rs = new ResponseEntity<>(MSG_ERROR_USER_ADD_UNKNOWN, HttpStatus.INTERNAL_SERVER_ERROR);
+			response = new ResponseEntity<>("41:ERROR_UNKNOWN", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
-		return rs;
+
+		return response;
 	}
 
 	/**
 	 * Returns new user associated with {@code id}.
-	 * 
+	 *
 	 * @param id
 	 *            the speicifed id
 	 * @return new user associated with {@code id}

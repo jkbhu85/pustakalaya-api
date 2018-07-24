@@ -1,5 +1,6 @@
 package com.jk.ptk.f.book;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,8 @@ import javax.persistence.TypedQuery;
 import com.jk.ptk.app.DataLayerInitialized;
 
 /**
- * Represents book category.
+ * Represents a book category.
+ *
  * @author Jitendra
  *
  */
@@ -28,7 +30,7 @@ public class BookCategory {
 	 * Returns an object representing book category for the specified
 	 * {@code categoryId}. If no category matching {@code categoryId} exists then
 	 * returns {@code null}.
-	 * 
+	 *
 	 * @param categoryId
 	 *            the specified book category id
 	 * @return an object representing book category for the specified
@@ -44,7 +46,7 @@ public class BookCategory {
 	}
 
 	public static void init(EntityManager em) {
-		final String jpql = "select c from BookCategory c where name=:name";
+		final String jpql = "select c from BookCategory c where c.name=:name";
 		BookCategory cat;
 		TypedQuery<BookCategory> query;
 
@@ -68,6 +70,7 @@ public class BookCategory {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(nullable=false)
 	private String name;
 
 	public Integer getId() {

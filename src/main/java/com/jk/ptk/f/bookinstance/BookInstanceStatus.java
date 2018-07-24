@@ -1,5 +1,6 @@
 package com.jk.ptk.f.bookinstance;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.TypedQuery;
 
 import com.jk.ptk.app.DataLayerInitialized;
+
+/**
+ * Represents a book instance status.
+ *
+ * @author Jitendra
+ *
+ */
 
 @Entity
 @DataLayerInitialized
@@ -25,7 +33,7 @@ public class BookInstanceStatus {
 	 * Returns an object representing book instance status for the specified
 	 * {@code statusId}. If no status matching {@code statusId} exists then returns
 	 * {@code null}.
-	 * 
+	 *
 	 * @param statusId
 	 *            the specified book instance status
 	 * @return an object representing book instance status for the specified
@@ -77,6 +85,7 @@ public class BookInstanceStatus {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(nullable = false)
 	private String name;
 
 	private BookInstanceStatus() {

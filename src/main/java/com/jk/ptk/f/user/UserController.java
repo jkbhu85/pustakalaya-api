@@ -16,9 +16,9 @@ public class UserController {
 	@Autowired
 	private UserService service;
 
-	@GetMapping("/{id}")
-	public User getUser(@PathVariable("id") Long id) {
-		return service.getUser(id);
+	@GetMapping("/{email}")
+	public User getUser(@PathVariable("email") String email) {
+		return service.getUser(email);
 	}
 
 	@PutMapping("/password")
@@ -33,7 +33,6 @@ public class UserController {
 			e.printStackTrace();
 		}
 	}
-
 
 	@PutMapping("/question")
 	public void updateSecurityQuestion(@RequestBody Map<String, String> body) {

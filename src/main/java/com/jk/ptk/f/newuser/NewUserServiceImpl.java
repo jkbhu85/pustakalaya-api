@@ -16,35 +16,37 @@ import com.jk.ptk.util.UuidUtils;
 import com.jk.ptk.util.mail.MailTemplateService;
 
 /**
- * Uses ORM framework to store and retrieve the object. An mail is sent to
- * user's email address with a link to complete registration process.
- * 
+ * An implementation of the {@code NewUserService} type.
+ *
  * @author Jitendra
  *
  */
 @Service
 public class NewUserServiceImpl implements NewUserService, DataValidation<NewUser> {
 	@Autowired
-	private NewUserRepository repo;
+	private NewUserRepository repository;
 
 	@Autowired
 	private MailTemplateService mailService;
 
 	@Override
 	public void addNewUser(NewUser newUser) throws ValidationException {
+		// validate fields
+		validate(newUser);
+
 		// set required fields
 		newUser.setId(UuidUtils.generate());
 		newUser.setRole(UserRole.DEFAULT_USER_ROLE);
-		// validate fields
-		validate(newUser);
+
 		// store into db
-		//repo.saveNewUser(newUser);
+		//repository.saveNewUser(newUser);
+
 		// notify user
 		sendMail(newUser);
 	}
 
 	private boolean sendMail(NewUser newUser) {
-		String registrationUri = App.getUrl("/api/newUser/" + newUser.getId());
+		String registrationUri = App.getUrl("/ptk/newUser/" + newUser.getId());
 		Map<String, Object> params = new HashMap<>();
 
 		params.put(MailConsts.PARAM_COMPLETE_REGISRATION_USER_NAME, newUser.getFirstName());
@@ -57,11 +59,11 @@ public class NewUserServiceImpl implements NewUserService, DataValidation<NewUse
 
 	@Override
 	public NewUser getNewUser(String id) {
-		return repo.findNewUser(id);
+		return repository.findNewUser(id);
 	}
 
 	@Override
-	public void validate(NewUser obj) throws ValidationException {
+	public void validate(NewUser newUser) throws ValidationException {
 		// TODO Auto-generated method stub
 	}
 

@@ -1,0 +1,5 @@
+User case - add user - Step 1: Requester adds user with a few details
+	- remove error 35:ERROR_DUPLICATE_EMAIL (422)
+	
+error-codes
+	- from the introduction remove the line that last line

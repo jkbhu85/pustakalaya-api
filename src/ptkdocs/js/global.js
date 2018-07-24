@@ -38,6 +38,7 @@ function loadHeader() {
                     <td>
                         <div class="header-text">
                             <div class="header-text-top">Pustakalaya</div>
+                            <div class="header-text-bottom">पुस्तकालय</div>
                         </div>
                     </td>
                 </tr>

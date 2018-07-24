@@ -1,5 +1,6 @@
 package com.jk.ptk.f.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
@@ -10,8 +11,8 @@ import javax.persistence.TypedQuery;
 import com.jk.ptk.app.DataLayerInitialized;
 
 /**
- * Represents user role.
- * 
+ * Represents a user role.
+ *
  * @author Jitendra
  *
  */
@@ -20,8 +21,8 @@ import com.jk.ptk.app.DataLayerInitialized;
 @DataLayerInitialized
 public class UserRole {
 	/**
-	 * Default user role to use when creating a new user.
-	 * 
+	 * Default user role to be used when creating a new user.
+	 *
 	 * <p>
 	 * The current default role is MEMBER.
 	 * </p>
@@ -38,7 +39,7 @@ public class UserRole {
 	/**
 	 * Returns an object representing user role for the specified {@code roleId}. If
 	 * no role matching {@code roleId} exists then returns {@code null}.
-	 * 
+	 *
 	 * @param roleId
 	 *            the specified user role id
 	 * @return an object representing user role for the specified {@code roleId} or
@@ -46,7 +47,8 @@ public class UserRole {
 	 */
 	public static UserRole fromId(Integer roleId) {
 		for (UserRole r : roles) {
-			if (r.getId() == roleId) return r;
+			if (r.getId() == roleId)
+				return r;
 		}
 
 		return null;
@@ -89,6 +91,8 @@ public class UserRole {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@Column(nullable = false)
 	private String name;
 
 	public UserRole() {
@@ -111,11 +115,6 @@ public class UserRole {
 	}
 
 	@Override
-	public String toString() {
-		return "UserRole [id=" + id + ", name=" + name + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		// return sum of hashcodes of id and name
 		return ((id == null) ? 0 : id.hashCode()) + ((name == null) ? 0 : name.hashCode());
@@ -123,14 +122,24 @@ public class UserRole {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj == null) return false;
-		if (getClass() != obj.getClass()) return false;
+		if (obj == this)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
 
 		UserRole other = (UserRole) obj;
 
-		if (id == null || name == null) return false;
+		if (id == null || name == null)
+			return false;
 
 		return (id.equals(other.id) && name.equals(other.name));
 	}
+
+	@Override
+	public String toString() {
+		return "UserRole [id=" + id + ", name=" + name + "]";
+	}
+
 }

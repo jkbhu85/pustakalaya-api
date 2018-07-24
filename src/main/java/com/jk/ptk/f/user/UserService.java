@@ -1,31 +1,20 @@
 package com.jk.ptk.f.user;
 
+import com.jk.ptk.app.ValidationException;
 import com.jk.ptk.security.login.InvalidCredentialsException;
 
 public interface UserService {
-	User getUser(Long id);
+	void addUser(User user) throws ValidationException;
 
-	UserAuthInfo getUserAuthInfo(Long id);
+	User getUser(String email);
+
+	void updateUser(String email, String fieldName, String newValue) throws ValidationException;
 
 	UserAuthInfo getUserAuthInfo(String email);
-	
+
 	void updateUserAuthInfo(UserAuthInfo authInfo);
 
 	void updatePassword(Long id, String oldPassword, String newPassword) throws InvalidCredentialsException;
 
 	void updateSecurityQuestion(Long id, String password, String question, String answer) throws InvalidCredentialsException;
-
-	void addUser(String email, String firstName, String lastName, String localeStr);
-
-	default void lockAccount(Long id) {
-	}
-
-	default void revokeAccount(Long id) {
-	}
-
-	default void activateAccount(Long id) {
-	}
-
-	default void deleteAccount(Long id) {
-	}
 }

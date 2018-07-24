@@ -2,43 +2,53 @@ package com.jk.ptk.f.newuser;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.NamedQuery;
 
 import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRole;
 
 /**
- * Represents a newly added user to the system. This user has only few details
- * about him/her and needs to complete registration process before he/she can
- * use the system.
- * 
+ * Represents a newly added user with partial details.
+ *
  * @author Jitendra
  *
  */
 @Entity
-@Table(name = "NewUser")
+@NamedQuery(name="delete_by_email", query = "delete from NewUser u where u.email=:email")
 public class NewUser {
 	@Id
 	private String id;
 
+	@Column(name = "emailUk", nullable = false, unique = true)
 	private String email;
+
+	@Column(nullable = false)
 	private String firstName;
+
+	@Column(nullable = false)
 	private String lastName;
+
+	@Column(name = "locale", nullable = false)
 	private String localeStr;
+
+	@Column(nullable = false)
 	private Date createdOn;
+
+	@Column(nullable = false)
 	private Date expiresOn;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "roleFk")
+	@JoinColumn(name = "roleFk", nullable = false)
 	private UserRole role;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "acCreatedByFk")
+	@JoinColumn(name = "acCreatedByFk", nullable = false)
 	private User acCreatedBy;
 
 	/**

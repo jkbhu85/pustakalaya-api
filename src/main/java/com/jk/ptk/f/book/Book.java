@@ -1,31 +1,51 @@
 package com.jk.ptk.f.book;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import com.jk.ptk.f.user.User;
+
 /**
- * Represents book in database.
- * 
+ * Represents a book in database.
+ *
  * @author Jitendra
  *
  */
+@Entity
 public class Book {
-	private int bookId;
-	private String title;
-	private String author;
-	private int editon;
-	private double price;
-	private int noOfPages;
-	private String isbn;
-	private String publication;
-	
-	public Book() {
-		this(0);
-	}
-	
-	public Book(int bookId) {
-		this.bookId = bookId;
-	}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-	public int getBookId() {
-		return bookId;
+	@Column(nullable = false)
+	private String title;
+
+	private String authors;
+
+	private int editon;
+
+	private String isbn;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "categoryFk", nullable = false)
+	private BookCategory bookCategory;
+
+	@Column(nullable = false)
+	private LocalDate addedOn;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "addedByFk", nullable = false)
+	private User addedBy;
+
+	public Book() {
 	}
 
 	public String getTitle() {
@@ -36,12 +56,12 @@ public class Book {
 		this.title = title;
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getAuthors() {
+		return authors;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setAuthors(String authors) {
+		this.authors = authors;
 	}
 
 	public int getEditon() {
@@ -52,22 +72,6 @@ public class Book {
 		this.editon = editon;
 	}
 
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public int getNoOfPages() {
-		return noOfPages;
-	}
-
-	public void setNoOfPages(int noOfPages) {
-		this.noOfPages = noOfPages;
-	}
-
 	public String getIsbn() {
 		return isbn;
 	}
@@ -76,11 +80,28 @@ public class Book {
 		this.isbn = isbn;
 	}
 
-	public String getPublication() {
-		return publication;
+	public BookCategory getBookCategory() {
+		return bookCategory;
 	}
 
-	public void setPublication(String publication) {
-		this.publication = publication;
+	public void setBookCategory(BookCategory bookCategory) {
+		this.bookCategory = bookCategory;
 	}
+
+	public User getAddedBy() {
+		return addedBy;
+	}
+
+	public void setAddedBy(User addedBy) {
+		this.addedBy = addedBy;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public LocalDate getAddedOn() {
+		return addedOn;
+	}
+
 }

@@ -32,4 +32,9 @@ public class UserRepository {
 		em.merge(userAuthInfo);
 		em.flush();
 	}
+
+	public User findUser(String email) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

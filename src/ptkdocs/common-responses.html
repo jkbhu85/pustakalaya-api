@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pustakalaya | Common Responses</title>
+    <link type="text/css" rel="stylesheet" href="./css/pustakalaya.css" />
+</head>
+
+<body>
+    <header id="header"></header>
+
+    <nav></nav>
+
+    <div class="main-content">
+        <noscript>
+            This website does not work without JavaScript. Please enable JavaScript or use a browser that supports
+            JavaScript.
+        </noscript>
+
+        <h1>Common Responses</h1>
+        <p>These are common responses returned by the API. Response type is <code>application/json</code>.
+        See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>.
+        See <a href="../error-codes.html">error codes</a>.</p>
+
+        <p>The format of the response is as following:</p>
+        <div class="response">
+            <div class="response-message">
+        <pre>
+{
+    "responseCode": &lt;xx&gt;
+    "message": "",
+    "errors": [],
+    "data": &lt;primitive_type&gt; | {} | []
+}</pre>
+            </div>
+        </div>
+
+        <div class="note">A response may or may not have all the fields.</div>
+
+        <hr/>
+
+        <dl class="response-list">
+            <dt>Requester is not authenticated.</dt>
+            <dd>
+                <div class="response">
+                    <div class="response-code">
+                        <span>401</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_NOT_AUTHENTICATED"
+}</pre>
+                    </div>
+                </div>
+            </dd>
+
+            <dt>Requester is not authorized.</dt>
+            <dd>
+                <div class="response">
+                    <div class="response-code">
+                        <span>403</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_NOT_AUTHORIZED"
+}</pre>
+                    </div>
+                </div>
+            </dd>
+
+            <dt>Any other error.</dt>
+            <dd>
+                <div class="response">
+                    <div class="response-code">
+                        <span>500</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "message": "ERROR_UNKNOWN"
+}</pre>
+                    </div>
+                </div>
+            </dd>
+
+            <dt>Data is invalid.</dt>
+            <dd>
+                <div class="response">
+                    <div class="response-code">
+                        <span>422</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "responseCode": 61,
+    "message": "ERROR_INVALID_FIELDS",
+    "errors": [
+        {
+            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
+            "errorCode": &lt;3x&gt;
+        },
+        ...
+    ]
+}</pre>
+                    </div>
+                </div>
+				
+                <p class="note">Send appropriate error code.</p>
+            </dd>
+        </dl>
+
+    </div>
+
+    <footer id="footer"></footer>
+    <script src="./js/global.js"></script>
+</body>
+
+</html>

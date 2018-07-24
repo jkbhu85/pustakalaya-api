@@ -156,12 +156,6 @@
                 </ul>
             </li>
             <li>
-                <p>Storage system was inaccessible.</p>
-                <ul>
-                    <li>Do nothing.</li>
-                </ul>
-            </li>
-            <li>
                 <p>Mail could not be sent to the user.</p>
                 <ul>
                     <li>Delete user data from the system.</li>
@@ -177,69 +171,25 @@
 
         <h3>Response</h3>
         <p>
-            Return a brief response. Numbers in parenthesis are
-            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>
-            and type of repsone content to be used to send response. Numbers followed by a ':' are
-            <a href="../error-codes.html">error codes</a>. Response type will always be
-            <code>application/json</code>.
+            The cases for which a response is not shown, the response is to be shown from 
+            <a href="../common-responses.html">common responses</a>.
         </p>
+
         <dl class="response-list">
-            <dt>Requester is not authenticated.</dt>
+            <dt>User was added successfully.</dt>
             <dd>
                 <div class="response">
                     <div class="response-code">
-                        <span>401</span>
+                        <span>200</span>
                     </div>
                     <div class="response-message">
                         <pre>
 {
-    "message": "ERROR_NOT_AUTHENTICATED"
+    "responseCode": 10,
+    "message": "SUCCESS_USER_ADDED"
 }</pre>
                     </div>
                 </div>
-            </dd>
-
-            <dt>Requester is not authorized.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>403</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_NOT_AUTHORIZED"
-}</pre>
-                    </div>
-                </div>
-            </dd>
-
-            <dt>Data is invalid.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>422</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_INVALID_FIELDS",
-    "errors": [
-        {
-            "fieldName": "&lt;EMAIL_FIELD_NAME&gt;",
-            "errorCode": 35
-        },
-        {
-            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
-            "errorCode": &lt;3x&gt;
-        }
-        ...
-    ]
-}</pre>
-                    </div>
-                </div>
-				
-                <p class="note">Send appropriate error code.</p>
             </dd>
 
             <dt>Mail could not be sent to the user.</dt>
@@ -251,62 +201,24 @@
                     <div class="response-message">
                         <pre>
 {
-    "message": "ERROR_EMAIL_NOT_SENT",
-    "errors": [
-        {
-            "fieldName": "&lt;EMAIL_FIELD_NAME&gt;",
-            "errorCode": 42
-        }
-    ]
+    "responseCode": 38,
+    "message": "ERROR_EMAIL_NOT_SENT"
 }</pre>
                     </div>
                 </div>
             </dd>
 
-            <dt>Storage system was inaccessible.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>500</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_SYSTEM_INACCESSIBLE"
-}</pre>
-                    </div>
-                </div>
-            </dd>
+            <dt>Requester is not authenticated.</dt>
+            <dd></dd>
+
+            <dt>Requester is not authorized.</dt>
+            <dd></dd>
+
+            <dt>Data is invalid.</dt>
+            <dd></dd>
 
             <dt>Any other error</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>500</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_UNKNOWN"
-}</pre>
-                    </div>
-                </div>
-            </dd>
-
-            <dt>User was added successfully.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>200</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "SUCCESS_NEWUSER_ADDED"
-}</pre>
-                    </div>
-                </div>
-            </dd>
+            <dd></dd>
         </dl>
 
         <h3>Postcondition</h3>
@@ -317,18 +229,6 @@
         </p>
 
         <hr/>
-<!--
-                <div class="response">
-                    <div class="response-code">
-                        <span></span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-
-                        </pre>
-                    </div>
-                </div>
--->
 
 
         <h2>Step 2: User completes the registration process by filling a form</h2>
@@ -398,7 +298,7 @@
                         <td>Required</td>
                         <td>
                             Must pass the regular expression
-                            <code class="pattern">[1-9][0-9]{9}</code>.
+                            <code class="pattern">[1-9][0-9]{9}</code>
                         </td>
                     </tr>
                     <tr>
@@ -498,12 +398,6 @@
                 </ul>
             </li>
             <li>
-                <p>Storage system was inaccessible.</p>
-                <ul>
-                    <li>Do nothing.</li>
-                </ul>
-            </li>
-            <li>
                 <p>Any other error.</p>
                 <ul>
                     <li>Do nothing.</li>
@@ -512,63 +406,11 @@
         </ul>
         <h3>Response</h3>
         <p>
-            Return a brief response. Numbers in parenthesis are HTTP response codes to be used to send response.
-            Numbers followed by a ':' are error codes.
+            The cases for which a response is not shown, the response is to be shown from 
+            <a href="../common-responses.html">common responses</a>.
         </p>
+
         <dl class="response-list">
-            <dt>Data is invalid.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>422</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_INVALID_FIELDS",
-    "errors": [
-        {
-            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
-            "errorCode": &lt;3x&gt;
-        }
-        ...
-    ]
-}</pre>
-                    </div>
-                </div>
-                <p class="note">Send appropriate response code.</p>
-            </dd>
-
-            <dt>Storage system was inaccessible.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>500</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_SYSTEM_INACCESSIBLE"
-}</pre>
-                    </div>
-                </div>
-            </dd>
-
-            <dt>Any other error</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>500</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_UNKNOWN"
-}</pre>
-                    </div>
-                </div>
-            </dd>
-
             <dt>User was added successfully.</dt>
             <dd>
                 <div class="response">
@@ -583,6 +425,12 @@
                     </div>
                 </div>
             </dd>
+
+            <dt>Data is invalid.</dt>
+            <dd></dd>
+
+            <dt>Any other error</dt>
+            <dd></dd>
         </dl>
 
         <hr/>
@@ -604,9 +452,10 @@
             </tbody>
         </table>
 
+        
         <h3>Required</h3>
         <div class="ptk-table-wrapper">
-            <table class="ptk-table">
+            <table class="ptk-table full-width">
                 <thead>
                     <tr>
                         <th>Field</th>
@@ -617,19 +466,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>registrationId</td>
+                        <td>&lt;registration_id&gt;</td>
                         <td>string</td>
                         <td>Required</td>
-                        <td>Id exist and has not expired</td>
+                        <td>Must be a valid id registered in the system.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+
         <h3>Success scenario</h3>
         <ul>
             <li>
-                <p>Details of partial registration are fetched from system using registration_id.</p>
+                <p>Details of partial registration are fetched from system using <code>&lt;registration_id&gt;</code>.</p>
                 <ul>
                     <li>first name</li>
                     <li>last name</li>
@@ -649,12 +499,6 @@
                 </ul>
             </li>
             <li>
-                <p>Storage system was inaccessible.</p>
-                <ul>
-                    <li>Do nothing.</li>
-                </ul>
-            </li>
-            <li>
                 <p>Any other error.</p>
                 <ul>
                     <li>Do nothing.</li>
@@ -663,79 +507,37 @@
         </ul>
 
         <h3>Response</h3>
+        <p>
+            The cases for which a response is not shown, the response is to be shown from 
+            <a href="../common-responses.html">common responses</a>.
+        </p>
+
         <dl class="response-list">
-            <dt>Data is invalid.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>422</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_INVALID_FIELDS",
-    "errors": [
-        {
-            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
-            "errorCode": &lt;3x&gt;
-        }
-        ...
-    ]
-}</pre>
-                    </div>
-                </div>
-                <p class="note">Send appropriate response code.</p>
-            </dd>
-
-            <dt>Storage system was inaccessible.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>500</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_SYSTEM_INACCESSIBLE"
-}</pre>
-                    </div>
-                </div>
-            </dd>
-
-            <dt>Any other error</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>500</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_UNKNOWN"
-}</pre>
-                    </div>
-                </div>
-            </dd>
-
             <dt>User data was fetched.</dt>
             <dd>
-				<div class="response">
-					<div class="response-code">
-						<span>200</span>
-					</div>
-					<div class="response-message">
-						<pre>
+                <div class="response">
+                    <div class="response-code">
+                        <span>200</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
 {
-	"data": {
-		"firstName": "&lt;first_name&gt;",
-		"lastName": "&lt;last_name&gt;",
-		"email": "&lt;email&gt;",
-		"locale": "&lt;locale&gt;"
-	}
+    "data": {
+        "firstName": "&lt;first_name&gt;",
+        "lastName": "&lt;last_name&gt;",
+        "email": "&lt;email&gt;",
+        "locale": "&lt;locale&gt;"
+    }
 }</pre>
-					</div>
-				</div>
+                    </div>
+                </div>
             </dd>
+
+            <dt>Data is invalid.</dt>
+            <dd></dd>
+
+            <dt>Any other error</dt>
+            <dd></dd>
         </dl>
         <hr/>
 
@@ -748,16 +550,4 @@
 
     <script src="../js/global.js"></script>
 </body>
-<!--
-<div class="response">
-    <div class="response-code">
-        <span></span>
-    </div>
-    <div class="response-message">
-        <pre>
-
-        </pre>
-    </div>
-</div>
--->
 </html>

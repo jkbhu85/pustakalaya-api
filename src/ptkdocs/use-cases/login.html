@@ -16,7 +16,7 @@
         <noscript>
             This website does not work without JavaScript. Please enable JavaScript or use a browser that supports JavaScript.
         </noscript>
-		
+        
         <div class="back-button">
             <a href="./toc-uses-cases.html">Back</a>
         </div>
@@ -189,32 +189,47 @@
 
         <h3>Response</h3>
         <p>
-            Return a brief response. Numbers in parenthesis are
-            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>
-            to be used to send response. Numbers followed by a ':' are
-            <a href="../error-codes.html">error codes</a>.
+            The cases for which a response is not shown, the response is to be shown from 
+            <a href="../common-responses.html">common responses</a>.
         </p>
-        <dl class="response">
-            <dt>Login is unsuccessful</dt>
+
+        <dl class="response-list">
+            <dt>Login is successful</dt>
             <dd>
-                <p>2x:ERROR_LOGIN_UNSUCCESSFUL (422)</p>
-                <p class="note">Send appropriate response code.</p>
+                <p>Send a JWT with specified <em>payload</em>.</p>
+                
+                <div class="response">
+                    <div class="response-code">
+                        <span>200</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "data": "&lt;jwt&gt;"
+}</pre>
+                    </div>
+                </div>
             </dd>
 
-            <dt>Storage system was inaccessible.</dt>
+            <dt>Login is unsuccessful</dt>
             <dd>
-                <p>41:ERROR_SYSTEM_INACCESSIBLE (500)</p>
+                <div class="response">
+                    <div class="response-code">
+                        <span>422</span>
+                    </div>
+                    <div class="response-message">
+                        <pre>
+{
+    "responseCode": 2x,
+    "message": "ERROR_LOGIN_UNSUCCESSFUL"
+}</pre>
+                    </div>
+                </div>
+                <div class="note">Send appropriate response code.</div>
             </dd>
 
             <dt>Any other error</dt>
-            <dd>
-                <p>41:ERROR_UNKNOWN (500)</p>
-            </dd>
-
-            <dt>Login is successful</dt>
-            <dd>
-                <p>Send a JWT with a specified expiration time and <em>payload</em> (200)</p>
-            </dd>
+            <dd></dd>
         </dl>
 
         <hr/>

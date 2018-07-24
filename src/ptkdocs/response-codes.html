@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Pustakalaya | Error Codes</title>
+    <title>Pustakalaya | Response Codes</title>
     <link type="text/css" rel="stylesheet" href="./css/pustakalaya.css" />
 </head>
 
@@ -17,10 +17,8 @@
             This website does not work without JavaScript. Please enable JavaScript or use a browser that supports JavaScript.
         </noscript>
 
-        <h1>Error Codes</h1>
-        <p>These codes can be sent with resposne messages from API endpoint to client. These codes are meant to be sent with
-            HTTP response code
-            <code>200</code>.</p>
+        <h1>Response Codes</h1>
+        <p>These codes can be sent with resposne messages from API endpoint to client.</p>
 
         <h2>Successful responses</h2>
         <dl class="error-codes">
@@ -176,19 +174,26 @@
             <dd>
                 <p>Empty file</p>
             </dd>
+
+            <dt>
+                <code>38</code>
+            </dt>
+            <dd>
+                <p>Mail could not be sent due to invalid email address</p>
+            </dd>
         </dl>
 
         <h2>System related</h2>
         <dl class="error-codes">
             <dt>
-                <code>41</code>
+                <code>51</code>
             </dt>
             <dd>
                 <p>System unavailable</p>
             </dd>
 
             <dt>
-                <code>42</code>
+                <code>52</code>
             </dt>
             <dd>
                 <p>Mail could not be sent</p>
@@ -198,28 +203,21 @@
         <h2>Unsuccessful responses</h2>
         <dl class="error-codes">
             <dt>
-                <code>51</code>
+                <code>61</code>
             </dt>
             <dd>
                 <p>Operation unsuccessful</p>
             </dd>
 
             <dt>
-                <code>52</code>
-            </dt>
-            <dd>
-                <p>Unknown error (The system did not anticipate this error.)</p>
-            </dd>
-
-            <dt>
-                <code>53</code>
+                <code>62</code>
             </dt>
             <dd>
                 <p>Limit exceeded</p>
             </dd>
 
             <dt>
-                <code>54</code>
+                <code>63</code>
             </dt>
             <dd>
                 <p>Resource does not exist</p>

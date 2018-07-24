@@ -44,7 +44,7 @@ CREATE TABLE ptk.BookInstanceStatus (
 
 CREATE TABLE ptk.BookCategory (
 	id       SMALLINT NOT NULL AUTO_INCREMENT,
-    category VARCHAR(24) NOT NULL,
+    name VARCHAR(24) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -208,12 +208,14 @@ CREATE TABLE ptk.BookAssignmentHistory (
     expectedReturnDate DATE NOT NULL,
     returnDate     TIMESTAMP NULL,
     amountFined    DECIMAL(9, 2),
+    currency       SMALLINT,
     comments       VARCHAR(200),
     PRIMARY KEY (id),
     FOREIGN KEY (bookInstanceFk) REFERENCES BookInstance (id),
     FOREIGN KEY (issuedToFk) REFERENCES LibUser (id),
     FOREIGN KEY (issuedByFk) REFERENCES LibUser (id),
-    FOREIGN KEY (releasedByFk) REFERENCES LibUser (id)
+    FOREIGN KEY (releasedByFk) REFERENCES LibUser (id),
+    FOREIGN KEY (currency) REFERENCES Currency (id)
 );
 
 

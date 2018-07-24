@@ -211,7 +211,7 @@
           </tr>
 
           <tr>
-            <td>category</td>
+            <td>name</td>
             <td>string</td>
             <td>1</td>
             <td>24</td>
@@ -1096,6 +1096,14 @@
           </tr>
 
           <tr>
+            <td>released_by_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>not null, foreign key (LibUser)</td>
+          </tr>
+
+          <tr>
             <td>issued_on</td>
             <td>timestamp</td>
             <td>-</td>
@@ -1125,6 +1133,14 @@
             <td>-</td>
             <td>9, 2</td>
             <td>can not be negative</td>
+          </tr>
+
+          <tr>
+            <td>currency_fk</td>
+            <td>number</td>
+            <td>-</td>
+            <td>-</td>
+            <td>foreign key (Currency)</td>
           </tr>
 
           <tr>

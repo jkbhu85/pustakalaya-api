@@ -1,8 +1,5 @@
 package com.jk.ptk;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import com.jk.ptk.app.Initializer;
 
 /**
- * Starting point for this Spring application.
+ * Starting point for this application.
  *
  * @author Jitendra
  *
@@ -32,8 +29,7 @@ public class PustakalayaApplication extends SpringBootServletInitializer impleme
 	}
 
 	public static void main(String[] args) {
-		List<String> list = Arrays.asList(args);
-		SpringApplication.run(PustakalayaApplication.class, list.toArray(new String[] {}));
+		SpringApplication.run(PustakalayaApplication.class, args);
 	}
 
 	@Override

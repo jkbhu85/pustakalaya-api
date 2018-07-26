@@ -33,3 +33,4 @@
 .DS_Store
 /src/frontend/Thumbs.db
 /bin/
+/.apt_generated_tests/

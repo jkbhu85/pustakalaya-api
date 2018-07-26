@@ -1,13 +1,3 @@
-/*
- * Project: Pustakalaya
- * Project link: https://github.com/optimus29/pustakalaya
- * Database schema: https://github.com/optimus29/pustakalaya/blob/master/src/ptkdocs/database-schema-doc.html
- * Database: MySQL 5.6
- *
- * @author Jitendra Kumar
- *
- */
- 
 DROP DATABASE IF EXISTS ptk;
 CREATE DATABASE ptk;
 
@@ -314,7 +304,7 @@ INSERT INTO ptk.LibUser
 )
 VALUES
 (
-  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'ADMIN') -- role
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'LIBRARIAN') -- role
 , (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'ACTIVE') -- account status
 , "jitendra.kumar@m.com" -- email
 , "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
@@ -327,6 +317,224 @@ VALUES
 , "Kumar" -- last name
 , "M" -- gender
 , "9123456784" -- mobile
+, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
+, 4 -- book quota
+, sysdate() -- time of creation
+, 'en_US' -- locale of user
+, (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
+);
+
+INSERT INTO ptk.LibUser
+(
+    roleFk,
+    accountStatusFk,
+    emailUk,
+    passwordHash,
+    passwordSalt,
+    passwordVersion,
+    securityQuestion,
+    securityAnswer,
+    dateOfBirth,
+    firstName,
+    lastName,
+    gender,
+    mobileUk,
+    isdCodeFk,
+    bookQuota,
+    createdOn,
+    locale,
+    acCreatedByFk
+)
+VALUES
+(
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'MEMBER') -- role
+, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'LOCKED') -- account status
+, "kuldeep.gangwar@m.com" -- email
+, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
+, "abckdkdt" -- password salt
+, 1 -- password version
+, "Who are you" -- security question
+, "unknown" -- security answer
+, "1993-12-11" -- date of birth
+, "Kuldeep" -- first name
+, "Gangwar" -- last name
+, "M" -- gender
+, "9123456784" -- mobile
+, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
+, 4 -- book quota
+, sysdate() -- time of creation
+, 'en_US' -- locale of user
+, (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
+);
+
+INSERT INTO ptk.LibUser
+(
+    roleFk,
+    accountStatusFk,
+    emailUk,
+    passwordHash,
+    passwordSalt,
+    passwordVersion,
+    securityQuestion,
+    securityAnswer,
+    dateOfBirth,
+    firstName,
+    lastName,
+    gender,
+    mobileUk,
+    isdCodeFk,
+    bookQuota,
+    createdOn,
+    locale,
+    acCreatedByFk
+)
+VALUES
+(
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'MEMBER') -- role
+, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'LOCKED') -- account status
+, "kuldeep.gangwar@m.com" -- email
+, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
+, "abckdkdt" -- password salt
+, 1 -- password version
+, "Who are you" -- security question
+, "unknown" -- security answer
+, "1993-12-11" -- date of birth
+, "Kuldeep" -- first name
+, "Gangwar" -- last name
+, "M" -- gender
+, "9123456785" -- mobile
+, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
+, 4 -- book quota
+, sysdate() -- time of creation
+, 'en_US' -- locale of user
+, (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
+);
+
+
+INSERT INTO ptk.LibUser
+(
+    roleFk,
+    accountStatusFk,
+    emailUk,
+    passwordHash,
+    passwordSalt,
+    passwordVersion,
+    securityQuestion,
+    securityAnswer,
+    dateOfBirth,
+    firstName,
+    lastName,
+    gender,
+    mobileUk,
+    isdCodeFk,
+    bookQuota,
+    createdOn,
+    locale,
+    acCreatedByFk
+)
+VALUES
+(
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'MEMBER') -- role
+, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'REVOKED') -- account status
+, "amit.gangwar@m.com" -- email
+, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
+, "abckdkdt" -- password salt
+, 1 -- password version
+, "Who are you" -- security question
+, "unknown" -- security answer
+, "1991-04-22" -- date of birth
+, "Amit" -- first name
+, "Gangwar" -- last name
+, "M" -- gender
+, "9123456775" -- mobile
+, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
+, 4 -- book quota
+, sysdate() -- time of creation
+, 'hi_IN' -- locale of user
+, (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
+);
+
+
+INSERT INTO ptk.LibUser
+(
+    roleFk,
+    accountStatusFk,
+    emailUk,
+    passwordHash,
+    passwordSalt,
+    passwordVersion,
+    securityQuestion,
+    securityAnswer,
+    dateOfBirth,
+    firstName,
+    lastName,
+    gender,
+    mobileUk,
+    isdCodeFk,
+    bookQuota,
+    createdOn,
+    locale,
+    acCreatedByFk
+)
+VALUES
+(
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'MEMBER') -- role
+, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'CLOSED') -- account status
+, "vishal.yadav@m.com" -- email
+, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
+, "abckdkdt" -- password salt
+, 1 -- password version
+, "Who are you" -- security question
+, "unknown" -- security answer
+, "1990-08-19" -- date of birth
+, "Vishal" -- first name
+, "Yadav" -- last name
+, "M" -- gender
+, "9123456776" -- mobile
+, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
+, 4 -- book quota
+, sysdate() -- time of creation
+, 'en_US' -- locale of user
+, (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
+);
+
+
+INSERT INTO ptk.LibUser
+(
+    roleFk,
+    accountStatusFk,
+    emailUk,
+    passwordHash,
+    passwordSalt,
+    passwordVersion,
+    securityQuestion,
+    securityAnswer,
+    dateOfBirth,
+    firstName,
+    lastName,
+    gender,
+    mobileUk,
+    isdCodeFk,
+    bookQuota,
+    createdOn,
+    locale,
+    acCreatedByFk
+)
+VALUES
+(
+  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'MEMBER') -- role
+, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'ACTIVE') -- account status
+, "harsh.vardhan@m.com" -- email
+, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
+, "abckdkdt" -- password salt
+, 1 -- password version
+, "Who are you" -- security question
+, "unknown" -- security answer
+, "1993-01-12" -- date of birth
+, "Harsh" -- first name
+, "Vardhan" -- last name
+, "M" -- gender
+, "9123456777" -- mobile
 , (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
 , 4 -- book quota
 , sysdate() -- time of creation

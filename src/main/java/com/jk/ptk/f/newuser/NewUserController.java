@@ -31,7 +31,7 @@ public class NewUserController {
 	 * Stores the specified instance to the storage.
 	 *
 	 * @param newUser
-	 *            the speicified instance to be stored
+	 *            the specified instance to be stored
 	 */
 	@PostMapping
 	public ResponseEntity<String> addNewUser(@RequestBody NewUser newUser) {
@@ -59,7 +59,7 @@ public class NewUserController {
 	 * Returns new user associated with {@code id}.
 	 *
 	 * @param id
-	 *            the speicifed id
+	 *            the specified id
 	 * @return new user associated with {@code id}
 	 */
 	@GetMapping("/{id}")

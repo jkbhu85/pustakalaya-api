@@ -16,6 +16,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 import com.jk.ptk.app.App;
+import com.jk.ptk.app.AppProps;
 
 /**
  * This class provides methods for encryption and decryption.
@@ -38,7 +39,7 @@ public final class CryptUtils {
 	}
 
 	private static String getSecretKeyPath() {
-		return System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + KEY_FILE_NAME;
+		return AppProps.CONFIG_DIR_PATH + File.separator + KEY_FILE_NAME;
 	}
 
 	/**
@@ -49,10 +50,10 @@ public final class CryptUtils {
 	 * @param fileName
 	 *            name or path of the file
 	 * @param absolutePath
-	 *            indicates if the path is an aboslute path
+	 *            indicates if the path is an absolute path
 	 * @return decrypted contents of file
 	 * @throws Exception
-	 *             if error occurres in the process
+	 *             if error occurred in the process
 	 */
 	public static byte[] decryptFromFile(String fileName, boolean absolutePath) throws Exception {
 		String path;
@@ -60,7 +61,7 @@ public final class CryptUtils {
 		if (absolutePath)
 			path = fileName;
 		else
-			path = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + fileName;
+			path = AppProps.CONFIG_DIR_PATH + File.separator + fileName;
 
 		byte[] encrypted = FileUtils.getBytes(path);
 		byte[] decrypted = decrypt(encrypted);
@@ -75,7 +76,7 @@ public final class CryptUtils {
 	 *            the data to be encrypted
 	 * @return encrypted source
 	 * @throws Exception
-	 *             if an error occures while encrypting the source
+	 *             if an error occurred while encrypting the source
 	 */
 	public static byte[] encrypt(byte[] source) throws Exception {
 		SecretKey secretKey = getSecretKey(getSecretKeyPath());
@@ -141,7 +142,7 @@ public final class CryptUtils {
 	 *            the data to be encrypted
 	 * @return encrypted source
 	 * @throws Exception
-	 *             if an error occures while encrypting the source
+	 *             if an error occurred while encrypting the source
 	 */
 	public static byte[] encrypt(String secretKeyPath, byte[] source) throws Exception {
 		// 1. get key
@@ -150,7 +151,7 @@ public final class CryptUtils {
 		// 2. get cipher
 		Cipher cipher = Cipher.getInstance(DES_CIPHER_TRANSFORMATION);
 
-		// 3. init cipher
+		// 3. initialize cipher
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
 		// 4. encrypt source
@@ -186,7 +187,7 @@ public final class CryptUtils {
 	 *            the data to be decrypted
 	 * @return the result of decryption
 	 * @throws Exception
-	 *             if an error occurs while decrypting the data
+	 *             if an error occurred while decrypting the data
 	 */
 	public static byte[] dcrypt(String secretKeyPath, byte[] encrypted) throws Exception {
 		SecretKey secretKey = loadKeyFromFile(secretKeyPath);

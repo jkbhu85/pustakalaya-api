@@ -1,5 +1,6 @@
 package com.jk.ptk.util.mail;
 
+import java.io.BufferedInputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.jk.ptk.app.App;
+import com.jk.ptk.app.AppProps;
 import com.jk.ptk.util.AutoClose;
 import com.jk.ptk.util.CryptUtils;
 import com.jk.ptk.util.FileUtils;
@@ -54,18 +55,14 @@ public class MailServiceImpl implements MailService, Closeable {
 	}
 
 	private void init() throws Exception {
-		Properties mailProps = new Properties();
-		String mailPropsFilePath = System.getenv(App.NAME_ENV_VAR_CONFIG) + File.separator + mailPropsFileName;
-		InputStream in = new FileInputStream(mailPropsFilePath);
-		mailProps.load(in);
-
-		String smtpAuth = mailProps.getProperty("mail.smtp.auth");
+		String smtpAuth = AppProps.valueOf("mail.smtp.auth");
+		Properties mailProps = getMailProps();
 
 		if ("true".equalsIgnoreCase(smtpAuth)) {
-			final String username = mailProps.getProperty("ptk.mail.username");
-			final String iv = mailProps.getProperty("ptk.mail.encryption.iv");
-			final String key = mailProps.getProperty("ptk.mail.encryption.key");
-			final String base64Pwd = mailProps.getProperty("ptk.mail.password");
+			final String username = AppProps.valueOf("ptk.mail.username");
+			final String iv = AppProps.valueOf("ptk.mail.encryption.iv");
+			final String key = AppProps.valueOf("ptk.mail.encryption.key");
+			final String base64Pwd = AppProps.valueOf("ptk.mail.password");
 			final String password = CryptUtils.decryptFromBase64(base64Pwd, iv, key);
 
 			Authenticator authenticator = new Authenticator() {
@@ -87,6 +84,18 @@ public class MailServiceImpl implements MailService, Closeable {
 
 		AutoClose.register(this);
 		LOG.debug("Mailer was initialized successfully.");
+	}
+	
+	private Properties getMailProps() throws Exception {
+		String fileName = AppProps.valueOf("ptk.mail.property.filename");
+		File file = new File(AppProps.CONFIG_DIR_PATH + File.separator + fileName);
+		
+		InputStream in = new BufferedInputStream(new FileInputStream(file));
+		Properties props = new Properties();
+		props.load(in);
+		
+		in.close();
+		return props;
 	}
 
 	private void addAttachments(Multipart multipart, List<File> attachments) throws Exception {

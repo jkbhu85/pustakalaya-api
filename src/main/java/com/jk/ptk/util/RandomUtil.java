@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 /**
- * Utility class that facilitates to work with cyrptographically secure random numbers.
+ * Utility class that facilitates to work with cryptographically secure random numbers.
  *
  * @author Jitendra
  *
@@ -17,12 +17,12 @@ public final class RandomUtil {
 	}
 
 	/**
-	 * Returns a string of length {@code len} which is a hexadcimal representation
+	 * Returns a string of length {@code len} which is a hexadecimal representation
 	 * of a cryptographically secure random non-negative integer.
 	 *
 	 * @param len
 	 *            number of digits in the hexadecimal number
-	 * @return a string of length {@code len} which is a hexadcimal representation
+	 * @return a string of length {@code len} which is a hexadecimal representation
 	 *         of a cryptographically secure random non-negative integer
 	 */
 	public static String getNoramlizedRandomHex(int len) {

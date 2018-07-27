@@ -30,7 +30,7 @@ public class UserRepositoryTest {
 
 	@Test
 	public void getUser() {
-		User user = repo.findUser(1L);
+		User user = repo.findUser("krishna.murlidhar@m.com");
 
 		try {
 			log.info("user info -> {}", om.writeValueAsString(user));

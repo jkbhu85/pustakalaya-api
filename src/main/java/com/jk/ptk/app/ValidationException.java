@@ -1,7 +1,9 @@
 package com.jk.ptk.app;
 
+import java.util.List;
+
 /**
- * This excpetion is thrown when data received from client fails validation.
+ * This exception is thrown when data received from client fails validation.
  * 
  * @author Jitendra
  *
@@ -9,32 +11,25 @@ package com.jk.ptk.app;
 public class ValidationException extends Exception {
 	private static final long serialVersionUID = -3182256808687423712L;
 
-	private int errorCode;
-	private String fieldName;
+	List<ErrorInfo> errorList;
 
 	/**
-	 * Creates a instance with the specified {@code errorCode} and specified
-	 * {@code fieldName}.
+	 * Creates an instance with the specified list of validation errors.
 	 * 
-	 * @see <a href=
-	 *      "https://github.com/optimus29/pustakalaya/blob/master/src/ptkdocs/error-codes.html">Error
-	 *      codes</a>
-	 * 
-	 * @param errorCode
-	 *            error code describing what is wrong with the value being validated
-	 * @param fieldName
-	 *            name of the field that failed validation
+	 * @param list list of validation errors
 	 */
-	public ValidationException(int errorCode, String fieldName) {
-		super(errorCode + ":" + fieldName);
+	public ValidationException(List<ErrorInfo> list) {
+		super("Invalid data.");
+		this.errorList = list;
 	}
 
-	public int getErrorCode() {
-		return errorCode;
-	}
-
-	public String getFieldName() {
-		return fieldName;
+	/**
+	 * Returns list of validation errors.
+	 * 
+	 * @return list of validation errors
+	 */
+	public List<ErrorInfo> getErrorList() {
+		return errorList;
 	}
 
 }

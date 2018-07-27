@@ -1,7 +1,5 @@
 package com.jk.ptk.app;
 
-import java.util.Properties;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,16 +18,18 @@ public final class App {
 	private static String appDomain = "http://localhost:8080";
 	private static int registraionLinkExpirationHours = 72;
 
-	private static final Logger LOG = LoggerFactory.getLogger(App.class);
+	private static final Logger log = LoggerFactory.getLogger(App.class);
 
 	/**
 	 * Maximum number of tries with incorrect credentials after which account is
 	 * locked.
 	 */
-	public static final int UNSUCCESSFUL_LOGIN_TRIES_THRESHOLD = 4;
-
-	private static Properties appProps = new Properties();
-
+	public static int unsuccessfulLoginTriesThreshold = 4;
+	
+	/**
+	 * Email of admin.
+	 */
+	public static String adminEmail = "jk.bhu85@gmail.com";
 
 	/**
 	 * Returns URL for the specified URI.
@@ -52,20 +52,20 @@ public final class App {
 	}
 
 	/**
-	 * Returns internet domain of the application.
+	 * Returns Internet domain of the application.
 	 *
-	 * @return internet domain of the application
+	 * @return Internet domain of the application
 	 */
 	public static String appDomain() {
 		return appDomain;
 	}
 
 	public static String getHmacSecret() {
-		String hmacSecret = appProps.getProperty("security.hmac.secret");
+		String hmacSecret = AppProps.valueOf("app.security.auth.jwt.hmac.secret");
 
 		if (hmacSecret == null) {
 			hmacSecret = new String(RandomUtil.getRandomBytes(32));
-			LOG.warn("Could not load HMAC secret key from properties. Using a generated secret key.");
+			log.warn("Could not load HMAC secret key from properties. Using a generated secret key.");
 		}
 
 		return hmacSecret;

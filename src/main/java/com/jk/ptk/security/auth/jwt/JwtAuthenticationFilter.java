@@ -38,7 +38,6 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
 		String jwt = request.getHeader(TOKEN_HEADER_NAME);
-		System.out.println("jwt: " + jwt);
 
 		try {
 			jwt = authHeaderValidator.removeValidationMarker(jwt);

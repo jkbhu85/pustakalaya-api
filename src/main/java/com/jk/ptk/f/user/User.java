@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
@@ -17,7 +18,9 @@ import com.jk.ptk.f.country.Country;
 
 @Entity
 @Table(name = "LibUser")
-@NamedQuery(name = "email_exist", query = "select COUNT(u) from User u where u.email=:email")
+@NamedQueries(
+	@NamedQuery(name = "if_user_exist_by_email", query = "select COUNT(u) from User u where u.email=:email")
+)
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @author Jitendra
  *
  */
-@Service
+@Service("noop")
 public class NoOpMailService implements MailService {
 
 	@Override

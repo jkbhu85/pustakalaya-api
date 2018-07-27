@@ -13,10 +13,11 @@ import java.util.function.Predicate;
 
 import javax.persistence.EntityManager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.sun.istack.internal.logging.Logger;
 
 /**
  * 
@@ -30,7 +31,7 @@ import com.sun.istack.internal.logging.Logger;
 
 @Component
 public class Initializer {
-	private static final Logger log = Logger.getLogger(Initializer.class);
+	private static final Logger log = LoggerFactory.getLogger(Initializer.class);
 
 	private EntityManager entityManager;
 
@@ -55,7 +56,7 @@ public class Initializer {
 			// list all classes in the project
 			classNameList = listClassNames(root, "");
 		} catch (Exception e) {
-			log.severe("Error occurred while searching for classes.{}", e);
+			log.error("Error occurred while searching for classes.{}", e);
 			return;
 		}
 		
@@ -96,7 +97,7 @@ public class Initializer {
 				// all good, add method to list
 				methodList.add(m);
 			} catch (Exception e) {
-				log.warning("Error occurred while finiding the method.", e);
+				log.warn("Error occurred while finiding the method.", e);
 			}
 		}
 
@@ -109,7 +110,7 @@ public class Initializer {
 			} catch (Exception e) {
 				// catch as Exception because the method may throw some exception during
 				// execution
-				log.severe("Error occurred while executing the method. {}", e);
+				log.error("Error occurred while executing the method. {}", e);
 				log.info("Shutting down the system due to unrecoverable error.");
 
 				// abnormal shut down of the system

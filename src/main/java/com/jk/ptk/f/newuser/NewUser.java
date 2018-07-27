@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
-import com.jk.ptk.f.user.User;
+import com.jk.ptk.f.user.LightUser;
 import com.jk.ptk.f.user.UserRole;
 
 /**
@@ -20,7 +20,7 @@ import com.jk.ptk.f.user.UserRole;
  *
  */
 @Entity
-@NamedQuery(name="delete_by_email", query = "delete from NewUser u where u.email=:email")
+@NamedQuery(name="delete_newUser_by_email", query = "delete from NewUser u where u.email=:email")
 public class NewUser {
 	@Id
 	private String id;
@@ -49,7 +49,7 @@ public class NewUser {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "acCreatedByFk", nullable = false)
-	private User acCreatedBy;
+	private LightUser acCreatedBy;
 
 	/**
 	 * Default constructor.
@@ -121,11 +121,11 @@ public class NewUser {
 		this.expiresOn = expiresOn;
 	}
 
-	public User getAcCreatedBy() {
+	public LightUser getAcCreatedBy() {
 		return acCreatedBy;
 	}
 
-	public void setAcCreatedBy(User acCreatedBy) {
+	public void setAcCreatedBy(LightUser acCreatedBy) {
 		this.acCreatedBy = acCreatedBy;
 	}
 

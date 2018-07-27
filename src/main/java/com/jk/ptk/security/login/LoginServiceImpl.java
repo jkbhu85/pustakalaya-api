@@ -73,7 +73,7 @@ public class LoginServiceImpl implements LoginService {
 		} else {
 			authInfo.setUnsuccessfulTries(authInfo.getUnsuccessfulTries() + 1);
 			
-			if (authInfo.getUnsuccessfulTries() == App.UNSUCCESSFUL_LOGIN_TRIES_THRESHOLD) {
+			if (authInfo.getUnsuccessfulTries() == App.unsuccessfulLoginTriesThreshold) {
 				authInfo.setAccountStatus(UserAcStatus.LOCKED);
 				log.info("Locking the account {}", authInfo.getEmail());
 			}

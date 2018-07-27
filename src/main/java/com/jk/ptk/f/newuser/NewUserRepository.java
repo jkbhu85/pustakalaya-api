@@ -1,7 +1,7 @@
 package com.jk.ptk.f.newuser;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +40,9 @@ public class NewUserRepository {
 		em.persist(newUser);
 	}
 
-	public void removeNewUser(String email) {
-		TypedQuery<NewUser> query = em.createNamedQuery("delete_by_email", NewUser.class);
-		query.setParameter(0, email);
-		query.executeUpdate();
+	public int removeNewUser(String email) {
+		Query query = em.createNamedQuery("delete_newUser_by_email");
+		query.setParameter("email", email);
+		return query.executeUpdate();
 	}
 }

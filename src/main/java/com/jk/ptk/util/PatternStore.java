@@ -28,4 +28,9 @@ public class PatternStore {
 	 * </p>
 	 */
 	public static final Pattern EMAIL = Pattern.compile("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$");
+	
+	/**
+	 * Pattern to validate locale. e.g. hi_IN.
+	 */
+	public static final Pattern LOCALE = Pattern.compile("[a-z][a-z][_][A-Z][A-Z]");
 }

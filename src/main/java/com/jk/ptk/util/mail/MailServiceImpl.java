@@ -27,6 +27,7 @@ import javax.mail.internet.MimeMultipart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import com.jk.ptk.app.AppProps;
 import com.jk.ptk.util.AutoClose;
@@ -39,7 +40,7 @@ import com.jk.ptk.util.FileUtils;
  * @author Jitendra
  *
  */
-
+@Service("MailServiceImpl")
 public class MailServiceImpl implements MailService, Closeable {
 	private static Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
 
@@ -154,7 +155,7 @@ public class MailServiceImpl implements MailService, Closeable {
 
 			LOG.debug("Mail prepared, about to send to: {}", recipients);
 			transport.sendMessage(msg, msg.getAllRecipients());
-			LOG.debug("Mail was sent successfully to {}.", recipients);
+			LOG.debug("Mail was sent successfully to {}", recipients);
 			return true;
 		} catch (Exception e) {
 			LOG.error("Exception in sending mail to: {}\nException: {}", recipients, e);

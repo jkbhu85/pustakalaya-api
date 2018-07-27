@@ -28,12 +28,6 @@ public class MailTemplateTest {
 
 		paramMap.put(MailConsts.PARAM_COMPLETE_REGISTRATION_LINK, "https://www.abc.com/completeRegistration");
 
-		mailTemplateService.sendMail(
-				MailConsts.TEMPLATE_COMPLETE_REGISTRAION,
-				recipients,
-				subjectKey,
-				paramMap,
-				locale
-				);
+		mailTemplateService.sendMail(new MailModel());
 	}
 }

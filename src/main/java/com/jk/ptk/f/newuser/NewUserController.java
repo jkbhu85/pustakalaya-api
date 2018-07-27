@@ -1,5 +1,7 @@
 package com.jk.ptk.f.newuser;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.ptk.app.ValidationException;
-import com.jk.ptk.f.user.User;
+import com.jk.ptk.app.response.PtkResponse;
+import com.jk.ptk.app.response.ResponseCode;
+import com.jk.ptk.f.user.LightUser;
+import com.jk.ptk.f.user.UserService;
+import com.jk.ptk.util.UserUtil;
 import com.jk.ptk.util.mail.MailNotSentException;
 
 /**
@@ -24,8 +30,13 @@ import com.jk.ptk.util.mail.MailNotSentException;
 @RestController
 @RequestMapping("/ptk/newUser")
 public class NewUserController {
+	private static final Logger log = LoggerFactory.getLogger(NewUserController.class);
+	
 	@Autowired
 	private NewUserService service;
+	
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * Stores the specified instance to the storage.
@@ -34,25 +45,46 @@ public class NewUserController {
 	 *            the specified instance to be stored
 	 */
 	@PostMapping
-	public ResponseEntity<String> addNewUser(@RequestBody NewUser newUser) {
-		ResponseEntity<String> response;
+	public ResponseEntity<PtkResponse> addNewUser(@RequestBody NewUser newUser) {
+		HttpStatus httpStatus;
+		PtkResponse response = new PtkResponse();
 
 		try {
-			User acCreatedBy = null;
+			LightUser acCreatedBy = userService.getLightUser(UserUtil.getEmail());
 			newUser.setAcCreatedBy(acCreatedBy);
-
 			service.addNewUser(newUser);
 
-			response = new ResponseEntity<>("10:SUCCESS_NEWUSER_ADDED", HttpStatus.ACCEPTED);
+			response
+				.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL)
+				.setMessage("SUCCESS_NEWUSER_ADDED");
+			
+			httpStatus = HttpStatus.ACCEPTED;
+			
 		} catch (ValidationException e) {
-			response = new ResponseEntity<>(e.getErrorCode() + ":ERROR_INVALID_" + e.getFieldName(), HttpStatus.UNPROCESSABLE_ENTITY);
+			response
+				.setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL)
+				.setMessage("ERROR_INVALID_FIELDS")
+				.setErrors(e.getErrorList());
+			
+			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (MailNotSentException e) {
-			response = new ResponseEntity<>("42:ERROR_EMAIL_NOT_SENT", HttpStatus.UNPROCESSABLE_ENTITY);
+			response
+				.setResponseCode(ResponseCode.MAIL_NOT_SENT_INVALID_EMAIL)
+				.setMessage("ERROR_EMAIL_NOT_SENT");
+			
+			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
-			response = new ResponseEntity<>("41:ERROR_UNKNOWN", HttpStatus.INTERNAL_SERVER_ERROR);
+			response
+				.setResponseCode(ResponseCode.UNKNOWN_ERROR)
+				.setMessage("ERROR_UNKNOWN");
+			
+			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+			
+			log.error("Exception in adding new user.{}", e);
 		}
 
-		return response;
+		ResponseEntity<PtkResponse> res = new ResponseEntity<>(response, httpStatus);
+		return res;
 	}
 
 	/**

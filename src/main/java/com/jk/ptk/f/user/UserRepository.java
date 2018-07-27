@@ -1,6 +1,7 @@
 package com.jk.ptk.f.user;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -12,10 +13,6 @@ import org.springframework.stereotype.Repository;
 public class UserRepository {
 	@Autowired
 	private EntityManager em;
-
-	public User findUser(Long id) {
-		return em.find(User.class, id);
-	}
 
 	public UserAuthInfo findUserAuthInfo(Long id) {
 		return em.find(UserAuthInfo.class, id);
@@ -34,7 +31,28 @@ public class UserRepository {
 	}
 
 	public User findUser(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		if (email == null || email.isEmpty()) return null;
+		
+		TypedQuery<User> query = em.createNamedQuery("find_by_email", User.class);
+		query.setParameter("email", email);
+		
+		return query.getSingleResult();
+	}
+
+	public LightUser findLightUser(String email) {
+		if (email == null || email.isEmpty()) return null;
+		
+		TypedQuery<LightUser> query = em.createNamedQuery("find_lightUser_by_email", LightUser.class);
+		query.setParameter("email", email);
+		
+		return query.getSingleResult();
+	}
+	
+	public boolean userExists(String email) {
+		Query query = em.createNamedQuery("if_user_exist_by_email");
+		query.setParameter("email", email);
+		final int result = ((Number)query.getSingleResult()).intValue();
+		
+		return result == 1;
 	}
 }

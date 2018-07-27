@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.AuthorityUtils;
 
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.jk.ptk.util.UserUtil;
 
 
 
@@ -42,6 +43,7 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 					true
 				);
 
+		UserUtil.setPayload(payload);
 		log.debug("authentication successful");
 		return token;
 	}

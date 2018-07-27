@@ -1,27 +1,17 @@
 package com.jk.ptk;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jk.ptk.app.response.PtkResponse;
-import com.jk.ptk.app.response.ResponseCode;
+import java.util.Base64;
+
+import com.jk.ptk.util.RandomUtil;
 
 public class Test {
 	public static void main(String[] args) {
-		PtkResponse response = new PtkResponse();
-		
-		response.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL);
-		response.setMessage("You operation was successful.");
-		
-		ObjectMapper mapper = new ObjectMapper();
 		try {
-			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
-			System.out.println(json);
-			PtkResponse res = mapper.readValue("{\n" + 
-					"  \"responseCode\" : 21,\n" + 
-					"  \"message\" : \"You operation was successfully.\"\n" + 
-					"}", PtkResponse.class);
-			
-			System.out.println(res.getResponseCode());
-			System.out.println(res.getMessage());
+			byte[] rand = RandomUtil.getRandomBytes(6);
+			String s1 = Base64.getEncoder().encodeToString(rand);
+			String s2 = RandomUtil.toNoramlizedHexString(rand);
+			System.out.println(s1);
+			System.out.println(s2);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

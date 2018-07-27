@@ -45,7 +45,7 @@ public enum ResponseCode {
 	/**
 	 * Code 32.
 	 */
-	VALUE_TOO_SMALL_OR_EMTY(32),
+	VALUE_TOO_SMALL_OR_EMPTY(32),
 	
 	/**
 	 * Code 33.

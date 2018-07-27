@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public LightUser getLightUser(String email) {
+		return repository.findLightUser(email);
+	}
+
+	@Override
 	public void addUser(User user) throws ValidationException {
 		// TODO Auto-generated method stub
 
@@ -76,6 +81,11 @@ public class UserServiceImpl implements UserService {
 			repository.udpateUserAuthInfo(authInfo);
 		} else
 			throw new InvalidCredentialsException("Password didn't match.");
+	}
+
+	@Override
+	public boolean userExists(String email) {
+		return repository.userExists(email);
 	}
 
 }

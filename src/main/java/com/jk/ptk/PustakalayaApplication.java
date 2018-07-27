@@ -31,7 +31,7 @@ public class PustakalayaApplication extends SpringBootServletInitializer impleme
 	public static void main(String[] args) {
 		SpringApplication.run(PustakalayaApplication.class, args);
 	}
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		initializer.initialize();

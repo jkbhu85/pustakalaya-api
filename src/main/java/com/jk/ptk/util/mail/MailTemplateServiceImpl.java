@@ -1,16 +1,13 @@
 package com.jk.ptk.util.mail;
 
 import java.io.StringWriter;
-import java.util.Locale;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.support.AbstractResourceBasedMessageSource;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import com.jk.ptk.util.MailConsts;
 
 @Service
 public class MailTemplateServiceImpl implements MailTemplateService {
@@ -18,6 +15,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 	private TemplateEngine templateEngine;
 
 	@Autowired
+	@Qualifier("MailServiceImpl")
 	private MailService mailService;
 
 	@Autowired
@@ -26,34 +24,17 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 	private static final String TEMPLATE_PREFIX = "html/";
 
 	@Override
-	public boolean sendMail(String templateName, String recipients, String subjectKey, Map<String, Object> paramMap, Locale locale) {
-		final Context context = new Context(locale);
-		Object[] subjectParams = null;
-
-		if (paramMap != null) {
-			setParamsToContext(context, paramMap);
-			subjectParams = (Object[]) paramMap.get(MailConsts.SUBJECT_PARAMETERS);
-		}
-
-		final String subject = bundle.getMessage(subjectKey, subjectParams, locale);
+	public void sendMail(MailModel model) {
+		final Context context = new Context(model.getLocale());
+		final String subject = bundle.getMessage(model.getSubjectPropName(), model.getSubjectParameters(), model.getLocale());
 		final StringWriter writer = new StringWriter();
-		String template = TEMPLATE_PREFIX + templateName;
+		final String template = TEMPLATE_PREFIX + model.getTemplateName();
 
+		context.setVariables(model.getParamMap());
 		templateEngine.process(template, context, writer);
 
 		final String msgBody = writer.toString();
 
-		return mailService.sendMail(recipients, subject, msgBody);
-	}
-
-	private void setParamsToContext(Context ctx, Map<String, Object> map) {
-		if (ctx == null || map == null) return;
-
-		for (Map.Entry<String, Object> entry: map.entrySet()) {
-			String key = entry.getKey();
-			Object value = entry.getValue();
-
-			ctx.setVariable(key, value);
-		}
+		mailService.sendMail(model.getRecipient(), subject, msgBody);
 	}
 }

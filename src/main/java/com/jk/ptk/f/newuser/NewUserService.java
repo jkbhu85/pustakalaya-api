@@ -1,7 +1,6 @@
 package com.jk.ptk.f.newuser;
 
-
-import com.jk.ptk.app.ValidationException;
+import com.jk.ptk.validation.ValidationException;
 
 /**
  * Implementations of this interface serves to manipulate instances of type
@@ -15,20 +14,21 @@ public interface NewUserService {
 	 * Add the specified user to the system.
 	 *
 	 * @param newUser
-	 *            the specfied user to add
+	 *            the specified user to add
 	 *
-	 * @throws ValidationException if the specified user data fails validation
+	 * @throws ValidationException
+	 *             if the specified user data fails validation
 	 */
 	void addNewUser(NewUser newUser) throws ValidationException;
 
 	/**
-	 * Returns the new user identified by {@code id}. Returns {@code null} if no
-	 * user associated with {@code id} exists.
+	 * Returns the new user identified by {@code id}.
 	 *
 	 * @param id
 	 *            the specified id
-	 * @return the new user identified by {@code id} or returns {@code null} if no
-	 *         user associated with {@code id} exists.
+	 * @return the new user identified by {@code id}.
+	 * @throws ValidationException
+	 *             if no new user was found or id has expired
 	 */
-	NewUser getNewUser(String id);
+	NewUser getNewUser(String id) throws ValidationException;
 }

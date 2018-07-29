@@ -1,6 +1,6 @@
 package com.jk.ptk.f.newuser;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jk.ptk.f.user.LightUser;
 import com.jk.ptk.f.user.UserRole;
 
@@ -22,6 +24,26 @@ import com.jk.ptk.f.user.UserRole;
 @Entity
 @NamedQuery(name="delete_newUser_by_email", query = "delete from NewUser u where u.email=:email")
 public class NewUser {
+	/**
+	 * Property name for JSON.
+	 */
+	public static final String FIELD_FIRST_NAME = "firstName";
+
+	/**
+	 * Property name for JSON.
+	 */
+	public static final String FIELD_LAST_NAME = "lastName";
+
+	/**
+	 * Property name for JSON.
+	 */
+	public static final String FIELD_EMAIL = "email";
+
+	/**
+	 * Property name for JSON.
+	 */
+	public static final String FIELD_LOCALE = "locale";
+
 	@Id
 	private String id;
 
@@ -38,17 +60,21 @@ public class NewUser {
 	private String localeStr;
 
 	@Column(nullable = false)
-	private Date createdOn;
+	@JsonIgnore
+	private LocalDateTime createdOn;
 
 	@Column(nullable = false)
-	private Date expiresOn;
+	@JsonIgnore
+	private LocalDateTime expiresOn;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "roleFk", nullable = false)
+	@JsonIgnore
 	private UserRole role;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "acCreatedByFk", nullable = false)
+	@JsonIgnore
 	private LightUser acCreatedBy;
 
 	/**
@@ -57,6 +83,7 @@ public class NewUser {
 	public NewUser() {
 	}
 
+	@JsonIgnore
 	public String getId() {
 		return id;
 	}
@@ -97,27 +124,29 @@ public class NewUser {
 		this.lastName = lastName;
 	}
 
+	@JsonProperty("locale")
 	public String getLocaleStr() {
 		return localeStr;
 	}
 
+	@JsonProperty("locale")
 	public void setLocaleStr(String localeStr) {
 		this.localeStr = localeStr;
 	}
 
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public Date getExpiresOn() {
+	public LocalDateTime getExpiresOn() {
 		return expiresOn;
 	}
 
-	public void setExpiresOn(Date expiresOn) {
+	public void setExpiresOn(LocalDateTime expiresOn) {
 		this.expiresOn = expiresOn;
 	}
 

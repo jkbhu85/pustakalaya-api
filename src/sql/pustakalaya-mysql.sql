@@ -86,7 +86,7 @@ CREATE TABLE ptk.NewUser (
 	lastName      VARCHAR(30),
 	locale        CHAR(5) NOT NULL,
 	createdOn     TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	expiresOn     TIMESTAMP NOT NULL,
+	expiresOn     DATETIME NOT NULL,
 	acCreatedByFk BIGINT NOT NULL,
 	roleFk        SMALLINT NOT NULL,
 	PRIMARY KEY (id),
@@ -208,6 +208,13 @@ CREATE TABLE ptk.BookAssignmentHistory (
     FOREIGN KEY (currency) REFERENCES Currency (id)
 );
 
+CREATE TABLE ptk.SupportedLocale(
+    name CHAR(5),
+    CONSTRAINT PRIMARY KEY(name)
+);
+
+INSERT INTO ptk.SupportedLocale VALUES ('en_US');
+INSERT INTO ptk.SupportedLocale VALUES ('hi_IN');
 
 INSERT INTO ptk.Country VALUES(NULL, 'India', '+91', 'IN');
 INSERT INTO ptk.Country VALUES(NULL, 'Nepal', '+977', 'NP');
@@ -359,57 +366,13 @@ VALUES
 , "Kuldeep" -- first name
 , "Gangwar" -- last name
 , "M" -- gender
-, "9123456784" -- mobile
+, "9123456684" -- mobile
 , (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
 , 4 -- book quota
 , sysdate() -- time of creation
 , 'en_US' -- locale of user
 , (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
 );
-
-INSERT INTO ptk.LibUser
-(
-    roleFk,
-    accountStatusFk,
-    emailUk,
-    passwordHash,
-    passwordSalt,
-    passwordVersion,
-    securityQuestion,
-    securityAnswer,
-    dateOfBirth,
-    firstName,
-    lastName,
-    gender,
-    mobileUk,
-    isdCodeFk,
-    bookQuota,
-    createdOn,
-    locale,
-    acCreatedByFk
-)
-VALUES
-(
-  (SELECT r.id FROM ptk.UserRole r WHERE r.name = 'MEMBER') -- role
-, (SELECT s.id FROM ptk.UserAccountStatus s WHERE s.name = 'LOCKED') -- account status
-, "kuldeep.gangwar@m.com" -- email
-, "0b864241ac67a71198321106380c46c9e53ed83b7c57c54f875edcabcdfa6682" -- password hash
-, "abckdkdt" -- password salt
-, 1 -- password version
-, "Who are you" -- security question
-, "unknown" -- security answer
-, "1993-12-11" -- date of birth
-, "Kuldeep" -- first name
-, "Gangwar" -- last name
-, "M" -- gender
-, "9123456785" -- mobile
-, (SELECT c.id FROM ptk.Country c WHERE c.abbr = 'IN') -- isd country
-, 4 -- book quota
-, sysdate() -- time of creation
-, 'en_US' -- locale of user
-, (SELECT u.id FROM ptk.LibUser u WHERE u.emailUk = 'krishna.murlidhar@m.com') -- account created by
-);
-
 
 INSERT INTO ptk.LibUser
 (

@@ -26,7 +26,6 @@ import javax.mail.internet.MimeMultipart;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.jk.ptk.app.AppProps;
@@ -42,11 +41,7 @@ import com.jk.ptk.util.FileUtils;
  */
 @Service("MailServiceImpl")
 public class MailServiceImpl implements MailService, Closeable {
-	private static Logger LOG = LoggerFactory.getLogger(MailServiceImpl.class);
-
-	@Value("mail.props.file")
-	private String mailPropsFileName = "mail.properties";
-
+	private static Logger log = LoggerFactory.getLogger(MailServiceImpl.class);
 	private Session session;
 	private Transport transport;
 	private String zipFilePath;
@@ -73,28 +68,25 @@ public class MailServiceImpl implements MailService, Closeable {
 				}
 			};
 
-			this.session = Session.getDefaultInstance(mailProps, authenticator);
+			this.session = Session.getInstance(mailProps, authenticator);
 		} else {
-			this.session = Session.getDefaultInstance(mailProps);
+			this.session = Session.getInstance(mailProps);
 		}
 
-		transport = session.getTransport();
-		LOG.debug("Connecting transport...");
-		transport.connect();
-		LOG.debug("Transport connected");
+		//transport = session.getTransport();
 
 		AutoClose.register(this);
-		LOG.debug("Mailer was initialized successfully.");
+		log.debug("Mailer was initialized successfully.");
 	}
-	
+
 	private Properties getMailProps() throws Exception {
-		String fileName = AppProps.valueOf("ptk.mail.property.filename");
+		String fileName = AppProps.valueOf("ptk.mail.properties.file");
 		File file = new File(AppProps.CONFIG_DIR_PATH + File.separator + fileName);
-		
+
 		InputStream in = new BufferedInputStream(new FileInputStream(file));
 		Properties props = new Properties();
 		props.load(in);
-		
+
 		in.close();
 		return props;
 	}
@@ -110,7 +102,7 @@ public class MailServiceImpl implements MailService, Closeable {
 			file = attachments.get(0);
 		} else {
 			file = FileUtils.zipFiles(attachments);
-			LOG.debug("Attachments were zipped with zip file name: {}", file.getName());
+			log.debug("Attachments were zipped with zip file name: {}", file.getName());
 		}
 
 		DataSource source = new FileDataSource(file);
@@ -125,9 +117,9 @@ public class MailServiceImpl implements MailService, Closeable {
 			boolean status = FileUtils.deleteFile(zipFilePath);
 
 			if (status) {
-				LOG.debug("Zip file was deleted. Path: {}", zipFilePath);
+				log.debug("Zip file was deleted. Path: {}", zipFilePath);
 			} else {
-				LOG.error("Zip file could not be deleted. Path: {}", zipFilePath);
+				log.error("Zip file could not be deleted. Path: {}", zipFilePath);
 			}
 		}
 	}
@@ -137,7 +129,7 @@ public class MailServiceImpl implements MailService, Closeable {
 		MimeMessage msg = new MimeMessage(session);
 
 		try {
-			msg.addHeader("Contentp-type", "text/html; charset=UTF-8");
+			msg.addHeader("Content-Type", "text/html; charset=UTF-8");
 			msg.setSubject(subject, "UTF-8");
 			msg.setSentDate(new Date());
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
@@ -147,18 +139,31 @@ public class MailServiceImpl implements MailService, Closeable {
 			// add text
 			BodyPart textPart = new MimeBodyPart();
 			textPart.setText(message);
+			textPart.setContent(message, "text/html;charset=UTF-8");
 			multipart.addBodyPart(textPart);
 
 			// add file attachments
 			addAttachments(multipart, attachments);
 			msg.setContent(multipart);
 
-			LOG.debug("Mail prepared, about to send to: {}", recipients);
+			log.debug("Mail prepared, about to send to: {}", recipients);
+
+			/*
+			log.debug("Connecting transport...");
+			transport = session.getTransport();
+			transport.connect();
+
+			log.debug("Transport connected");
+
 			transport.sendMessage(msg, msg.getAllRecipients());
-			LOG.debug("Mail was sent successfully to {}", recipients);
+			transport.close();*/
+
+			Transport.send(msg);
+
+			log.debug("Mail was sent successfully to {}", recipients);
 			return true;
 		} catch (Exception e) {
-			LOG.error("Exception in sending mail to: {}\nException: {}", recipients, e);
+			log.error("Exception in sending mail to: {}\nException: {}", recipients, e);
 		} finally {
 			cleanUp();
 		}
@@ -177,7 +182,7 @@ public class MailServiceImpl implements MailService, Closeable {
 			try {
 				transport.close();
 			} catch (Exception e) {
-				LOG.error("Error while closing mail transport.{}", e);
+				log.error("Error while closing mail transport.{}", e);
 			}
 		}
 	}

@@ -45,4 +45,8 @@ public class NewUserRepository {
 		query.setParameter("email", email);
 		return query.executeUpdate();
 	}
+
+	public void remove(NewUser newUser) {
+		em.remove(newUser);
+	}
 }

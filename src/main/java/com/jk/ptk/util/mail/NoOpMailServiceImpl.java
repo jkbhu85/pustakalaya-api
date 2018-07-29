@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 /**
  * A no op implementation of {@link MailService}. It just prints all the
  * arguments to console.
- * 
+ *
  * @author Jitendra
  *
  */
-@Service("noop")
-public class NoOpMailService implements MailService {
+@Service("NoOpMailServiceImpl")
+public class NoOpMailServiceImpl implements MailService {
 
 	@Override
 	public boolean sendMail(String recipients, String subject, String message) {

@@ -11,7 +11,7 @@
 	<p th:text="#{registration.text.line1}"></p>
 	
 	<p>
-		<a href="http://www.example.com/" th:href="${registerationLink}" th:text="#{registration.link.text}">Click here</a>
+		<a th:href="${registerationLink}">[[${registerationLink}]]</a>
 	</p>
 	
 	<p th:text="#{registration.text.line2(${registrationExpires})}"></p>

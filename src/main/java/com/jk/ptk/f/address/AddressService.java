@@ -2,7 +2,7 @@ package com.jk.ptk.f.address;
 
 import java.util.List;
 
-import com.jk.ptk.app.ValidationException;
+import com.jk.ptk.validation.ValidationException;
 
 /**
  * Implementations of this interface serves to manipulate instances of type

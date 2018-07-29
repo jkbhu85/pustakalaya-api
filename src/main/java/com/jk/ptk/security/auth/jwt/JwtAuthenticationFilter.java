@@ -21,7 +21,7 @@ import com.jk.ptk.security.header.InvalidHeaderException;
 
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-	private static final String TOKEN_HEADER_NAME = "Authentication";
+	private static final String TOKEN_HEADER_NAME = "Authorization";
 	private AuthHeaderValidator authHeaderValidator = new BasicAuthHeaderValidator();
 //	private static final Logger log = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 

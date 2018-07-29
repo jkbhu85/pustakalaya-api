@@ -1,5 +1,10 @@
-User case - add user - Step 1: Requester adds user with a few details
-	- remove error 35:ERROR_DUPLICATE_EMAIL (422)
-	
-error-codes
-	- from the introduction remove the line that last line
+add user -- Step 1: Requester adds user with a few details
+	- User was added successfully.
+		- "SUCCESS_USER_ADDED" -> "SUCCESS_NEWUSER_ADDED"
+		
+	- Mail could not be sent to the user.
+		- remove this error
+
+add user -- Get details of partial registration
+	- Success scenario
+		- remove account created by

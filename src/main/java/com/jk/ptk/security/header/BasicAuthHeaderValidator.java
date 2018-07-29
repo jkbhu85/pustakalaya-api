@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BasicAuthHeaderValidator implements AuthHeaderValidator {
-	private static final String HEADER_PREFIX = "Bearer: ";
+	private static final String HEADER_PREFIX = "Bearer ";
 
 	@Override
 	public boolean isHeaderValid(String headerValue) {

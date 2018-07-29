@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jk.ptk.app.DataValidation;
-import com.jk.ptk.app.ValidationException;
+import com.jk.ptk.validation.DataValidation;
+import com.jk.ptk.validation.ValidationException;
 
 /**
  * An implementation of the {@code AddressService} type.

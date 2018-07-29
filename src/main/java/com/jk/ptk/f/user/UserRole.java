@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.TypedQuery;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.jk.ptk.app.DataLayerInitialized;
 
 /**
@@ -37,17 +39,18 @@ public class UserRole {
 	public static final UserRole[] roles = { ADMIN, LIBRARIAN, MEMBER, NONE };
 
 	/**
-	 * Returns an object representing user role for the specified {@code roleId}. If
-	 * no role matching {@code roleId} exists then returns {@code null}.
+	 * Returns an object representing user role for the specified {@code roleName}. If
+	 * no role matching {@code roleName} exists then returns {@code null}.
 	 *
-	 * @param roleId
-	 *            the specified user role id
+	 * @param roleName
+	 *            the specified user role name
 	 * @return an object representing user role for the specified {@code roleId} or
 	 *         returns {@code null} if no status matching {@code statusId} exists
 	 */
-	public static UserRole fromId(Integer roleId) {
+	@JsonCreator
+	public static UserRole from(String roleName) {
 		for (UserRole r : roles) {
-			if (r.getId() == roleId)
+			if (r.getName().equals(roleName))
 				return r;
 		}
 
@@ -102,6 +105,7 @@ public class UserRole {
 		return name;
 	}
 
+	@JsonValue
 	public Integer getId() {
 		return id;
 	}

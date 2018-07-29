@@ -15,7 +15,7 @@ public class MailTemplateServiceImpl implements MailTemplateService {
 	private TemplateEngine templateEngine;
 
 	@Autowired
-	@Qualifier("MailServiceImpl")
+	@Qualifier("NoOpMailServiceImpl")
 	private MailService mailService;
 
 	@Autowired

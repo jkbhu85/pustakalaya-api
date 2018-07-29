@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jk.ptk.app.ValidationException;
+import com.jk.ptk.validation.ValidationException;
 
 /**
  * API endpoint to manipulate instances of type {@link Address}.

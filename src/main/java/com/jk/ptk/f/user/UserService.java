@@ -1,7 +1,7 @@
 package com.jk.ptk.f.user;
 
-import com.jk.ptk.app.ValidationException;
 import com.jk.ptk.security.login.InvalidCredentialsException;
+import com.jk.ptk.validation.ValidationException;
 
 public interface UserService {
 	boolean userExists(String email);

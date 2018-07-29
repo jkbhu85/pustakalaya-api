@@ -19,13 +19,13 @@ public interface MailService {
 	 * successfully {@code false} otherwise.
 	 *
 	 * @param recipients
-	 *            comma seperated email addresses of the recipients
+	 *            comma separated email addresses of the recipients
 	 * @param subject
 	 *            subject of the email
 	 * @param message
 	 *            body of the email
 	 *
-	 * @return {@code true} if mail sent succcessfully, {@code false} otherwise
+	 * @return {@code true} if mail sent successfully, {@code false} otherwise
 	 */
 	boolean sendMail(String recipients, String subject, String message);
 
@@ -38,13 +38,13 @@ public interface MailService {
 	 * zipped and the resulting zip file will be attached.
 	 *
 	 * @param recipients
-	 *            comma seperated email addresses of the recipients
+	 *            comma separated email addresses of the recipients
 	 * @param subject
 	 *            subject of the email
 	 * @param message
 	 *            body of the email
 	 * @param attachments list of files to be attached
-	 * @return {@code true} if mail sent succcessfully, {@code false} otherwise
+	 * @return {@code true} if mail sent successfully, {@code false} otherwise
 	 */
 	boolean sendMail(String recipients, String subject, String message, List<File> attachments);
 }

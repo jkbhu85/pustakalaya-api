@@ -1,11 +1,13 @@
 package com.jk.ptk.util.mail;
 
+import java.io.File;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * Base class for all objects sent to mail template engine.
- * 
+ *
  * @author Jitendra
  *
  */
@@ -16,7 +18,8 @@ public class MailModel {
 	private String subjectPropName;
 	private String templateName;
 	private String[] subjectParameters;
-	private Map<String, Object> paramMap; 
+	private Map<String, Object> paramMap;
+	private List<File> attachments;
 
 	/**
 	 * @return the recipient
@@ -27,7 +30,7 @@ public class MailModel {
 
 	/**
 	 * @param recipient
-	 *                  the recipient to set
+	 *            the recipient to set
 	 */
 	public void setRecipient(String recipient) {
 		this.recipient = recipient;
@@ -42,7 +45,7 @@ public class MailModel {
 
 	/**
 	 * @param recipientName
-	 *                      the recipientName to set
+	 *            the recipientName to set
 	 */
 	public void setRecipientName(String recipientName) {
 		this.recipientName = recipientName;
@@ -57,7 +60,7 @@ public class MailModel {
 
 	/**
 	 * @param locale
-	 *               the locale to set
+	 *            the locale to set
 	 */
 	public void setLocale(Locale locale) {
 		this.locale = locale;
@@ -72,7 +75,7 @@ public class MailModel {
 
 	/**
 	 * @param subjectPropName
-	 *                        the subjectPropName to set
+	 *            the subjectPropName to set
 	 */
 	public void setSubjectPropName(String subjectPropName) {
 		this.subjectPropName = subjectPropName;
@@ -87,7 +90,7 @@ public class MailModel {
 
 	/**
 	 * @param templateName
-	 *                     the templateName to set
+	 *            the templateName to set
 	 */
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
@@ -102,7 +105,7 @@ public class MailModel {
 
 	/**
 	 * @param subjectParameters
-	 *                          the subjectParameters to set
+	 *            the subjectParameters to set
 	 */
 	public void setSubjectParameters(String[] subjectParameters) {
 		this.subjectParameters = subjectParameters;
@@ -116,12 +119,26 @@ public class MailModel {
 	}
 
 	/**
-	 * @param paramMap the paramMap to set
+	 * @param paramMap
+	 *            the paramMap to set
 	 */
 	public void setParamMap(Map<String, Object> paramMap) {
 		this.paramMap = paramMap;
 	}
-	
-	
+
+	/**
+	 * @return the attachments
+	 */
+	public List<File> getAttachments() {
+		return attachments;
+	}
+
+	/**
+	 * @param attachments
+	 *            the attachments to set
+	 */
+	public void setAttachments(List<File> attachments) {
+		this.attachments = attachments;
+	}
 
 }

@@ -3,9 +3,9 @@ package com.jk.ptk.f.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jk.ptk.app.ValidationException;
 import com.jk.ptk.security.login.CredentialsUtil;
 import com.jk.ptk.security.login.InvalidCredentialsException;
+import com.jk.ptk.validation.ValidationException;
 
 @Component
 public class UserServiceImpl implements UserService {

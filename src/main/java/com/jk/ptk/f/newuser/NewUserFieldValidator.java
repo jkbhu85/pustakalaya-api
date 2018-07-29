@@ -1,22 +1,22 @@
 package com.jk.ptk.f.newuser;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.jk.ptk.app.DataValidation;
-import com.jk.ptk.app.ErrorInfo;
-import com.jk.ptk.app.ValidationException;
 import com.jk.ptk.app.response.ResponseCode;
 import com.jk.ptk.f.user.UserService;
+import com.jk.ptk.util.LocaleUtil;
 import com.jk.ptk.util.PatternStore;
+import com.jk.ptk.validation.DataValidation;
+import com.jk.ptk.validation.ValidationException;
 
 /**
  * Validates the fields of the type {@link NewUser}.
- * 
+ *
  * @author Jitendra
  *
  */
@@ -26,94 +26,88 @@ public class NewUserFieldValidator implements DataValidation<NewUser> {
 	@Autowired
 	private UserService userService;
 
-	private static final String FIELD_FIRST_NAME = "firstName";
-	private static final String FIELD_LAST_NAME = "lastName";
-	private static final String FIELD_EMAIL = "email";
-	private static final String FIELD_LOCALE = "locale";
-
 	@Override
 	public void validate(NewUser newUser) throws ValidationException {
-		List<ErrorInfo> errList = new ArrayList<>();
-		ErrorInfo error;
+		ResponseCode errorCode;
+		Map<String, ResponseCode> errorMap = new HashMap<>();
 
-		error = validateFirstName(newUser.getFirstName(), true);
-		if (error != null) {
-			error.setFieldName(FIELD_FIRST_NAME);
-			errList.add(error);
+		errorCode = validateFirstName(newUser.getFirstName(), true);
+		if (errorCode != null) {
+			errorMap.put(NewUser.FIELD_FIRST_NAME, errorCode);
 		}
 
-		error = validateLastName(newUser.getLastName(), true);
-		if (error != null) {
-			error.setFieldName(FIELD_LAST_NAME);
-			errList.add(error);
+		errorCode = validateLastName(newUser.getLastName(), true);
+		if (errorCode != null) {
+			errorMap.put(NewUser.FIELD_LAST_NAME, errorCode);
 		}
 
-		error = validateEmail(newUser.getEmail(), true);
-		if (error != null) {
-			error.setFieldName(FIELD_EMAIL);
-			errList.add(error);
+		errorCode = validateEmail(newUser.getEmail(), true);
+		if (errorCode != null) {
+			errorMap.put(NewUser.FIELD_EMAIL, errorCode);
 		}
 
-		error = validateLocaleStr(newUser.getLocaleStr(), true);
-		if (error != null) {
-			error.setFieldName(FIELD_LOCALE);
-			errList.add(error);
+		errorCode = validateLocaleStr(newUser.getLocaleStr(), true);
+		if (errorCode != null) {
+			errorMap.put(NewUser.FIELD_LOCALE, errorCode);
 		}
 
 		// if there are errors throw exception
-		if (errList.size() > 0) {
-			throw new ValidationException(errList);
+		if (errorMap.size() > 0) {
+			throw new ValidationException(errorMap);
 		}
 	}
 
-	private ErrorInfo validateFirstName(String value, boolean mandatory) {
+	private ResponseCode validateFirstName(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return new ErrorInfo(ResponseCode.VALUE_TOO_SMALL_OR_EMPTY);
+				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
 			else
 				return null;
 		}
 
 		if (value.length() > 30)
-			return new ErrorInfo(ResponseCode.VALUE_TOO_LARGE);
+			return ResponseCode.VALUE_TOO_LARGE;
 
 		return null;
 	}
 
-	private ErrorInfo validateLastName(String value, boolean mandatory) {
+	private ResponseCode validateLastName(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return new ErrorInfo(ResponseCode.VALUE_TOO_SMALL_OR_EMPTY);
+				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
 			else
 				return null;
 		}
 
 		if (value.length() > 30)
-			return new ErrorInfo(ResponseCode.VALUE_TOO_LARGE);
+			return ResponseCode.VALUE_TOO_LARGE;
 
 		return null;
 	}
 
-	private ErrorInfo validateLocaleStr(String value, boolean mandatory) {
+	private ResponseCode validateLocaleStr(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return new ErrorInfo(ResponseCode.VALUE_TOO_SMALL_OR_EMPTY);
+				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
 			else
 				return null;
 		}
 
 		Matcher m = PatternStore.LOCALE.matcher(value);
 		if (!m.matches())
-			return new ErrorInfo(ResponseCode.INVALID_FORMAT);
+			return ResponseCode.INVALID_FORMAT;
+
+		if (!LocaleUtil.isSupported(value))
+			return ResponseCode.UNSUPPORTED_VALUE;
 
 		return null;
 	}
 
-	private ErrorInfo validateEmail(String value, boolean mandatory) {
+	private ResponseCode validateEmail(String value, boolean mandatory) {
 		// check if value is empty
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return new ErrorInfo(ResponseCode.VALUE_TOO_SMALL_OR_EMPTY);
+				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
 			else
 				return null;
 		}
@@ -121,11 +115,11 @@ public class NewUserFieldValidator implements DataValidation<NewUser> {
 		// match email with pattern
 		Matcher m = PatternStore.EMAIL.matcher(value);
 		if (!m.matches())
-			return new ErrorInfo(ResponseCode.INVALID_FORMAT);
+			return ResponseCode.INVALID_FORMAT;
 
 		// check whether it already exists
 		if (userService.userExists(value))
-			return new ErrorInfo(ResponseCode.VALUE_ALREADY_EXIST);
+			return ResponseCode.VALUE_ALREADY_EXIST;
 
 		return null;
 	}

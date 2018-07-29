@@ -1,4 +1,4 @@
-package com.jk.ptk.app;
+package com.jk.ptk.validation;
 
 /**
  * Implementation of this interface validates the fields of the specified type.

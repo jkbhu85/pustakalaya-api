@@ -1,3 +1,9 @@
+/**
+ * This SQL is written for MySQL 5.6.
+ * 
+ * @author Jitendra
+ */
+
 DROP DATABASE IF EXISTS ptk;
 CREATE DATABASE ptk;
 

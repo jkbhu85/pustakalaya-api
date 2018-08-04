@@ -1,5 +1,7 @@
 package com.jk.ptk.f.user;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -9,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Transactional
+//@Transactional
 public class UserRepository {
 	@Autowired
 	private EntityManager em;
@@ -19,12 +21,14 @@ public class UserRepository {
 	}
 
 	public UserAuthInfo findUserAuthInfo(String email) {
-		TypedQuery<UserAuthInfo> q = em.createNamedQuery("find_by_email", UserAuthInfo.class);
-		q.setParameter("email", email);
-
-		return q.getSingleResult();
+		TypedQuery<UserAuthInfo> query = em.createNamedQuery("find_by_email", UserAuthInfo.class);
+		query.setParameter("email", email);
+		List<UserAuthInfo> list = query.getResultList();
+		
+		return (list.size() == 0 ? null : list.get(0));
 	}
 
+	@Transactional
 	public void udpateUserAuthInfo(UserAuthInfo userAuthInfo) {
 		em.merge(userAuthInfo);
 		em.flush();
@@ -34,9 +38,9 @@ public class UserRepository {
 		if (email == null || email.isEmpty()) return null;
 		
 		TypedQuery<User> query = em.createNamedQuery("find_by_email", User.class);
-		query.setParameter("email", email);
+		List<User> list = query.getResultList();
 		
-		return query.getSingleResult();
+		return (list.size() == 0 ? null : list.get(0));
 	}
 
 	public LightUser findLightUser(String email) {
@@ -44,8 +48,9 @@ public class UserRepository {
 		
 		TypedQuery<LightUser> query = em.createNamedQuery("find_lightUser_by_email", LightUser.class);
 		query.setParameter("email", email);
+		List<LightUser> list = query.getResultList();
 		
-		return query.getSingleResult();
+		return (list.size() == 0 ? null : list.get(0));
 	}
 	
 	public boolean userExists(String email) {

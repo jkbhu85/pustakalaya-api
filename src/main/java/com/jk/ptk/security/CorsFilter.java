@@ -1,6 +1,7 @@
 package com.jk.ptk.security;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -107,6 +108,9 @@ public class CorsFilter implements Filter {
 			}
 
 			allowedOrigins = origins.split(",");
+			log.debug("CORS Headers: " + allowedHeaders);
+			log.debug("CORS Methods: " + allowedMethods);
+			log.debug("CORS Origins: " + Arrays.toString(allowedOrigins));
 			log.info("CORS was configured successfully.");
 		} catch (Exception e) {
 			log.error("Failed to configure CORS.{}", e);

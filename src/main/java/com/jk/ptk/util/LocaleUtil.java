@@ -1,6 +1,7 @@
 package com.jk.ptk.util;
 
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -16,8 +17,18 @@ public final class LocaleUtil {
 	private LocaleUtil() {
 	}
 
-	private static final Set<String> supportedLocaleNameSet = new HashSet<>();
-	private static final Set<Locale> supportedLocaleSet = new HashSet<>();
+	private static final Set<String> supportedLocaleNameSet = new LinkedHashSet<>();
+	private static final Set<Locale> supportedLocaleSet = new LinkedHashSet<>();
+	
+	private static Set<String> finalLocaleNameSet;
+	
+	public static Set<String> allLocales() {
+		if (finalLocaleNameSet == null) {
+			finalLocaleNameSet = Collections.unmodifiableSet(supportedLocaleNameSet);
+		}
+		
+		return finalLocaleNameSet;
+	}
 
 	@SuppressWarnings("unused")
 	private static void init(EntityManager em) {

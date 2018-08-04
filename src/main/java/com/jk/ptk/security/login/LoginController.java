@@ -1,5 +1,7 @@
 package com.jk.ptk.security.login;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import com.jk.ptk.app.response.ResponseCode;
 @RestController
 @RequestMapping("/ptk/login")
 public class LoginController {
+	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 
 	@Autowired
 	private LoginService loginService;
@@ -26,7 +29,7 @@ public class LoginController {
 		try {
 			String jwt = loginService.login(loginCred);
 			response.setData(jwt);
-			status = HttpStatus.ACCEPTED;
+			status = HttpStatus.OK;
 		} catch (InvalidCredentialsException e) {
 			response
 				.setResponseCode(ResponseCode.INVALID_CREDENTIALS)
@@ -47,6 +50,7 @@ public class LoginController {
 				.setResponseCode(ResponseCode.UNKNOWN_ERROR)
 				.setMessage("ERROR_UNKNOWN");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
+			log.error("Error in authentication.{}", e);
 		}
 
 		ResponseEntity<PtkResponse> re = new ResponseEntity<>(response, status);

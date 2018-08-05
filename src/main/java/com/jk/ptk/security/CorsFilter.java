@@ -55,6 +55,10 @@ public class CorsFilter implements Filter {
 				res.setHeader("Access-Control-Allow-Origin", origin);
 				res.setHeader("Access-Control-Allow-Methods", allowedMethods);
 				res.setHeader("Access-Control-Allow-Headers", allowedHeaders);
+				log.debug("Origin is allowed for CORS: {}", origin);
+			} else {
+
+				log.debug("Origin is NOT allowed for CORS: {}", origin);
 			}
 		}
 
@@ -77,7 +81,7 @@ public class CorsFilter implements Filter {
 
 	/**
 	 * Loads CORS configuration.
-	 * 
+	 *
 	 * @param fConfig filter configuration
 	 * @throws ServletException no exception is thrown, merely for contract
 	 */

@@ -93,7 +93,7 @@ public class NewUserController {
 
 		try {
 			NewUser user = service.getNewUser(id);
-			httpStatus = HttpStatus.ACCEPTED;
+			httpStatus = HttpStatus.OK;
 			response.setData(user);
 		} catch (ValidationException e) {
 			response.setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL).setMessage("ERROR_INVALID_FIELDS")

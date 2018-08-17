@@ -108,9 +108,10 @@ public class NewUserServiceImpl implements NewUserService {
 
 		if (user == null || LocalDateTime.now().isAfter(user.getExpiresOn())) {
 			Map<String, ResponseCode> errorMap = new HashMap<>();
-			errorMap.put("registraionId", ResponseCode.RESOURCE_DOES_NOT_EXIST);
+			errorMap.put(NewUser.FIELD_REGISTRATION_ID, ResponseCode.RESOURCE_DOES_NOT_EXIST);
 
-			repository.remove(user);
+			if (user != null)
+				repository.remove(user);
 
 			throw new ValidationException(errorMap);
 		}

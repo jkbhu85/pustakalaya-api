@@ -43,6 +43,8 @@ public class NewUser {
 	 * Property name for JSON.
 	 */
 	public static final String FIELD_LOCALE = "locale";
+	
+	public static final String FIELD_REGISTRATION_ID = "registrationId";
 
 	@Id
 	private String id;

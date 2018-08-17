@@ -67,6 +67,8 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 
 		web
 			.ignoring()
+				.antMatchers("/ptk/newUser/*")
+				.antMatchers("/ptk/country")
 				.antMatchers("/ptk/login")
 				.antMatchers("/error")
 				.requestMatchers(optionsRequest)

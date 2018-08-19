@@ -45,7 +45,7 @@ public enum ResponseCode {
 	/**
 	 * Code 32.
 	 */
-	VALUE_TOO_SMALL_OR_EMPTY(32),
+	VALUE_TOO_SMALL(32),
 
 	/**
 	 * Code 33.
@@ -70,12 +70,17 @@ public enum ResponseCode {
 	/**
 	 * Code 37.
 	 */
-	EMPTY_FILE(37),
+	EMPTY_VALUE(37),
 
 	/**
 	 * Code 38.
 	 */
 	MAIL_NOT_SENT_INVALID_EMAIL(38),
+
+	/**
+	 * Code 39.
+	 */
+	DOES_NOT_MATCH(39),
 
 	// System related
 	/**

@@ -2,6 +2,8 @@ package com.jk.ptk.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -29,5 +31,26 @@ public final class DateUtils {
 
 	public static Date toUtilDate(java.sql.Date sqlDate) {
 		return new Date(sqlDate.getTime());
+	}
+
+	public static LocalDate parseDate(String dateStr) {
+		if (dateStr == null || dateStr.isEmpty())
+			return null;
+
+		String[] multiple = dateStr.split("-");
+
+		if (multiple.length != 3)
+			return null;
+
+		try {
+			int dayOfMonth = Integer.parseInt(multiple[0]);
+			int month = Integer.parseInt(multiple[1]);
+			int year = Integer.parseInt(multiple[2]);
+
+			return LocalDate.of(year, month, dayOfMonth);
+		} catch (NumberFormatException | DateTimeException ignore) {
+		}
+
+		return null;
 	}
 }

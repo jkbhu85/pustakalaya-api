@@ -11,7 +11,7 @@ import com.jk.ptk.app.response.ResponseCode;
 import com.jk.ptk.f.user.UserService;
 import com.jk.ptk.util.LocaleUtil;
 import com.jk.ptk.util.PatternStore;
-import com.jk.ptk.validation.DataValidation;
+import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.ValidationException;
 
 /**
@@ -21,7 +21,7 @@ import com.jk.ptk.validation.ValidationException;
  *
  */
 @Component("NewUserValidator")
-public class NewUserFieldValidator implements DataValidation<NewUser> {
+public class NewUserFieldValidator implements DataValidator<NewUser> {
 
 	@Autowired
 	private UserService userService;
@@ -60,7 +60,7 @@ public class NewUserFieldValidator implements DataValidation<NewUser> {
 	private ResponseCode validateFirstName(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
+				return ResponseCode.EMPTY_VALUE;
 			else
 				return null;
 		}
@@ -74,7 +74,7 @@ public class NewUserFieldValidator implements DataValidation<NewUser> {
 	private ResponseCode validateLastName(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
+				return ResponseCode.EMPTY_VALUE;
 			else
 				return null;
 		}
@@ -88,7 +88,7 @@ public class NewUserFieldValidator implements DataValidation<NewUser> {
 	private ResponseCode validateLocaleStr(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
+				return ResponseCode.EMPTY_VALUE;
 			else
 				return null;
 		}
@@ -107,7 +107,7 @@ public class NewUserFieldValidator implements DataValidation<NewUser> {
 		// check if value is empty
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
-				return ResponseCode.VALUE_TOO_SMALL_OR_EMPTY;
+				return ResponseCode.EMPTY_VALUE;
 			else
 				return null;
 		}

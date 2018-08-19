@@ -19,7 +19,7 @@ import com.jk.ptk.util.MailConsts;
 import com.jk.ptk.util.UuidUtils;
 import com.jk.ptk.util.mail.MailModel;
 import com.jk.ptk.util.mail.MailTemplateService;
-import com.jk.ptk.validation.DataValidation;
+import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.ValidationException;
 
 /**
@@ -40,7 +40,7 @@ public class NewUserServiceImpl implements NewUserService {
 
 	@Autowired
 	@Qualifier("NewUserValidator")
-	DataValidation<NewUser> validator;
+	DataValidator<NewUser> validator;
 
 	@Override
 	public void addNewUser(NewUser newUser) throws ValidationException {
@@ -91,11 +91,11 @@ public class NewUserServiceImpl implements NewUserService {
 		model.setParamMap(params);
 		model.setRecipient(newUser.getEmail());
 		model.setRecipientName(newUser.getFirstName());
-		model.setTemplateName(MailConsts.TEMPLATE_COMPLETE_REGISTRAION);
-		model.setSubjectPropName(MailConsts.PROP_SUBJECT_COMPLETE_REGISTRAION);
+		model.setTemplateName(MailConsts.TEMPLATE_COMPLETE_REGISTRATION);
+		model.setSubjectPropName(MailConsts.SUBJECT_COMPLETE_REGISTRATION);
 		model.setLocale(LocaleUtil.from(newUser.getLocaleStr()));
 
-		params.put(MailConsts.PARAM_COMPLETE_REGISRATION_USER_NAME, newUser.getFirstName());
+		params.put(MailConsts.PARAM_NAME_OF_USER, newUser.getFirstName());
 		params.put(MailConsts.PARAM_COMPLETE_REGISTRATION_EXPIRE, App.registrationLinkExpireDuration() + "");
 		params.put(MailConsts.PARAM_COMPLETE_REGISTRATION_LINK, registrationUri);
 

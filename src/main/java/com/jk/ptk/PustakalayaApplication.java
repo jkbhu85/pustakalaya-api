@@ -22,7 +22,7 @@ import com.jk.ptk.app.Initializer;
 public class PustakalayaApplication extends SpringBootServletInitializer implements CommandLineRunner {
 	@Autowired
 	private Initializer initializer;
-	
+
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(PustakalayaApplication.class);
@@ -31,7 +31,7 @@ public class PustakalayaApplication extends SpringBootServletInitializer impleme
 	public static void main(String[] args) {
 		SpringApplication.run(PustakalayaApplication.class, args);
 	}
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		initializer.initialize();

@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jk.ptk.app.App;
+import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserAcStatus;
-import com.jk.ptk.f.user.UserAuthInfo;
 import com.jk.ptk.f.user.UserService;
 import com.jk.ptk.security.auth.jwt.JwtPayload;
 import com.jk.ptk.security.auth.jwt.JwtUtil;
@@ -24,7 +24,8 @@ public class LoginServiceImpl implements LoginService {
 	private UserService service;
 
 	@Override
-	public String login(LoginCredentials loginCred) throws InvalidCredentialsException, AccountLockedException, AccountRevokedException {
+	public String login(LoginCredentials loginCred)
+			throws InvalidCredentialsException, AccountLockedException, AccountRevokedException {
 		String username = loginCred.getUsername();
 		String password = loginCred.getPassword();
 
@@ -35,61 +36,55 @@ public class LoginServiceImpl implements LoginService {
 			throw new InvalidCredentialsException();
 		}
 
-		UserAuthInfo authInfo = service.getUserAuthInfo(username);
+		User user = service.findUser(username);
 
-		// no auth info found, throw exception
-		if (authInfo == null || authInfo.getAccountStatus().equals(UserAcStatus.CLOSED)) {
+		// no user found, throw exception
+		Integer accountStatus = user.getAccountStatus().getId();
+		if (user == null || UserAcStatus.CLOSED.getId().equals(accountStatus)) {
 			throw new InvalidCredentialsException();
 		}
 
-		if (authInfo.getAccountStatus().equals(UserAcStatus.LOCKED)) {
+		if (UserAcStatus.LOCKED.getId().equals(accountStatus)) {
 			throw new AccountLockedException();
 		}
 
-		if (authInfo.getAccountStatus().equals(UserAcStatus.REVOKED)) {
+		if (UserAcStatus.REVOKED.getId().equals(accountStatus)) {
 			throw new AccountRevokedException();
 		}
 
 		// get password hash
-		String passwordHash =
-				CredentialsUtil.getPasswordHash
-				(
-						password,
-						authInfo.getPasswordSalt(),
-						authInfo.getPasswordVersion()
-				);
+		String passwordHash = CredentialsUtil.getPasswordHash(password, user.getPasswordSalt(),
+				user.getPasswordVersion());
 
-		if (authInfo.getPasswordHash().equals(passwordHash)) {
-			JwtPayload payload = getPayload(authInfo);
+		if (user.getPasswordHash().equals(passwordHash)) {
+			JwtPayload payload = getPayload(user);
 			String jwt = JwtUtil.encode(payload);
 			jwt = authHeaderValidator.addValidationMarker(jwt);
-			authInfo.setUnsuccessfulTries(0);
 
-			service.updateUserAuthInfo(authInfo);
+			service.updateUnsuccessfulTries(user.getEmail(), 0);
 
 			log.info("Authenticated user with username: {}", username);
 
 			return jwt;
 		} else {
-			authInfo.setUnsuccessfulTries(authInfo.getUnsuccessfulTries() + 1);
-			
-			if (authInfo.getUnsuccessfulTries() == App.unsuccessfulLoginTriesThreshold) {
-				authInfo.setAccountStatus(UserAcStatus.LOCKED);
-				log.info("Locking the account {}", authInfo.getEmail());
+			Integer unsuccefullTries = user.getUnsuccessfulTries() + 1;
+
+			if (user.getUnsuccessfulTries() == App.getUnsuccessfulLoginTriesThreshold()) {
+				user.setAccountStatus(UserAcStatus.LOCKED);
+				log.info("Locking the account {}", user.getEmail());
 			}
 
-			service.updateUserAuthInfo(authInfo);	
-			
+			service.updateUnsuccessfulTries(user.getEmail(), unsuccefullTries);
 			throw new InvalidCredentialsException();
 		}
 	}
 
-	private JwtPayload getPayload(UserAuthInfo authInfo) {
+	private JwtPayload getPayload(User authInfo) {
 		JwtPayload payload = new JwtPayload();
 
 		payload.setEmail(authInfo.getEmail());
 		payload.setName(authInfo.getFirstName());
-		payload.setRole(authInfo.getRole());
+		payload.setRole(authInfo.getRole().getName());
 		payload.setLocale(authInfo.getLocaleValue());
 
 		return payload;

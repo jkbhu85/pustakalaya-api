@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.jk.ptk.f.user.LightUser;
 import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRole;
 
@@ -37,7 +36,7 @@ public class UserRoleHistory {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "assignedByFk", nullable = false)
-	private LightUser assignedBy;
+	private User assignedBy;
 
 	@JoinColumn(name = "assignDate", nullable = false)
 	private LocalDate assignDate;
@@ -63,16 +62,12 @@ public class UserRoleHistory {
 		this.role = role;
 	}
 
-	public LightUser getAssignedBy() {
+	public User getAssignedBy() {
 		return assignedBy;
 	}
 
-	public void setAssignedBy(LightUser assignedBy) {
-		this.assignedBy = assignedBy;
-	}
-
 	public void setAssignedBy(User assignedBy) {
-		this.assignedBy = LightUser.fromUser(assignedBy);
+		this.assignedBy = assignedBy;
 	}
 
 	public String getComments() {

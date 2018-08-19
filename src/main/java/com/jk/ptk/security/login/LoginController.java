@@ -28,7 +28,9 @@ public class LoginController {
 
 		try {
 			String jwt = loginService.login(loginCred);
-			response.setData(jwt);
+			response
+				.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL)
+				.setData(jwt);
 			status = HttpStatus.OK;
 		} catch (InvalidCredentialsException e) {
 			response

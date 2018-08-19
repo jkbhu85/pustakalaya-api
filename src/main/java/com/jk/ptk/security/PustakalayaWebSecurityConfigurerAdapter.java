@@ -65,6 +65,16 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 			}
 		};
 
+		RequestMatcher addUserRequest = new RequestMatcher() {
+			@Override
+			public boolean matches(HttpServletRequest request) {
+				String method = request.getMethod();
+				String uri = request.getRequestURI();
+
+				return ("/ptk/user".equals(uri) && "POST".equalsIgnoreCase(method));
+			}
+		};
+
 		web
 			.ignoring()
 				.antMatchers("/ptk/newUser/*")
@@ -72,6 +82,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 				.antMatchers("/ptk/login")
 				.antMatchers("/error")
 				.requestMatchers(optionsRequest)
+				.requestMatchers(addUserRequest)
 			;
 	}
 

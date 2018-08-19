@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jk.ptk.validation.DataValidation;
+import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.ValidationException;
 
 /**
@@ -15,7 +15,7 @@ import com.jk.ptk.validation.ValidationException;
  *
  */
 @Service
-public class AddressServiceImpl implements AddressService, DataValidation<Address> {
+public class AddressServiceImpl implements AddressService, DataValidator<Address> {
 	@Autowired
 	private AddressRepository repository;
 

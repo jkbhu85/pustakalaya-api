@@ -17,34 +17,30 @@ public final class App {
 	private App() {
 	}
 
+	private static int passwordVersion = -1;
+
 	static {
-		if (AppProps.valueOf("app.security.password.version") == null) {
-			passwordVersion = 0;
-			log.error("Password version property is not set.");
-			System.exit(-1);
-		} else {
+		if (AppProps.valueOf("app.security.password.version") != null) {
 			try {
 				passwordVersion = Integer.parseInt(AppProps.valueOf("app.security.password.version"));
+				log.info("Password version in used is {}.", passwordVersion);
 			} catch (NumberFormatException ignore) {
-				log.error("Password version property is not set.");
 			}
 		}
+		
+		if (passwordVersion == -1) {
+			log.error("Password version property is not set.");
+			System.exit(1);
+		}
 	}
-
-	private static String appDomain = "https://localhost:8080";
-	private static int registraionLinkExpirationHours = 72;
-	private static int passwordVersion = -1;
 
 	public static int getCurrentPasswordVersion() {
 		return passwordVersion;
 	}
 
-	private static int unsuccessfulLoginTriesThreshold = -1;
-	private static int userNoneBookQuota = -1;
-	private static int userMemberBookQuota = -1;
-	private static int userLibrarianBookQuota = -1;
-	private static int userAdminBookQuota = -1;
 
+	private static int userNoneBookQuota = -1;
+	
 	public static int getNoneBookQuota() {
 		if (userNoneBookQuota != -1)
 			return userNoneBookQuota;
@@ -62,6 +58,9 @@ public final class App {
 		return userNoneBookQuota;
 	}
 
+
+	private static int userMemberBookQuota = -1;
+	
 	public static int getMemberBookQuota() {
 		if (userMemberBookQuota != -1)
 			return userMemberBookQuota;
@@ -79,6 +78,9 @@ public final class App {
 		return userMemberBookQuota;
 	}
 
+
+	private static int userLibrarianBookQuota = -1;
+	
 	public static int getLibrarianBookQuota() {
 		if (userLibrarianBookQuota != -1)
 			return userLibrarianBookQuota;
@@ -95,6 +97,9 @@ public final class App {
 
 		return userLibrarianBookQuota;
 	}
+	
+
+	private static int userAdminBookQuota = -1;
 
 	public static int getAdminBookQuota() {
 		if (userAdminBookQuota != -1)
@@ -113,6 +118,8 @@ public final class App {
 		return userAdminBookQuota;
 	}
 
+
+	private static int unsuccessfulLoginTriesThreshold = -1;
 	/**
 	 * Maximum number of tries with incorrect credentials after which account is
 	 * locked.
@@ -135,33 +142,64 @@ public final class App {
 		return unsuccessfulLoginTriesThreshold;
 	}
 
-	/**
-	 * Returns URL for the specified URI. URI should not begin with '/'.
-	 *
-	 * @param uri
-	 *            the specified URI
-	 * @return URL for the specified URI
-	 */
-	public static String getUrl(String uri) {
-		return appDomain() + "/" + uri;
-	}
 
+	private static int registraionLinkExpirationHours = -1;
+	
 	/**
 	 * Returns registration link expiration duration in hours.
 	 *
 	 * @return registration link expiration duration in hours
 	 */
 	public static int registrationLinkExpireDuration() {
+		if (registraionLinkExpirationHours != -1)
+			return registraionLinkExpirationHours;
+
+		if (AppProps.valueOf("user.partial.registration.link.expire.period") == null) {
+			registraionLinkExpirationHours = 72;
+		} else {
+			try {
+				registraionLinkExpirationHours = Integer
+						.parseInt(AppProps.valueOf("user.partial.registration.link.expire.period"));
+			} catch (NumberFormatException ignore) {
+				registraionLinkExpirationHours = 72;
+			}
+		}
+
 		return registraionLinkExpirationHours;
 	}
 
+
+	private static String uiDomain = null;
 	/**
-	 * Returns Internet domain of the application.
+	 * Returns Internet domain of the front end application.
 	 *
-	 * @return Internet domain of the application
+	 * @return Internet domain of the front end application
 	 */
 	public static String appDomain() {
-		return appDomain;
+		if (uiDomain != null)
+			return uiDomain;
+
+		if (AppProps.valueOf("app.frontend.domain") == null) {
+			uiDomain = "https://localhost:4200";
+		} else {
+			uiDomain = AppProps.valueOf("app.frontend.domain");
+		}
+		
+		return uiDomain;
+	}
+	
+	/**
+	 * Returns URL for the specified URI for front end application.
+	 *
+	 * @param uri
+	 *            the specified URI
+	 * @return URL for the specified URI
+	 */
+	public static String getUrl(String uri) {
+		if (uri == null) return null;
+		
+		if (uri.startsWith("/")) return uiDomain + uri;
+		else return uiDomain + "/" + uri;
 	}
 
 	public static String getHmacSecret() {

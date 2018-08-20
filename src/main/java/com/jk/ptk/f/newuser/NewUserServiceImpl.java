@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,7 @@ public class NewUserServiceImpl implements NewUserService {
 	DataValidator<NewUser> validator;
 
 	@Override
+	@Transactional
 	public void addNewUser(NewUser newUser) throws ValidationException {
 		// validate fields
 		if (validator != null)
@@ -117,6 +120,17 @@ public class NewUserServiceImpl implements NewUserService {
 		}
 
 		return user;
+	}
+
+	@Override
+	public NewUser findNewUser(String email) {
+		return repository.findNewUserByEmail(email);
+	}
+
+	@Override
+	@Transactional
+	public void remove(NewUser newUser) {
+		repository.remove(newUser);
 	}
 
 }

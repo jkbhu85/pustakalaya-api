@@ -2,25 +2,30 @@ package com.jk.ptk.f.country;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+/**
+ * 
+ * Implementations of this interface interact with a storage system to
+ * manipulate instances of type {@link Country}.
+ * 
+ * @author Jitendra
+ *
+ */
+public interface CountryRepository {
+	/**
+	 * Returns a country associated with the specified {@code id} if it exists
+	 * otherwise {@code null}.
+	 * 
+	 * @param id
+	 *           the specified id
+	 * @return a country associated with the specified {@code id} if it exists
+	 *         otherwise {@code null}
+	 */
+	Country find(Long id);
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-@Repository
-@Transactional
-public class CountryRepository {
-	@Autowired
-	private EntityManager em;
-	
-	public List<Country> getCountries() {
-		TypedQuery<Country> q = em.createNamedQuery("get_all_countries", Country.class);
-		return q.getResultList();
-	}
-	
-	public Country getCountry(Long id) {
-		return em.find(Country.class, id);
-	}
+	/**
+	 * Returns a list of all countries from the storage system.
+	 * 
+	 * @return a list of all countries from the storage system
+	 */
+	List<Country> getAll();
 }

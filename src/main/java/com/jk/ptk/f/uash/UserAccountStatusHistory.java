@@ -1,6 +1,6 @@
 package com.jk.ptk.f.uash;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserAcStatus;
@@ -20,7 +21,9 @@ import com.jk.ptk.f.user.UserAcStatus;
  * @author Jitendra
  *
  */
+
 @Entity
+@NamedQuery(name="uash_find_all_by_email", query="SELECT uash FROM UserAccountStatusHistory uash INNER JOIN uash.user u WHERE u.email=:email")
 public class UserAccountStatusHistory {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,7 +37,7 @@ public class UserAccountStatusHistory {
 	@JoinColumn(name = "userFk", nullable = false)
 	private User user;
 
-	private LocalDate createdOn;
+	private LocalDateTime createdOn;
 
 	@Column(nullable = false)
 	private String comments;
@@ -70,7 +73,7 @@ public class UserAccountStatusHistory {
 		return id;
 	}
 
-	public LocalDate getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 }

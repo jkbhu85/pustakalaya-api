@@ -77,7 +77,7 @@ public class UserController {
 		} catch (Exception e) {
 			response.setResponseCode(ResponseCode.UNKNOWN_ERROR).setMessage("ERROR_UNKNOWN");
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-			log.error("Error while adding user.{}", e);
+			log.error("Error while adding user.", e);
 		}
 
 		ResponseEntity<PtkResponse> res = new ResponseEntity<>(response, httpStatus);

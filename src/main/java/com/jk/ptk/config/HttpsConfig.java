@@ -17,7 +17,7 @@ import com.jk.ptk.app.AppProps;
 public class HttpsConfig {
 	private static final Logger log = LoggerFactory.getLogger(HttpsConfig.class);
 
-	// redirect all traffic of http to https
+	// redirect all traffic of HTTP to HTTPS
 	@Bean
 	public ServletWebServerFactory servletContainer() {
 		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
@@ -46,11 +46,17 @@ public class HttpsConfig {
 
 		try {
 			httpPort = Integer.parseInt(AppProps.valueOf("app.security.http.port"));
-			httpsPort = Integer.parseInt(AppProps.valueOf("app.security.https.port"));
+			
 		} catch (NumberFormatException e) {
 			httpPort = 8080;
+			log.warn("Port number for HTTP is not defined.");
+		}
+		
+		try {
+			httpsPort = Integer.parseInt(AppProps.valueOf("app.security.https.port"));
+		} catch (NumberFormatException e) {
 			httpsPort = 8443;
-			log.warn("HTTP and HTTPS port number are not defined.");
+			log.warn("Port number for HTTPS is not defined.");
 		}
 
 		connector.setScheme("http");

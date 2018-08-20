@@ -7,6 +7,7 @@ package com.jk.ptk.f.user;
  *
  */
 public class UserFormValues {
+	public static final String FIELD_REGISTRATION_ID = "registrationId";
 	public static final String FIELD_EMAIL = "email";
 	public static final String FIELD_FIRST_NAME = "firstName";
 	public static final String FIELD_LAST_NAME = "lastName";
@@ -20,6 +21,7 @@ public class UserFormValues {
 	public static final String FIELD_SECURITY_QUESTION = "securityQuestion";
 	public static final String FIELD_SECURITY_ANSWER = "securityAnswer";
 
+	private String registrationId;
 	private String email;
 	private String firstName;
 	private String lastName;
@@ -37,6 +39,21 @@ public class UserFormValues {
 	}
 
 	/**
+	 * @return the registrationId
+	 */
+	public String getRegistrationId() {
+		return registrationId;
+	}
+
+	/**
+	 * @param registrationId
+	 *                       the registrationId to set
+	 */
+	public void setRegistrationId(String registrationId) {
+		this.registrationId = registrationId;
+	}
+
+	/**
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -45,7 +62,7 @@ public class UserFormValues {
 
 	/**
 	 * @param email
-	 *            the email to set
+	 *              the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -60,7 +77,7 @@ public class UserFormValues {
 
 	/**
 	 * @param firstName
-	 *            the firstName to set
+	 *                  the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -75,7 +92,7 @@ public class UserFormValues {
 
 	/**
 	 * @param lastName
-	 *            the lastName to set
+	 *                 the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -90,7 +107,7 @@ public class UserFormValues {
 
 	/**
 	 * @param gender
-	 *            the gender to set
+	 *               the gender to set
 	 */
 	public void setGender(String gender) {
 		this.gender = gender;
@@ -105,7 +122,7 @@ public class UserFormValues {
 
 	/**
 	 * @param dateOfBirth
-	 *            the dateOfBirth to set
+	 *                    the dateOfBirth to set
 	 */
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
@@ -120,7 +137,7 @@ public class UserFormValues {
 
 	/**
 	 * @param locale
-	 *            the locale to set
+	 *               the locale to set
 	 */
 	public void setLocale(String locale) {
 		this.locale = locale;
@@ -135,7 +152,7 @@ public class UserFormValues {
 
 	/**
 	 * @param isdCode
-	 *            the isdCode to set
+	 *                the isdCode to set
 	 */
 	public void setIsdCode(String isdCode) {
 		this.isdCode = isdCode;
@@ -150,7 +167,7 @@ public class UserFormValues {
 
 	/**
 	 * @param mobile
-	 *            the mobile to set
+	 *               the mobile to set
 	 */
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
@@ -165,7 +182,7 @@ public class UserFormValues {
 
 	/**
 	 * @param password
-	 *            the password to set
+	 *                 the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -180,7 +197,7 @@ public class UserFormValues {
 
 	/**
 	 * @param confirmPassword
-	 *            the confirmPassword to set
+	 *                        the confirmPassword to set
 	 */
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
@@ -195,7 +212,7 @@ public class UserFormValues {
 
 	/**
 	 * @param securityQuestion
-	 *            the securityQuestion to set
+	 *                         the securityQuestion to set
 	 */
 	public void setSecurityQuestion(String securityQuestion) {
 		this.securityQuestion = securityQuestion;
@@ -210,13 +227,15 @@ public class UserFormValues {
 
 	/**
 	 * @param securityAnswer
-	 *            the securityAnswer to set
+	 *                       the securityAnswer to set
 	 */
 	public void setSecurityAnswer(String securityAnswer) {
 		this.securityAnswer = securityAnswer;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

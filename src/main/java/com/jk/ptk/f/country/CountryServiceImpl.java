@@ -5,19 +5,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * A concrete class of interface {@link CountryService}.
+ * 
+ * @author Jitendra
+ *
+ */
 @Component
 public class CountryServiceImpl implements CountryService {
 	@Autowired
 	private CountryRepository repository;
 
 	@Override
-	public List<Country> getCountries() {
-		return repository.getCountries();
+	public Country find(Long id) {
+		return repository.find(id);
 	}
 
 	@Override
-	public Country getCountry(Long id) {
-		return repository.getCountry(id);
+	public List<Country> getAll() {
+		return repository.getAll();
 	}
 
 }

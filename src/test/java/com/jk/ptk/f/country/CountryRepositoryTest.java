@@ -23,12 +23,12 @@ public class CountryRepositoryTest {
 	
 	@Test
 	public void getCountries() {
-		assertNotEquals(0, cr.getCountries().size());
+		assertNotEquals(0, cr.getAll().size());
 	}
 	
 	@Test
 	public void getCountryById() {
-		Country c = cr.getCountry(1L);
+		Country c = cr.find(1L);
 		
 		assertEquals("India", c.getName());
 	}

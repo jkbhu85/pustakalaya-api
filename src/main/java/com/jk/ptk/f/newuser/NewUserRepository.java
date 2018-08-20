@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-@Transactional
 public class NewUserRepository {
 	@Autowired
 	private EntityManager em;
@@ -34,6 +32,8 @@ public class NewUserRepository {
 	}
 
 	public NewUser findNewUserByEmail(String email) {
+		if (email == null) return null;
+		
 		TypedQuery<NewUser> query = em.createNamedQuery("newUser_find_by_email", NewUser.class);
 		query.setParameter("email", email);
 		List<NewUser> list = query.getResultList();
@@ -47,6 +47,7 @@ public class NewUserRepository {
 	 * @param newUser
 	 *            the specified new user to save
 	 */
+
 	public void saveNewUser(NewUser newUser) {
 		em.persist(newUser);
 	}

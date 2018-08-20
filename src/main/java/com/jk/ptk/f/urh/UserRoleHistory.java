@@ -1,6 +1,6 @@
 package com.jk.ptk.f.urh;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,17 +9,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRole;
 
 /**
- * Represents entry of user role history.
+ * Represents an entry of user role history.
  *
  * @author Jitendra
  *
  */
 @Entity
+@NamedQuery(name = "urh_find_all_by_email", query = "SELECT urh FROM UserRoleHistory urh INNER JOIN urh.user u WHERE u.email=:email")
 public class UserRoleHistory {
 
 	@Id
@@ -39,7 +41,7 @@ public class UserRoleHistory {
 	private User assignedBy;
 
 	@JoinColumn(name = "assignDate", nullable = false)
-	private LocalDate assignDate;
+	private LocalDateTime assignDate;
 
 	private String comments;
 
@@ -82,7 +84,7 @@ public class UserRoleHistory {
 		return id;
 	}
 
-	public LocalDate getAssignDate() {
+	public LocalDateTime getAssignDate() {
 		return assignDate;
 	}
 

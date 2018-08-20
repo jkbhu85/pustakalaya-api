@@ -38,7 +38,7 @@ public class AppProps {
 		try {
 			init();
 		} catch (Exception e) {
-			log.error("Could not load properties. Exiting now.{}", e);
+			log.error("Could not load properties. Exiting now.", e);
 			System.exit(-1);
 		}
 	}
@@ -58,7 +58,7 @@ public class AppProps {
 		}
 
 		if (!configDir.isDirectory()) {
-			throw new IOException("Config path is not a directory. Path: {}" + configDir.getAbsolutePath());
+			throw new IOException("Config path is not a directory. Path: " + configDir.getAbsolutePath());
 		}
 
 		for (File file : configDir.listFiles()) {
@@ -66,7 +66,9 @@ public class AppProps {
 				continue;
 
 			if (!file.canRead()) {
-				throw new IOException("Can not read the property file. Path: {}" + file.getAbsolutePath());
+				throw new IOException("Can not read the property file. Path: " + file.getAbsolutePath());
+			} else {
+				log.info("Reading property file: {}", file.getName());
 			}
 
 			// load property file

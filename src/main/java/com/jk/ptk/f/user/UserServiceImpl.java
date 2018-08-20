@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +15,10 @@ import com.jk.ptk.app.ResourceExpiredException;
 import com.jk.ptk.f.country.CountryRepository;
 import com.jk.ptk.f.newuser.NewUser;
 import com.jk.ptk.f.newuser.NewUserRepository;
+import com.jk.ptk.f.uash.UserAccountStatusHistory;
+import com.jk.ptk.f.uash.UserAccountStatusHistoryRepository;
+import com.jk.ptk.f.urh.UserRoleHistory;
+import com.jk.ptk.f.urh.UserRoleHistoryRepository;
 import com.jk.ptk.security.login.CredentialsUtil;
 import com.jk.ptk.security.login.InvalidCredentialsException;
 import com.jk.ptk.util.DateUtils;
@@ -29,6 +35,8 @@ public class UserServiceImpl implements UserService {
 	private UserRepository repository;
 	private CountryRepository countryRepository;
 	private NewUserRepository newUserRepository;
+	private UserRoleHistoryRepository roleRepository;
+	private UserAccountStatusHistoryRepository acStatusRepository;
 	private MailTemplateService mailService;
 
 	@Autowired
@@ -36,10 +44,13 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	public UserServiceImpl(UserRepository repository, CountryRepository countryRepository,
-			NewUserRepository newUserRepository, MailTemplateService mailService) {
+			NewUserRepository newUserRepository, UserRoleHistoryRepository roleRepository,
+			UserAccountStatusHistoryRepository acStatusRepository, MailTemplateService mailService) {
 		this.repository = repository;
 		this.countryRepository = countryRepository;
 		this.newUserRepository = newUserRepository;
+		this.roleRepository = roleRepository;
+		this.acStatusRepository = acStatusRepository;
 		this.mailService = mailService;
 	}
 
@@ -53,20 +64,48 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(rollbackOn=Exception.class)
 	public void addUser(UserFormValues userFormValues) throws ValidationException, ResourceExpiredException {
-		NewUser newUser = newUserRepository.findNewUserByEmail(userFormValues.getEmail());
+		NewUser newUser = newUserRepository.findNewUser(userFormValues.getRegistrationId());
 
 		if (newUser == null || newUser.getExpiresOn().isBefore(LocalDateTime.now()))
 			throw new ResourceExpiredException("Registration id has expired.");
+		
+		userFormValues.setEmail(newUser.getEmail());
 
 		if (dataValidator != null)
 			dataValidator.validate(userFormValues);
 
 		User user = toUser(userFormValues, newUser);
+		UserRoleHistory urh = UserRoleHistoryFrom(user);
+		UserAccountStatusHistory uash = acStatusHistoryFrom(user);
 
-		newUserRepository.removeNewUser(newUser.getEmail());
+		newUserRepository.remove(newUser);
 		repository.addUser(user);
+		roleRepository.addRoleHistory(urh);
+		acStatusRepository.addAccountStatus(uash);
 		sendMail(user);
+	}
+
+	private UserRoleHistory UserRoleHistoryFrom(User user) {
+		UserRoleHistory urh = new UserRoleHistory();
+
+		urh.setUser(user);
+		urh.setAssignedBy(user.getAcCreatedBy());
+		urh.setRole(user.getRole());
+		urh.setComments("Account created");
+
+		return urh;
+	}
+
+	private UserAccountStatusHistory acStatusHistoryFrom(User user) {
+		UserAccountStatusHistory uash = new UserAccountStatusHistory();
+
+		uash.setAccountStatus(user.getAccountStatus());
+		uash.setUser(user);
+		uash.setComments("Account created");
+
+		return uash;
 	}
 
 	private void sendMail(User user) {
@@ -83,7 +122,7 @@ public class UserServiceImpl implements UserService {
 		params.put(MailConsts.PARAM_NAME_OF_USER, user.getFirstName());
 		params.put(MailConsts.PARAM_EMAIL_OF_USER, user.getEmail());
 
-		String loginUrl = App.getUrl("login");
+		String loginUrl = App.getUrl("/login");
 		params.put(MailConsts.PARAM_LOGIN_PAGE, loginUrl);
 
 		mailService.sendMail(model);
@@ -97,7 +136,7 @@ public class UserServiceImpl implements UserService {
 		user.setGender(formValues.getGender());
 
 		long countryCode = Integer.parseInt(formValues.getIsdCode());
-		user.setCountry(countryRepository.getCountry(countryCode));
+		user.setCountry(countryRepository.find(countryCode));
 		user.setEmail(formValues.getEmail());
 		user.setMobile(formValues.getMobile());
 
@@ -139,6 +178,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void updatePassword(String email, String currentPassword, String newPassword, String confirmNewPassword)
 			throws InvalidCredentialsException, ValidationException {
 		User user = repository.findUser(email);
@@ -174,6 +214,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void updateSecurityQuestion(String email, String password, String question, String answer)
 			throws InvalidCredentialsException, ValidationException {
 		User user = repository.findUser(email);
@@ -202,6 +243,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void updateUnsuccessfulTries(String email, Integer tries) {
 		repository.updateUnsuccessfulTries(email, tries);
 	}

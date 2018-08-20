@@ -32,8 +32,6 @@ public class DbConfig {
 		dataSource.setUrl(AppProps.valueOf("db.url"));
 		dataSource.setUsername(AppProps.valueOf("db.username"));
 		dataSource.setPassword(AppProps.valueOf("db.password"));
-		
-		System.out.println(AppProps.valueOf("db.driver.class.name ______"));
 
 		return dataSource;
 	}

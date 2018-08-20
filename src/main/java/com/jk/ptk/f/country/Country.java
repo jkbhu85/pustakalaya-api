@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
 @Entity
-@NamedQuery(name = "get_all_countries", query = "select c from Country c order by c.name")
+@NamedQuery(name = "country_get_all", query = "select c from Country c order by c.name")
 public class Country {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

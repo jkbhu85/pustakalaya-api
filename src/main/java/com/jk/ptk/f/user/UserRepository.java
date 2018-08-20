@@ -10,19 +10,25 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+/**
+ * Repository for the type {@link User}.
+ * 
+ * @author Jitendra
+ *
+ */
 @Repository
-//@Transactional
 public class UserRepository {
 	@Autowired
 	private EntityManager em;
 
-	@Transactional
+	@Transactional(rollbackOn=Exception.class)
 	public void addUser(User user) {
 		em.persist(user);
 	}
 
 	public User findUser(String email) {
-		if (email == null || email.isEmpty()) return null;
+		if (email == null || email.isEmpty())
+			return null;
 
 		TypedQuery<User> query = em.createNamedQuery("user_find_by_email", User.class);
 		query.setParameter("email", email);
@@ -34,7 +40,7 @@ public class UserRepository {
 	public boolean userExists(String email) {
 		Query query = em.createNamedQuery("user_exist_by_email");
 		query.setParameter("email", email);
-		final int result = ((Number)query.getSingleResult()).intValue();
+		final int result = ((Number) query.getSingleResult()).intValue();
 
 		return result == 1;
 	}
@@ -42,12 +48,11 @@ public class UserRepository {
 	public boolean mobileExists(String mobile) {
 		Query query = em.createNamedQuery("user_mobile_exists");
 		query.setParameter("mobile", mobile);
-		final int result = ((Number)query.getSingleResult()).intValue();
+		final int result = ((Number) query.getSingleResult()).intValue();
 
 		return result == 1;
 	}
 
-	@Transactional
 	public void updatePassword(String email, String passwordHash, String passwordSalt, Integer passwordVersion) {
 		Query query = em.createNamedQuery("user_update_password");
 		query.setParameter("email", email);
@@ -56,13 +61,11 @@ public class UserRepository {
 		query.setParameter("passwordVersion", passwordVersion);
 	}
 
-	@Transactional
 	public void updateSecurityQuestion(String email, String question, String answer) {
 		Query query = em.createNamedQuery("user_update_security_question");
 		query.setParameter("email", email);
 	}
 
-	@Transactional
 	public void updateUnsuccessfulTries(String email, Integer tries) {
 		Query query = em.createNamedQuery("user_update_unsuccessful_tries");
 		query.setParameter("email", email);

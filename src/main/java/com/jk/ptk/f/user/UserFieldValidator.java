@@ -110,8 +110,6 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 			return validateFirstName(value, mandatory);
 		case UserFormValues.FIELD_LAST_NAME:
 			return validateLastName(value, mandatory);
-		case UserFormValues.FIELD_EMAIL:
-			return validateEmail(value, mandatory);
 		case UserFormValues.FIELD_MOBILE:
 			return validateMobile(value, mandatory);
 		case UserFormValues.FIELD_ISD_CODE:
@@ -149,11 +147,6 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 		errorCode = validateLastName(user.getLastName(), true);
 		if (errorCode != null) {
 			errorMap.put(UserFormValues.FIELD_LAST_NAME, errorCode);
-		}
-
-		errorCode = validateEmail(user.getEmail(), true);
-		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_EMAIL, errorCode);
 		}
 
 		errorCode = validateLocaleStr(user.getLocale(), true);
@@ -300,24 +293,6 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 		return null;
 	}
 
-	private ResponseCode validateEmail(String value, boolean mandatory) {
-		if (value == null || value.isEmpty()) {
-			if (mandatory)
-				return ResponseCode.EMPTY_VALUE;
-			else
-				return null;
-		}
-
-		Matcher m = PatternStore.EMAIL.matcher(value);
-		if (!m.matches())
-			return ResponseCode.INVALID_FORMAT;
-
-		if (userService.userExists(value))
-			return ResponseCode.VALUE_ALREADY_EXIST;
-
-		return null;
-	}
-
 	private ResponseCode validateMobile(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
@@ -347,7 +322,7 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 		try {
 			long countryCode = Integer.parseInt(value);
 
-			if (countryService.getCountry(countryCode) != null)
+			if (countryService.find(countryCode) != null)
 				return null;
 		} catch (NumberFormatException ignore) {
 		}

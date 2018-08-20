@@ -16,11 +16,11 @@ public class CountryController {
 
 	@GetMapping
 	public List<Country> getCountries() {
-		return service.getCountries();
+		return service.getAll();
 	}
 
 	@GetMapping("/{id}")
 	public Country getCountry(@PathVariable("id") Long id) {
-		return service.getCountry(id);
+		return service.find(id);
 	}
 }

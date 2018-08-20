@@ -2,35 +2,22 @@ package com.jk.ptk.security.login;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.jk.ptk.util.RandomUtil;
+
 public final class CredentialsUtil {
 	private static Logger log = LoggerFactory.getLogger(CredentialsUtil.class);
 	private static final HashGenerator hashGenerator = new HashGenerator();
-	private static final PasswordSaltGenerator pwdSaltGenerator = new PasswordSaltGenerator();
 
 	public static String getPasswordHash(String password, String salt, int passwordVersion) {
 		return hashGenerator.getPasswordHash(password, salt, passwordVersion);
 	}
 
 	public static String getPasswordSalt() {
-		return pwdSaltGenerator.getPasswordSalt();
-	}
-
-	private static class PasswordSaltGenerator {
-		private SecureRandom sr = new SecureRandom();
-
-		private String getPasswordSalt() {
-			byte[] bytes = new byte[8];
-
-			// get secure random bits
-			sr.nextBytes(bytes);
-
-			return new String(bytes);
-		}
+		return RandomUtil.getNoramlizedRandomHex(8);
 	}
 
 	private static class HashGenerator {

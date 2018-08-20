@@ -3,23 +3,21 @@ package com.jk.ptk.f.newuser;
 import com.jk.ptk.validation.ValidationException;
 
 /**
- * Implementations of this interface serves to manipulate instances of type
+ * Implementations of this interface manipulate instances of type
  * {@link NewUser}.
  *
  * @author Jitendra
- *
  */
 public interface NewUserService {
 	/**
-	 * Add the specified user to the system.
+	 * Saves the specified user in the system.
 	 *
-	 * @param newUser
-	 *                the specified user to add
-	 *
+	 * @param userValues
+	 *                   the specified user to add
 	 * @throws ValidationException
 	 *                             if the specified user data fails validation
 	 */
-	void addNewUser(NewUser newUser) throws ValidationException;
+	void save(NewUserV userValues) throws ValidationException;
 
 	/**
 	 * Returns the new user identified by the specified id.
@@ -30,7 +28,7 @@ public interface NewUserService {
 	 * @throws ValidationException
 	 *                             if a user with the specified id was not found
 	 */
-	NewUser getNewUser(String id) throws ValidationException;
+	NewUser find(String id) throws ValidationException;
 
 	/**
 	 * Returns the new user associated with the specified email, returns
@@ -41,13 +39,13 @@ public interface NewUserService {
 	 * @return new user associated with the specified email,
 	 *         {@code null} if no user was found
 	 */
-	NewUser findNewUser(String email);
+	NewUser findByEmail(String email);
 
 	/**
 	 * Removes the specified new user form the system.
 	 * 
 	 * @param newUser
-	 *             the specified new user to be removed
+	 *                the specified new user to be removed
 	 */
 	void remove(NewUser newUser);
 }

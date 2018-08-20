@@ -17,16 +17,19 @@ import javax.persistence.Table;
 
 import com.jk.ptk.f.country.Country;
 
+/**
+ * Represents a user.
+ * 
+ * @author Jitendra
+ */
 @Entity
 @Table(name = "LibUser")
-@NamedQueries({
-	@NamedQuery(name = "user_find_by_email", query = "SELECT u FROM User u WHERE u.email=:email"),
-	@NamedQuery(name = "user_exist_by_email", query = "SELECT COUNT(u) FROM User u WHERE u.email=:email"),
-	@NamedQuery(name = "user_mobile_exists", query = "SELECT COUNT(u) FROM User u WHERE u.mobile=:mobile"),
-	@NamedQuery(name = "user_update_password", query = "UPDATE User u SET u.passwordHash=:passwordHash, u.passwordSalt=:passwordSalt,u.passwordVersion=:passwordVersion WHERE u.email=:email"),
-	@NamedQuery(name = "user_update_security_question", query = "UPDATE User u SET u.securityQuestion=:securityQuestion, u.securityAnswer=:securityAnswer WHERE email=:email"),
-	@NamedQuery(name = "user_update_unsuccessful_tries", query = "UPDATE User u SET u.unsuccessfulTries=:unsuccessfulTries WHERE email=:email")
-})
+@NamedQueries({ @NamedQuery(name = "user_find_by_email", query = "SELECT u FROM User u WHERE u.email=:email"),
+		@NamedQuery(name = "user_exist_by_email", query = "SELECT COUNT(u) FROM User u WHERE u.email=:email"),
+		@NamedQuery(name = "user_mobile_exists", query = "SELECT COUNT(u) FROM User u WHERE u.mobile=:mobile"),
+		@NamedQuery(name = "user_update_password", query = "UPDATE User u SET u.passwordHash=:passwordHash, u.passwordSalt=:passwordSalt,u.passwordVersion=:passwordVersion WHERE u.email=:email"),
+		@NamedQuery(name = "user_update_security_question", query = "UPDATE User u SET u.securityQuestion=:securityQuestion, u.securityAnswer=:securityAnswer WHERE email=:email"),
+		@NamedQuery(name = "user_update_unsuccessful_tries", query = "UPDATE User u SET u.unsuccessfulTries=:unsuccessfulTries WHERE email=:email") })
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -198,14 +201,16 @@ public class User {
 	}
 
 	/**
-	 * @param createdOn the createdOn to set
+	 * @param createdOn
+	 *                  the createdOn to set
 	 */
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
 	/**
-	 * @param acCreatedBy the acCreatedBy to set
+	 * @param acCreatedBy
+	 *                    the acCreatedBy to set
 	 */
 	public void setAcCreatedBy(User acCreatedBy) {
 		this.acCreatedBy = acCreatedBy;
@@ -219,7 +224,8 @@ public class User {
 	}
 
 	/**
-	 * @param passwordHash the passwordHash to set
+	 * @param passwordHash
+	 *                     the passwordHash to set
 	 */
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
@@ -233,7 +239,8 @@ public class User {
 	}
 
 	/**
-	 * @param passwordSalt the passwordSalt to set
+	 * @param passwordSalt
+	 *                     the passwordSalt to set
 	 */
 	public void setPasswordSalt(String passwordSalt) {
 		this.passwordSalt = passwordSalt;
@@ -247,7 +254,8 @@ public class User {
 	}
 
 	/**
-	 * @param passwordVersion the passwordVersion to set
+	 * @param passwordVersion
+	 *                        the passwordVersion to set
 	 */
 	public void setPasswordVersion(Integer passwordVersion) {
 		this.passwordVersion = passwordVersion;
@@ -261,7 +269,8 @@ public class User {
 	}
 
 	/**
-	 * @param unsuccessfulTries the unsuccessfulTries to set
+	 * @param unsuccessfulTries
+	 *                          the unsuccessfulTries to set
 	 */
 	public void setUnsuccessfulTries(Integer unsuccessfulTries) {
 		this.unsuccessfulTries = unsuccessfulTries;
@@ -275,7 +284,8 @@ public class User {
 	}
 
 	/**
-	 * @param securityQuestion the securityQuestion to set
+	 * @param securityQuestion
+	 *                         the securityQuestion to set
 	 */
 	public void setSecurityQuestion(String securityQuestion) {
 		this.securityQuestion = securityQuestion;
@@ -289,7 +299,8 @@ public class User {
 	}
 
 	/**
-	 * @param securityAnswer the securityAnswer to set
+	 * @param securityAnswer
+	 *                       the securityAnswer to set
 	 */
 	public void setSecurityAnswer(String securityAnswer) {
 		this.securityAnswer = securityAnswer;
@@ -301,7 +312,5 @@ public class User {
 	public User getAcCreatedBy() {
 		return acCreatedBy;
 	}
-
-
 
 }

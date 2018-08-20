@@ -15,10 +15,9 @@ import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRole;
 
 /**
- * Represents an entry of user role history.
+ * Represents an entry of user's role history.
  *
  * @author Jitendra
- *
  */
 @Entity
 @NamedQuery(name = "urh_find_all_by_email", query = "SELECT urh FROM UserRoleHistory urh INNER JOIN urh.user u WHERE u.email=:email")

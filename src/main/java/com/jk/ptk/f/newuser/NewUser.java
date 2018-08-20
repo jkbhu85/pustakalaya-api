@@ -17,39 +17,14 @@ import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRole;
 
 /**
- * Represents a newly added user with partial details.
+ * Represents a new user added with partial details.
  *
  * @author Jitendra
- *
  */
 @Entity
-@NamedQueries({
-	@NamedQuery(name="newUser_delete_by_email", query = "delete from NewUser u where u.email=:email"),
-	@NamedQuery(name="newUser_find_by_email", query="select u from NewUser u where u.email=:email")
-})
+@NamedQueries({ @NamedQuery(name = "newUser_delete_by_email", query = "delete from NewUser u where u.email=:email"),
+		@NamedQuery(name = "newUser_find_by_email", query = "select u from NewUser u where u.email=:email") })
 public class NewUser {
-	/**
-	 * Property name for JSON.
-	 */
-	public static final String FIELD_FIRST_NAME = "firstName";
-
-	/**
-	 * Property name for JSON.
-	 */
-	public static final String FIELD_LAST_NAME = "lastName";
-
-	/**
-	 * Property name for JSON.
-	 */
-	public static final String FIELD_EMAIL = "email";
-
-	/**
-	 * Property name for JSON.
-	 */
-	public static final String FIELD_LOCALE = "locale";
-
-	public static final String FIELD_REGISTRATION_ID = "registrationId";
-
 	@Id
 	private String id;
 

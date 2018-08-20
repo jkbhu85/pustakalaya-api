@@ -20,14 +20,13 @@ import com.jk.ptk.validation.OperationNotSupportedException;
 import com.jk.ptk.validation.ValidationException;
 
 /**
- * This class is used to validate the fields of the class
- * {@link UserFormValues}.
+ * This class is used to validate the fields of the type
+ * {@link UserV}.
  *
  * @author Jitendra
- *
  */
-@Component
-public class UserFieldValidator implements DataValidator<UserFormValues> {
+@Component("UserFieldValidator")
+public class UserFieldValidator implements DataValidator<UserV> {
 	private static final int FIRST_NAME_MAX_LEN = 30;
 	private static final int LAST_NAME_MAX_LEN = 30;
 	private static final int PASSWORD_MIN_LEN = 6;
@@ -106,27 +105,27 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 	private ResponseCode validateField(String value, String fieldName, boolean mandatory,
 			Map<String, String> crossFieldMap) {
 		switch (fieldName) {
-		case UserFormValues.FIELD_FIRST_NAME:
+		case UserV.FIELD_FIRST_NAME:
 			return validateFirstName(value, mandatory);
-		case UserFormValues.FIELD_LAST_NAME:
+		case UserV.FIELD_LAST_NAME:
 			return validateLastName(value, mandatory);
-		case UserFormValues.FIELD_MOBILE:
+		case UserV.FIELD_MOBILE:
 			return validateMobile(value, mandatory);
-		case UserFormValues.FIELD_ISD_CODE:
+		case UserV.FIELD_ISD_CODE:
 			return validateIsdCode(value, mandatory);
-		case UserFormValues.FIELD_GENDER:
+		case UserV.FIELD_GENDER:
 			return validateGender(value, mandatory);
-		case UserFormValues.FIELD_DATE_OF_BIRTH:
+		case UserV.FIELD_DATE_OF_BIRTH:
 			return validateDateOfBirth(value, mandatory);
-		case UserFormValues.FIELD_LOCALE:
+		case UserV.FIELD_LOCALE:
 			return validateLocaleStr(value, mandatory);
-		case UserFormValues.FIELD_PASSWORD:
+		case UserV.FIELD_PASSWORD:
 			return validatePassword(value, mandatory);
-		case UserFormValues.FIELD_CONFIRM_PASSWORD:
+		case UserV.FIELD_CONFIRM_PASSWORD:
 			return validateConfirmPassword(value, crossFieldMap, mandatory);
-		case UserFormValues.FIELD_SECURITY_QUESTION:
+		case UserV.FIELD_SECURITY_QUESTION:
 			return validateSecurityQuestion(value, mandatory);
-		case UserFormValues.FIELD_SECURITY_ANSWER:
+		case UserV.FIELD_SECURITY_ANSWER:
 			return validateSecurityAnswer(value, mandatory);
 		}
 
@@ -134,66 +133,66 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 	}
 
 	@Override
-	public void validate(UserFormValues user) throws ValidationException {
+	public void validate(UserV user) throws ValidationException {
 		ResponseCode errorCode;
 		Map<String, ResponseCode> errorMap = new HashMap<>();
 		Map<String, String> crossFieldMap = new HashMap<>();
 
 		errorCode = validateFirstName(user.getFirstName(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_FIRST_NAME, errorCode);
+			errorMap.put(UserV.FIELD_FIRST_NAME, errorCode);
 		}
 
 		errorCode = validateLastName(user.getLastName(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_LAST_NAME, errorCode);
+			errorMap.put(UserV.FIELD_LAST_NAME, errorCode);
 		}
 
 		errorCode = validateLocaleStr(user.getLocale(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_LOCALE, errorCode);
+			errorMap.put(UserV.FIELD_LOCALE, errorCode);
 		}
 
 		errorCode = validateGender(user.getGender(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_GENDER, errorCode);
+			errorMap.put(UserV.FIELD_GENDER, errorCode);
 		}
 
 		errorCode = validateDateOfBirth(user.getDateOfBirth(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_DATE_OF_BIRTH, errorCode);
+			errorMap.put(UserV.FIELD_DATE_OF_BIRTH, errorCode);
 		}
 
 		errorCode = validateMobile(user.getMobile(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_MOBILE, errorCode);
+			errorMap.put(UserV.FIELD_MOBILE, errorCode);
 		}
 
 		errorCode = validateIsdCode(user.getIsdCode(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_ISD_CODE, errorCode);
+			errorMap.put(UserV.FIELD_ISD_CODE, errorCode);
 		}
 
 		errorCode = validatePassword(user.getPassword(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_PASSWORD, errorCode);
+			errorMap.put(UserV.FIELD_PASSWORD, errorCode);
 		}
 
-		crossFieldMap.put(UserFormValues.FIELD_PASSWORD, user.getPassword());
+		crossFieldMap.put(UserV.FIELD_PASSWORD, user.getPassword());
 		errorCode = validateConfirmPassword(user.getConfirmPassword(), crossFieldMap, true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_CONFIRM_PASSWORD, errorCode);
+			errorMap.put(UserV.FIELD_CONFIRM_PASSWORD, errorCode);
 		}
 		crossFieldMap.clear();
 
 		errorCode = validateSecurityQuestion(user.getSecurityQuestion(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_SECURITY_QUESTION, errorCode);
+			errorMap.put(UserV.FIELD_SECURITY_QUESTION, errorCode);
 		}
 
 		errorCode = validateSecurityAnswer(user.getSecurityAnswer(), true);
 		if (errorCode != null) {
-			errorMap.put(UserFormValues.FIELD_SECURITY_ANSWER, errorCode);
+			errorMap.put(UserV.FIELD_SECURITY_ANSWER, errorCode);
 		}
 
 		// if there are errors then throw exception
@@ -305,7 +304,7 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 		if (!m.matches())
 			return ResponseCode.INVALID_FORMAT;
 
-		if (userService.mobileExists(value))
+		if (userService.doesMobileExists(value))
 			return ResponseCode.VALUE_ALREADY_EXIST;
 
 		return null;
@@ -355,7 +354,7 @@ public class UserFieldValidator implements DataValidator<UserFormValues> {
 				return null;
 		}
 
-		String password = crossFields.get(UserFormValues.FIELD_PASSWORD);
+		String password = crossFields.get(UserV.FIELD_PASSWORD);
 
 		if (password != null && password.equals(value))
 			return null;

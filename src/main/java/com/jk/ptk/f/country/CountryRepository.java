@@ -3,12 +3,10 @@ package com.jk.ptk.f.country;
 import java.util.List;
 
 /**
- * 
  * Implementations of this interface interact with a storage system to
- * manipulate instances of type {@link Country}.
+ * perform CRUD operations on the type {@link Country}.
  * 
  * @author Jitendra
- *
  */
 public interface CountryRepository {
 	/**
@@ -23,9 +21,9 @@ public interface CountryRepository {
 	Country find(Long id);
 
 	/**
-	 * Returns a list of all countries from the storage system.
+	 * Returns a list of all countries.
 	 * 
-	 * @return a list of all countries from the storage system
+	 * @return a list of all countries
 	 */
 	List<Country> getAll();
 }

@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 import com.jk.ptk.app.DataLayerInitialized;
 
 /**
- * Represents a user account status.
+ * Represents user's account status.
  *
  * @author Jitendra
  *

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * A concrete class of interface {@link CountryService}.
+ * An implementation of the {@code CountryService} type.
  * 
  * @author Jitendra
  *

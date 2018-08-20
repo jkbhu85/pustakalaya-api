@@ -14,17 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.ptk.app.response.PtkResponse;
 import com.jk.ptk.app.response.ResponseCode;
-import com.jk.ptk.f.user.User;
-import com.jk.ptk.f.user.UserService;
-import com.jk.ptk.util.UserUtil;
 import com.jk.ptk.util.mail.MailNotSentException;
 import com.jk.ptk.validation.ValidationException;
 
 /**
- * API endpoint to manipulate instances of type {@link NewUser}.
+ * API end point for the type {@link NewUser}.
  *
  * @author Jitendra
- *
  */
 
 @RestController
@@ -35,29 +31,17 @@ public class NewUserController {
 	@Autowired
 	private NewUserService service;
 
-	@Autowired
-	private UserService userService;
-
-	/**
-	 * Stores the specified instance to the storage.
-	 *
-	 * @param newUser
-	 *            the specified instance to be stored
-	 */
 	@PostMapping
-	public ResponseEntity<PtkResponse> addNewUser(@RequestBody NewUser newUser) {
+	public ResponseEntity<PtkResponse> addNewUser(@RequestBody NewUserV newUser) {
 		HttpStatus httpStatus;
 		PtkResponse response = new PtkResponse();
 
 		try {
-			User acCreatedBy = userService.findUser(UserUtil.getEmail());
-			newUser.setAcCreatedBy(acCreatedBy);
-			service.addNewUser(newUser);
+			service.save(newUser);
 
 			response.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL).setMessage("SUCCESS_NEWUSER_ADDED");
 
 			httpStatus = HttpStatus.ACCEPTED;
-
 		} catch (ValidationException e) {
 			response.setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL).setMessage("ERROR_INVALID_FIELDS")
 					.setErrors(e.getErrorMap());
@@ -79,20 +63,13 @@ public class NewUserController {
 		return res;
 	}
 
-	/**
-	 * Returns new user associated with the {@code id}.
-	 *
-	 * @param id
-	 *            the specified id
-	 * @return new user associated with the {@code id}
-	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<PtkResponse> getNewUser(@PathVariable("id") String id) {
 		PtkResponse response = new PtkResponse();
 		HttpStatus httpStatus;
 
 		try {
-			NewUser user = service.getNewUser(id);
+			NewUser user = service.find(id);
 			httpStatus = HttpStatus.OK;
 			response.setData(user);
 		} catch (ValidationException e) {

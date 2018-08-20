@@ -2,30 +2,29 @@ package com.jk.ptk.f.uash;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+/**
+ * Implementations of this interface interact with a storage system to
+ * perform CRUD operations on the type {@link UserAccountStatusHistory}.
+ * 
+ * @author Jitendra
+ */
+public interface UserAccountStatusHistoryRepository {
+	/**
+	 * Saves the specified {@code uash} in the system.
+	 * 
+	 * @param uash
+	 *             the specified entry to be saved
+	 */
+	void save(UserAccountStatusHistory uash);
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class UserAccountStatusHistoryRepository {
-	
-	private EntityManager em;
-	
-	@Autowired
-	public UserAccountStatusHistoryRepository(EntityManager em) {
-		this.em = em;
-	}
-	
-	public void addAccountStatus(UserAccountStatusHistory uas) {
-		em.persist(uas);
-	}
-
-	public List<UserAccountStatusHistory> getAccountHistory(String email) {
-		TypedQuery<UserAccountStatusHistory> query = em.createNamedQuery("uash_find_all_by_email", UserAccountStatusHistory.class);
-		query.setParameter("email", email);
-		
-		return query.getResultList();
-	}
+	/**
+	 * Returns a list of all entries of uesr's account status history associated
+	 * with the specified {@code email}. NEVER returns {@code null}.
+	 * 
+	 * @param email
+	 *              the specified email
+	 * @return a list of all entries of uesr's account status history associated
+	 *         with the specified {@code email}
+	 */
+	public List<UserAccountStatusHistory> getAll(String email);
 }

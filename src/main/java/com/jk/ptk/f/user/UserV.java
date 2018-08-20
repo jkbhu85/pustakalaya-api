@@ -1,12 +1,11 @@
 package com.jk.ptk.f.user;
 
 /**
- * Represents user values as received from front end.
+ * Represents form values as received from front end.
  *
  * @author Jitendra
- *
  */
-public class UserFormValues {
+public class UserV {
 	public static final String FIELD_REGISTRATION_ID = "registrationId";
 	public static final String FIELD_EMAIL = "email";
 	public static final String FIELD_FIRST_NAME = "firstName";
@@ -35,7 +34,10 @@ public class UserFormValues {
 	private String securityQuestion;
 	private String securityAnswer;
 
-	public UserFormValues() {
+	/**
+	 * Default constructor.
+	 */
+	public UserV() {
 	}
 
 	/**

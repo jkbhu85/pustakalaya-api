@@ -48,7 +48,6 @@ public class AddressServiceImpl implements AddressService, DataValidator<Address
 
 	@Override
 	public void validate(Address obj) throws ValidationException {
-		// TODO Auto-generated method stub
 
 	}
 

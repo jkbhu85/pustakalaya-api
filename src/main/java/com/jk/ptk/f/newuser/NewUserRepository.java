@@ -1,64 +1,53 @@
 package com.jk.ptk.f.newuser;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 /**
- * Repository class for {@link NewUser}.
- *
+ * 
+ * Implementations of this interface interact with a storage system to
+ * perform CRUD operations on the type {@link NewUser}.
+ * 
  * @author Jitendra
  *
  */
-@Repository
-public class NewUserRepository {
-	@Autowired
-	private EntityManager em;
+public interface NewUserRepository {
+	/**
+	 * Saves the specified {@code newUser} in the system.
+	 * 
+	 * @param newUser
+	 *                the specified new user to be saved
+	 */
+	void save(NewUser newUser);
 
 	/**
-	 * Returns user associated with {@code id}.
+	 * Returns the user identified by the specified {@code id}.
 	 *
 	 * @param id
-	 *            the specified id
-	 * @return user associated with {@code id}
+	 *           the specified id
+	 * @return user identified by the specified {@code id}
 	 */
-	public NewUser findNewUser(String id) {
-		return em.find(NewUser.class, id);
-	}
-
-	public NewUser findNewUserByEmail(String email) {
-		if (email == null) return null;
-		
-		TypedQuery<NewUser> query = em.createNamedQuery("newUser_find_by_email", NewUser.class);
-		query.setParameter("email", email);
-		List<NewUser> list = query.getResultList();
-
-		return (list.size() == 0 ? null : list.get(0));
-	}
+	NewUser find(String id);
 
 	/**
-	 * Saves {@code newUser} to database.
+	 * Returns the user associated with the specified {@code email}.
 	 *
-	 * @param newUser
-	 *            the specified new user to save
+	 * @param email
+	 *              the specified email
+	 * @return user associated with the specified {@code email}
 	 */
+	NewUser findByEmail(String email);
 
-	public void saveNewUser(NewUser newUser) {
-		em.persist(newUser);
-	}
+	/**
+	 * Removes the specified {@code newUser} from the system.
+	 * 
+	 * @param newUser
+	 *                the specified new user to be removed
+	 */
+	void remove(NewUser newUser);
 
-	public int removeNewUser(String email) {
-		Query query = em.createNamedQuery("newUser_delete_by_email");
-		query.setParameter("email", email);
-		return query.executeUpdate();
-	}
-
-	public void remove(NewUser newUser) {
-		em.remove(newUser);
-	}
+	/**
+	 * Removes the new user associated with the specified {@code email}.
+	 * 
+	 * @param email
+	 *              the specified email
+	 */
+	void removeByEmail(String email);
 }

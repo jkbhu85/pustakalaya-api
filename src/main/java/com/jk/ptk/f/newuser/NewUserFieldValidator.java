@@ -15,40 +15,41 @@ import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.ValidationException;
 
 /**
- * Validates the fields of the type {@link NewUser}.
- *
+ * This class is used to validate the fields of the type {@code NewUserV}.
+ * 
  * @author Jitendra
- *
  */
 @Component("NewUserValidator")
-public class NewUserFieldValidator implements DataValidator<NewUser> {
+public class NewUserFieldValidator implements DataValidator<NewUserV> {
+	private static final int FIRST_NAME_MAX_LEN = 30;
+	private static final int LAST_NAME_MAX_LEN = 30;
 
 	@Autowired
 	private UserService userService;
 
 	@Override
-	public void validate(NewUser newUser) throws ValidationException {
+	public void validate(NewUserV newUser) throws ValidationException {
 		ResponseCode errorCode;
 		Map<String, ResponseCode> errorMap = new HashMap<>();
 
 		errorCode = validateFirstName(newUser.getFirstName(), true);
 		if (errorCode != null) {
-			errorMap.put(NewUser.FIELD_FIRST_NAME, errorCode);
+			errorMap.put(NewUserV.FIELD_FIRST_NAME, errorCode);
 		}
 
 		errorCode = validateLastName(newUser.getLastName(), true);
 		if (errorCode != null) {
-			errorMap.put(NewUser.FIELD_LAST_NAME, errorCode);
+			errorMap.put(NewUserV.FIELD_LAST_NAME, errorCode);
 		}
 
 		errorCode = validateEmail(newUser.getEmail(), true);
 		if (errorCode != null) {
-			errorMap.put(NewUser.FIELD_EMAIL, errorCode);
+			errorMap.put(NewUserV.FIELD_EMAIL, errorCode);
 		}
 
-		errorCode = validateLocaleStr(newUser.getLocaleStr(), true);
+		errorCode = validateLocaleStr(newUser.getLocale(), true);
 		if (errorCode != null) {
-			errorMap.put(NewUser.FIELD_LOCALE, errorCode);
+			errorMap.put(NewUserV.FIELD_LOCALE, errorCode);
 		}
 
 		// if there are errors throw exception
@@ -65,7 +66,7 @@ public class NewUserFieldValidator implements DataValidator<NewUser> {
 				return null;
 		}
 
-		if (value.length() > 30)
+		if (value.length() > FIRST_NAME_MAX_LEN)
 			return ResponseCode.VALUE_TOO_LARGE;
 
 		return null;
@@ -79,7 +80,7 @@ public class NewUserFieldValidator implements DataValidator<NewUser> {
 				return null;
 		}
 
-		if (value.length() > 30)
+		if (value.length() > LAST_NAME_MAX_LEN)
 			return ResponseCode.VALUE_TOO_LARGE;
 
 		return null;
@@ -118,7 +119,7 @@ public class NewUserFieldValidator implements DataValidator<NewUser> {
 			return ResponseCode.INVALID_FORMAT;
 
 		// check whether it already exists
-		if (userService.userExists(value))
+		if (userService.doesUserExist(value))
 			return ResponseCode.VALUE_ALREADY_EXIST;
 
 		return null;

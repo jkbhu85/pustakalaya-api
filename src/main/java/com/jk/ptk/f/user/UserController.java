@@ -21,10 +21,9 @@ import com.jk.ptk.security.login.InvalidCredentialsException;
 import com.jk.ptk.validation.ValidationException;
 
 /**
- * API endpoint to manipulate instances of type {@link User}.
+ * API endpoint to for the type {@link User}.
  *
  * @author Jitendra
- *
  */
 @RestController("/ptk/user")
 public class UserController {
@@ -37,34 +36,18 @@ public class UserController {
 		this.service = userService;
 	}
 
-	/**
-	 * Updates the user associated with specified email, {@code null} otherwise.
-	 *
-	 * @param email
-	 *            the specified email
-	 * @return the user associated with specified email, {@code null} otherwise
-	 */
 	@GetMapping("/{email}")
 	public User getUser(@PathVariable("email") String email) {
-		return service.findUser(email);
+		return service.findByEmail(email);
 	}
 
-	/**
-	 * Adds the user to the system with data represented by the specified object if
-	 * the data passes the validation.
-	 *
-	 * @param userFormValues
-	 *            data of the user
-	 * @return an instance of type {@link PtkResponse} encapsulating the situation
-	 *         of what happened
-	 */
 	@PostMapping
-	public ResponseEntity<PtkResponse> addUser(@RequestBody UserFormValues userFormValues) {
+	public ResponseEntity<PtkResponse> addUser(@RequestBody UserV userFormValues) {
 		HttpStatus httpStatus;
 		PtkResponse response = new PtkResponse();
 
 		try {
-			service.addUser(userFormValues);
+			service.save(userFormValues);
 			response.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL).setMessage("SUCCESS_ACCOUNT_CREATED");
 			httpStatus = HttpStatus.OK;
 		} catch (ResourceExpiredException e) {
@@ -84,14 +67,6 @@ public class UserController {
 		return res;
 	}
 
-	/**
-	 * Updates the password of the user.
-	 *
-	 * @param body
-	 *            required fields to update the password
-	 * @return an instance of type {@link PtkResponse} encapsulating the situation
-	 *         of what happened
-	 */
 	@PutMapping("/password")
 	public ResponseEntity<PtkResponse> updatePassword(@RequestBody Map<String, String> body) {
 		HttpStatus httpStatus;
@@ -121,14 +96,6 @@ public class UserController {
 		return res;
 	}
 
-	/**
-	 * Updates the security question and answer of the user.
-	 *
-	 * @param body
-	 *            required fields to update the password
-	 * @return an instance of type {@link PtkResponse} encapsulating the situation
-	 *         of what happened.
-	 */
 	@PutMapping("/question")
 	public ResponseEntity<PtkResponse> updateSecurityQuestion(@RequestBody Map<String, String> body) {
 		HttpStatus httpStatus;
@@ -139,7 +106,7 @@ public class UserController {
 		String answer = body.get("answer");
 
 		try {
-			service.updateSecurityQuestion(email, password, question, answer);
+			service.updateSecurityQuestionAndAnswer(email, password, question, answer);
 			response.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL)
 					.setMessage("SUCCESS_SECURITY_QUESTION_ANSWER_CHANGED");
 			httpStatus = HttpStatus.OK;

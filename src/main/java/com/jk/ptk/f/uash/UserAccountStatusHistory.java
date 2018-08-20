@@ -16,7 +16,7 @@ import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserAcStatus;
 
 /**
- * Represents one entry of user status history.
+ * Represents an entry of user's account status history.
  *
  * @author Jitendra
  *

@@ -1,6 +1,5 @@
 package com.jk.ptk.f.uash;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -12,13 +11,12 @@ import org.springframework.stereotype.Service;
  * An implementation of the {@code UserAccountStatusHistoryService} type.
  *
  * @author Jitendra
- *
  */
 @Service
 public class UserAccountStatusHistoryServiceImpl implements UserAccountStatusHistoryService {
-	
+
 	private UserAccountStatusHistoryRepository repository;
-	
+
 	@Autowired
 	public UserAccountStatusHistoryServiceImpl(UserAccountStatusHistoryRepository repository) {
 		this.repository = repository;
@@ -26,17 +24,13 @@ public class UserAccountStatusHistoryServiceImpl implements UserAccountStatusHis
 
 	@Override
 	@Transactional
-	public void addAccountStatusHistory(UserAccountStatusHistory uas) {
-		if (uas == null) return;
-		
-		repository.addAccountStatus(uas);
+	public void save(UserAccountStatusHistory uash) {
+		repository.save(uash);
 	}
 
 	@Override
-	public List<UserAccountStatusHistory> getAccountHistory(String email) {
-		if (email == null) return new ArrayList<>();
-		
-		return repository.getAccountHistory(email);
+	public List<UserAccountStatusHistory> getAll(String email) {
+		return repository.getAll(email);
 	}
 
 }

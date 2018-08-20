@@ -1,74 +1,88 @@
 package com.jk.ptk.f.user;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 /**
- * Repository for the type {@link User}.
+ * Implementations of this interface interact with a storage system to
+ * perform CRUD operations on the type {@link User}.
  * 
  * @author Jitendra
- *
  */
-@Repository
-public class UserRepository {
-	@Autowired
-	private EntityManager em;
+public interface UserRepository {
 
-	@Transactional(rollbackOn=Exception.class)
-	public void addUser(User user) {
-		em.persist(user);
-	}
+	/**
+	 * Saves the specified {@code user} in the system.
+	 * 
+	 * @param user
+	 *             the specified user to be saved
+	 */
+	void save(User user);
 
-	public User findUser(String email) {
-		if (email == null || email.isEmpty())
-			return null;
+	/**
+	 * Returns the user associated with the specified {@code email}.
+	 *
+	 * @param email
+	 *              the specified email
+	 * @return user user associated with the specified {@code email}
+	 */
+	User findByEmail(String email);
 
-		TypedQuery<User> query = em.createNamedQuery("user_find_by_email", User.class);
-		query.setParameter("email", email);
-		List<User> list = query.getResultList();
+	/**
+	 * Returns {@code true} if the specified {@code email} is associated with an
+	 * user, {@code false} otherwise.
+	 * 
+	 * @param email
+	 *              the specified email
+	 * @return {@code true} if the specified {@code email} is associated with an
+	 *         user, {@code false} otherwise
+	 */
+	boolean doesEmailExists(String email);
 
-		return (list.size() == 0 ? null : list.get(0));
-	}
+	/**
+	 * Returns {@code true} if the specified {@code mobile} is associated with an
+	 * user, {@code false} otherwise.
+	 * 
+	 * @param mobile
+	 *               the specified mobile
+	 * @return {@code true} if the specified {@code mobile} is associated with an
+	 *         user, {@code false} otherwise
+	 */
+	boolean doesMobileExists(String mobile);
 
-	public boolean userExists(String email) {
-		Query query = em.createNamedQuery("user_exist_by_email");
-		query.setParameter("email", email);
-		final int result = ((Number) query.getSingleResult()).intValue();
+	/**
+	 * Updates password of the user associated with the specified {@code email} if
+	 * the user exists.
+	 * 
+	 * @param email
+	 *                        the specified email
+	 * @param passwordHash
+	 *                        the password hash to save
+	 * @param passwordSalt
+	 *                        the password salt to save
+	 * @param passwordVersion
+	 *                        the password version to save
+	 */
+	void updatePassword(String email, String passwordHash, String passwordSalt, Integer passwordVersion);
 
-		return result == 1;
-	}
+	/**
+	 * Updates security question and answer of the user associated with the
+	 * specified {@code email} if the user exists.
+	 * 
+	 * @param email
+	 *                 the specified email
+	 * @param question
+	 *                 the question to save
+	 * @param answer
+	 *                 the answer to save
+	 */
+	void updateSecurityQuestionAndAnswer(String email, String question, String answer);
 
-	public boolean mobileExists(String mobile) {
-		Query query = em.createNamedQuery("user_mobile_exists");
-		query.setParameter("mobile", mobile);
-		final int result = ((Number) query.getSingleResult()).intValue();
-
-		return result == 1;
-	}
-
-	public void updatePassword(String email, String passwordHash, String passwordSalt, Integer passwordVersion) {
-		Query query = em.createNamedQuery("user_update_password");
-		query.setParameter("email", email);
-		query.setParameter("passwordHash", passwordHash);
-		query.setParameter("passwordSalt", passwordSalt);
-		query.setParameter("passwordVersion", passwordVersion);
-	}
-
-	public void updateSecurityQuestion(String email, String question, String answer) {
-		Query query = em.createNamedQuery("user_update_security_question");
-		query.setParameter("email", email);
-	}
-
-	public void updateUnsuccessfulTries(String email, Integer tries) {
-		Query query = em.createNamedQuery("user_update_unsuccessful_tries");
-		query.setParameter("email", email);
-		query.setParameter("unsuccessfulTries", tries);
-	}
+	/**
+	 * Updates number of unsuccessful login tries of the user associated with the
+	 * specified {@code email} if the user exists.
+	 * 
+	 * @param email
+	 *              the specified email
+	 * @param tries
+	 *              number of unsuccessful login tries to save
+	 */
+	void updateUnsuccessfulTries(String email, Integer tries);
 }

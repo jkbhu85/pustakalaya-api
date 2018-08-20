@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
 			throw new InvalidCredentialsException();
 		}
 
-		User user = service.findUser(username);
+		User user = service.findByEmail(username);
 
 		// no user found, throw exception
 		Integer accountStatus = user.getAccountStatus().getId();

@@ -7,6 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 
+/**
+ * Represents a country.
+ * 
+ * @author Jitendra
+ */
 @Entity
 @NamedQuery(name = "country_get_all", query = "select c from Country c order by c.name")
 public class Country {

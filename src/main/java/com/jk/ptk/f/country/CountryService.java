@@ -7,7 +7,6 @@ import java.util.List;
  * {@link Country}.
  * 
  * @author Jitendra
- *
  */
 public interface CountryService {
 	/**
@@ -22,9 +21,9 @@ public interface CountryService {
 	Country find(Long id);
 
 	/**
-	 * Returns a list of all countries from the storage system.
+	 * Returns a list of all countries.
 	 * 
-	 * @return a list of all countries from the storage system
+	 * @return a list of all countries
 	 */
 	List<Country> getAll();
 }

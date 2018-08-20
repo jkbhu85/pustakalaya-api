@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import com.jk.ptk.app.App;
@@ -30,6 +31,11 @@ import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.FormField;
 import com.jk.ptk.validation.ValidationException;
 
+/**
+ * An implementation of the {@code UserService} type.
+ *
+ * @author Jitendra
+ */
 @Component
 public class UserServiceImpl implements UserService {
 	private UserRepository repository;
@@ -40,7 +46,8 @@ public class UserServiceImpl implements UserService {
 	private MailTemplateService mailService;
 
 	@Autowired
-	private DataValidator<UserFormValues> dataValidator;
+	@Qualifier("UserFieldValidator")
+	private DataValidator<UserV> dataValidator;
 
 	@Autowired
 	public UserServiceImpl(UserRepository repository, CountryRepository countryRepository,
@@ -54,40 +61,40 @@ public class UserServiceImpl implements UserService {
 		this.mailService = mailService;
 	}
 
-	public void setDataValidator(DataValidator<UserFormValues> dataValidator) {
+	public void setDataValidator(DataValidator<UserV> dataValidator) {
 		this.dataValidator = dataValidator;
 	}
 
 	@Override
-	public User findUser(String email) {
-		return repository.findUser(email);
+	public User findByEmail(String email) {
+		return repository.findByEmail(email);
 	}
 
 	@Override
-	@Transactional(rollbackOn=Exception.class)
-	public void addUser(UserFormValues userFormValues) throws ValidationException, ResourceExpiredException {
-		NewUser newUser = newUserRepository.findNewUser(userFormValues.getRegistrationId());
+	@Transactional(rollbackOn = Exception.class)
+	public void save(UserV userValues) throws ValidationException, ResourceExpiredException {
+		NewUser newUser = newUserRepository.find(userValues.getRegistrationId());
 
 		if (newUser == null || newUser.getExpiresOn().isBefore(LocalDateTime.now()))
 			throw new ResourceExpiredException("Registration id has expired.");
-		
-		userFormValues.setEmail(newUser.getEmail());
+
+		userValues.setEmail(newUser.getEmail());
 
 		if (dataValidator != null)
-			dataValidator.validate(userFormValues);
+			dataValidator.validate(userValues);
 
-		User user = toUser(userFormValues, newUser);
-		UserRoleHistory urh = UserRoleHistoryFrom(user);
-		UserAccountStatusHistory uash = acStatusHistoryFrom(user);
+		User user = toUser(userValues, newUser);
+		UserRoleHistory urh = userRoleHistoryFrom(user);
+		UserAccountStatusHistory uash = accountStatusHistoryFrom(user);
 
 		newUserRepository.remove(newUser);
-		repository.addUser(user);
-		roleRepository.addRoleHistory(urh);
-		acStatusRepository.addAccountStatus(uash);
+		repository.save(user);
+		roleRepository.save(urh);
+		acStatusRepository.save(uash);
 		sendMail(user);
 	}
 
-	private UserRoleHistory UserRoleHistoryFrom(User user) {
+	private UserRoleHistory userRoleHistoryFrom(User user) {
 		UserRoleHistory urh = new UserRoleHistory();
 
 		urh.setUser(user);
@@ -98,7 +105,7 @@ public class UserServiceImpl implements UserService {
 		return urh;
 	}
 
-	private UserAccountStatusHistory acStatusHistoryFrom(User user) {
+	private UserAccountStatusHistory accountStatusHistoryFrom(User user) {
 		UserAccountStatusHistory uash = new UserAccountStatusHistory();
 
 		uash.setAccountStatus(user.getAccountStatus());
@@ -128,20 +135,20 @@ public class UserServiceImpl implements UserService {
 		mailService.sendMail(model);
 	}
 
-	private User toUser(UserFormValues formValues, NewUser newUser) {
+	private User toUser(UserV userValues, NewUser newUser) {
 		User user = new User();
 
-		user.setFirstName(formValues.getFirstName());
-		user.setLastName(formValues.getLastName());
-		user.setGender(formValues.getGender());
+		user.setFirstName(userValues.getFirstName());
+		user.setLastName(userValues.getLastName());
+		user.setGender(userValues.getGender());
 
-		long countryCode = Integer.parseInt(formValues.getIsdCode());
+		long countryCode = Integer.parseInt(userValues.getIsdCode());
 		user.setCountry(countryRepository.find(countryCode));
-		user.setEmail(formValues.getEmail());
-		user.setMobile(formValues.getMobile());
+		user.setEmail(userValues.getEmail());
+		user.setMobile(userValues.getMobile());
 
-		user.setLocaleValue(formValues.getLocale());
-		user.setDateOfBirth(DateUtils.parseDate(formValues.getDateOfBirth()));
+		user.setLocaleValue(userValues.getLocale());
+		user.setDateOfBirth(DateUtils.parseDate(userValues.getDateOfBirth()));
 		user.setRole(newUser.getRole());
 		user.setAccountStatus(UserAcStatus.ACTIVE);
 
@@ -149,12 +156,12 @@ public class UserServiceImpl implements UserService {
 		user.setCreatedOn(newUser.getCreatedOn());
 		user.setAcCreatedBy(newUser.getAcCreatedBy());
 
-		user.setSecurityQuestion(formValues.getSecurityQuestion());
-		user.setSecurityAnswer(formValues.getSecurityAnswer());
+		user.setSecurityQuestion(userValues.getSecurityQuestion());
+		user.setSecurityAnswer(userValues.getSecurityAnswer());
 
 		String passwordSalt = CredentialsUtil.getPasswordSalt();
 		int passwordVersion = App.getCurrentPasswordVersion();
-		String passwordHash = CredentialsUtil.getPasswordHash(formValues.getPassword(), passwordSalt, passwordVersion);
+		String passwordHash = CredentialsUtil.getPasswordHash(userValues.getPassword(), passwordSalt, passwordVersion);
 
 		user.setPasswordHash(passwordHash);
 		user.setPasswordSalt(passwordSalt);
@@ -178,10 +185,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public boolean doesUserExist(String email) {
+		return repository.doesEmailExists(email);
+	}
+
+	@Override
+	public boolean doesMobileExists(String mobile) {
+		return repository.doesMobileExists(mobile);
+	}
+
+	@Override
 	@Transactional
 	public void updatePassword(String email, String currentPassword, String newPassword, String confirmNewPassword)
 			throws InvalidCredentialsException, ValidationException {
-		User user = repository.findUser(email);
+		User user = repository.findByEmail(email);
 
 		if (user == null)
 			throw new RuntimeException("Invalid user");
@@ -189,9 +206,8 @@ public class UserServiceImpl implements UserService {
 		if (!isPasswordValid(currentPassword, user))
 			throw new InvalidCredentialsException("Old password didn't match.");
 
-		FormField pwd = new FormField(newPassword, UserFormValues.FIELD_PASSWORD, true);
-		FormField cpwd = new FormField(confirmNewPassword, UserFormValues.FIELD_CONFIRM_PASSWORD, true,
-				Arrays.asList(pwd));
+		FormField pwd = new FormField(newPassword, UserV.FIELD_PASSWORD, true);
+		FormField cpwd = new FormField(confirmNewPassword, UserV.FIELD_CONFIRM_PASSWORD, true, Arrays.asList(pwd));
 
 		// validate data
 		if (dataValidator != null) {
@@ -215,31 +231,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public void updateSecurityQuestion(String email, String password, String question, String answer)
+	public void updateSecurityQuestionAndAnswer(String email, String password, String question, String answer)
 			throws InvalidCredentialsException, ValidationException {
-		User user = repository.findUser(email);
+		User user = repository.findByEmail(email);
 
 		if (isPasswordValid(password, user)) {
-			FormField questionField = new FormField(question, UserFormValues.FIELD_SECURITY_QUESTION, true);
-			FormField answerField = new FormField(answer, UserFormValues.FIELD_SECURITY_ANSWER, true);
+			FormField questionField = new FormField(question, UserV.FIELD_SECURITY_QUESTION, true);
+			FormField answerField = new FormField(answer, UserV.FIELD_SECURITY_ANSWER, true);
 
 			if (dataValidator != null) {
 				dataValidator.validate(Arrays.asList(questionField, answerField));
 			}
 
-			repository.updateSecurityQuestion(user.getEmail(), question, answer);
+			repository.updateSecurityQuestionAndAnswer(user.getEmail(), question, answer);
 		} else
 			throw new InvalidCredentialsException("Password didn't match.");
-	}
-
-	@Override
-	public boolean userExists(String email) {
-		return repository.userExists(email);
-	}
-
-	@Override
-	public boolean mobileExists(String mobile) {
-		return repository.mobileExists(mobile);
 	}
 
 	@Override

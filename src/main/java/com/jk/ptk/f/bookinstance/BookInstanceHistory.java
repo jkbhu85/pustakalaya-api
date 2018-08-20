@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.jk.ptk.f.user.LightUser;
 import com.jk.ptk.f.user.User;
 
 /**
@@ -33,7 +32,7 @@ public class BookInstanceHistory {
 
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="statusChangedByFk", nullable=false)
-	private LightUser statusChangedBy;
+	private User statusChangedBy;
 
 	private LocalDate statusChangedOn;
 
@@ -50,16 +49,12 @@ public class BookInstanceHistory {
 		this.bookInstance = bookInstance;
 	}
 
-	public LightUser getStatusChangedBy() {
+	public User getStatusChangedBy() {
 		return statusChangedBy;
 	}
 
-	public void setStatusChangedBy(LightUser statusChangedBy) {
-		this.statusChangedBy = statusChangedBy;
-	}
-
 	public void setStatusChangedBy(User statusChangedBy) {
-		this.statusChangedBy = LightUser.fromUser(statusChangedBy);
+		this.statusChangedBy = statusChangedBy;
 	}
 
 	public String getComments() {

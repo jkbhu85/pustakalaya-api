@@ -12,27 +12,131 @@ import com.jk.ptk.util.RandomUtil;
  *
  */
 public final class App {
+	private static final Logger log = LoggerFactory.getLogger(App.class);
+
 	private App() {
 	}
 
-	private static String appDomain = "http://localhost:8080";
-	private static int registraionLinkExpirationHours = 72;
+	static {
+		if (AppProps.valueOf("app.security.password.version") == null) {
+			passwordVersion = 0;
+			log.error("Password version property is not set.");
+			System.exit(-1);
+		} else {
+			try {
+				passwordVersion = Integer.parseInt(AppProps.valueOf("app.security.password.version"));
+			} catch (NumberFormatException ignore) {
+				log.error("Password version property is not set.");
+			}
+		}
+	}
 
-	private static final Logger log = LoggerFactory.getLogger(App.class);
+	private static String appDomain = "https://localhost:8080";
+	private static int registraionLinkExpirationHours = 72;
+	private static int passwordVersion = -1;
+
+	public static int getCurrentPasswordVersion() {
+		return passwordVersion;
+	}
+
+	private static int unsuccessfulLoginTriesThreshold = -1;
+	private static int userNoneBookQuota = -1;
+	private static int userMemberBookQuota = -1;
+	private static int userLibrarianBookQuota = -1;
+	private static int userAdminBookQuota = -1;
+
+	public static int getNoneBookQuota() {
+		if (userNoneBookQuota != -1)
+			return userNoneBookQuota;
+
+		if (AppProps.valueOf("user.none.book.quota") == null) {
+			userNoneBookQuota = 0;
+		} else {
+			try {
+				userNoneBookQuota = Integer.parseInt(AppProps.valueOf("user.none.book.quota"));
+			} catch (NumberFormatException ignore) {
+				userNoneBookQuota = 0;
+			}
+		}
+
+		return userNoneBookQuota;
+	}
+
+	public static int getMemberBookQuota() {
+		if (userMemberBookQuota != -1)
+			return userMemberBookQuota;
+
+		if (AppProps.valueOf("user.none.book.quota") == null) {
+			userMemberBookQuota = 0;
+		} else {
+			try {
+				userMemberBookQuota = Integer.parseInt(AppProps.valueOf("user.member.book.quota"));
+			} catch (NumberFormatException ignore) {
+				userMemberBookQuota = 0;
+			}
+		}
+
+		return userMemberBookQuota;
+	}
+
+	public static int getLibrarianBookQuota() {
+		if (userLibrarianBookQuota != -1)
+			return userLibrarianBookQuota;
+
+		if (AppProps.valueOf("user.librarian.book.quota") == null) {
+			userLibrarianBookQuota = 0;
+		} else {
+			try {
+				userLibrarianBookQuota = Integer.parseInt(AppProps.valueOf("user.librarian.book.quota"));
+			} catch (NumberFormatException ignore) {
+				userLibrarianBookQuota = 0;
+			}
+		}
+
+		return userLibrarianBookQuota;
+	}
+
+	public static int getAdminBookQuota() {
+		if (userAdminBookQuota != -1)
+			return userAdminBookQuota;
+
+		if (AppProps.valueOf("user.admin.book.quota") == null) {
+			userAdminBookQuota = 0;
+		} else {
+			try {
+				userAdminBookQuota = Integer.parseInt(AppProps.valueOf("user.admin.book.quota"));
+			} catch (NumberFormatException ignore) {
+				userAdminBookQuota = 0;
+			}
+		}
+
+		return userAdminBookQuota;
+	}
 
 	/**
 	 * Maximum number of tries with incorrect credentials after which account is
 	 * locked.
 	 */
-	public static int unsuccessfulLoginTriesThreshold = 4;
-	
-	/**
-	 * Email of admin.
-	 */
-	public static String adminEmail = "jk.bhu85@gmail.com";
+	public static int getUnsuccessfulLoginTriesThreshold() {
+		if (unsuccessfulLoginTriesThreshold != -1)
+			return unsuccessfulLoginTriesThreshold;
+
+		if (AppProps.valueOf("user.security.login.unsuccessful.tries.threshold") == null) {
+			unsuccessfulLoginTriesThreshold = 4;
+		} else {
+			try {
+				unsuccessfulLoginTriesThreshold = Integer
+						.parseInt(AppProps.valueOf("user.security.login.unsuccessful.tries.threshold"));
+			} catch (NumberFormatException ignore) {
+				unsuccessfulLoginTriesThreshold = 4;
+			}
+		}
+
+		return unsuccessfulLoginTriesThreshold;
+	}
 
 	/**
-	 * Returns URL for the specified URI.
+	 * Returns URL for the specified URI. URI should not begin with '/'.
 	 *
 	 * @param uri
 	 *            the specified URI

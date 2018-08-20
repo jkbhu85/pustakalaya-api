@@ -16,7 +16,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import com.jk.ptk.util.UserLocale;
 
 @Configuration
-public class SpringMailConfig {
+public class ThymeleafConfig {
 	@Bean
 	public LocaleResolver localeResolver() {
 		final LocaleResolver localeResolver = new LocaleResolver() {

@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 
 import com.jk.ptk.f.book.Currency;
 import com.jk.ptk.f.bookinstance.BookInstance;
-import com.jk.ptk.f.user.LightUser;
 import com.jk.ptk.f.user.User;
 
 /**
@@ -34,15 +33,15 @@ public class BookAssignmentHistory {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "issuedToFk", nullable = false)
-	private LightUser issuedTo;
+	private User issuedTo;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "issuedByFk", nullable = false)
-	private LightUser issuedBy;
+	private User issuedBy;
 
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="releasedByFk")
-	private LightUser releasedBy;
+	private User releasedBy;
 
 	private LocalDate issuedOn;
 
@@ -70,40 +69,24 @@ public class BookAssignmentHistory {
 		this.bookInstance = bookInstance;
 	}
 
-	public LightUser getIssuedTo() {
+	public User getIssuedTo() {
 		return issuedTo;
 	}
 
-	public void setIssuedTo(LightUser issuedTo) {
+	public void setIssuedTo(User issuedTo) {
 		this.issuedTo = issuedTo;
 	}
 
-	public void setIssuedTo(User issuedTo) {
-		this.issuedTo = LightUser.fromUser(issuedTo);
-	}
-
-	public LightUser getIssuedBy() {
+	public User getIssuedBy() {
 		return issuedBy;
 	}
 
-	public void setIssuedBy(LightUser issuedBy) {
+	public void setIssuedBy(User issuedBy) {
 		this.issuedBy = issuedBy;
 	}
 
-	public void setIssuedBy(User issuedBy) {
-		this.issuedBy = LightUser.fromUser(issuedBy);
-	}
-
-	public LightUser getReleasedBy() {
+	public User getReleasedBy() {
 		return releasedBy;
-	}
-
-	public void setReleasedBy(LightUser releasedBy) {
-		this.releasedBy = releasedBy;
-	}
-
-	public void setReleasedBy(User releasedBy) {
-		this.releasedBy = LightUser.fromUser(releasedBy);
 	}
 
 	public LocalDate getExpectedReturnDate() {

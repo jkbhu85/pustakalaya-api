@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{subject.account.creation.complete(${subjectParameters})}"></title>
+</head>
+
+<body>
+	<p th:text="#{greetings(${userName})}"></p>
+	
+	<p th:text="#{acc.text.line1(${userEmail})}"></p>
+	
+	<p th:text="#{acc.text.line2(${loginPage})}"></p>
+	
+	<div>
+		<p>
+			<span th:text="#{thanks}"></span><br/>
+			<span th:text="#{pustakalaya.team}"></span><br/>
+			<span th:text="#{contact.mail}"></span><br/>
+			<span th:text="#{contact.number}"></span>
+		</p>
+	</div>
+</body>
+</html>

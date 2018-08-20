@@ -22,6 +22,6 @@ public class UserRepositoryTest {
 	@Test
 	public void findUserInfo_email() {
 		String email = "krishna.murildhar@m.com";
-		log.info("UserAuthInfo -> {}", repo.findUserAuthInfo(email));
+		log.info("UserAuthInfo -> {}", repo.findUser(email));
 	}
 }

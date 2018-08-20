@@ -8,11 +8,12 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jk.ptk.f.user.LightUser;
+import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRole;
 
 /**
@@ -22,7 +23,10 @@ import com.jk.ptk.f.user.UserRole;
  *
  */
 @Entity
-@NamedQuery(name="delete_newUser_by_email", query = "delete from NewUser u where u.email=:email")
+@NamedQueries({
+	@NamedQuery(name="newUser_delete_by_email", query = "delete from NewUser u where u.email=:email"),
+	@NamedQuery(name="newUser_find_by_email", query="select u from NewUser u where u.email=:email")
+})
 public class NewUser {
 	/**
 	 * Property name for JSON.
@@ -43,6 +47,8 @@ public class NewUser {
 	 * Property name for JSON.
 	 */
 	public static final String FIELD_LOCALE = "locale";
+
+	public static final String FIELD_REGISTRATION_ID = "registrationId";
 
 	@Id
 	private String id;
@@ -72,10 +78,10 @@ public class NewUser {
 	@JsonIgnore
 	private UserRole role;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "acCreatedByFk", nullable = false)
 	@JsonIgnore
-	private LightUser acCreatedBy;
+	private User acCreatedBy;
 
 	/**
 	 * Default constructor.
@@ -150,11 +156,11 @@ public class NewUser {
 		this.expiresOn = expiresOn;
 	}
 
-	public LightUser getAcCreatedBy() {
+	public User getAcCreatedBy() {
 		return acCreatedBy;
 	}
 
-	public void setAcCreatedBy(LightUser acCreatedBy) {
+	public void setAcCreatedBy(User acCreatedBy) {
 		this.acCreatedBy = acCreatedBy;
 	}
 

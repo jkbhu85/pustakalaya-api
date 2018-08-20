@@ -22,7 +22,7 @@ public class MailTemplateTest {
 	@Test
 	public void createAccount() {
 		String recipients = "def@mail.com";
-		String subjectKey = MailConsts.PROP_SUBJECT_COMPLETE_REGISTRAION;
+		String subjectKey = MailConsts.SUBJECT_COMPLETE_REGISTRATION;
 		Map<String, Object> paramMap = new HashMap<>();
 		Locale locale = Locale.US;
 

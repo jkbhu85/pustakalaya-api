@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.ptk.app.response.PtkResponse;
 import com.jk.ptk.app.response.ResponseCode;
-import com.jk.ptk.f.user.LightUser;
+import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserService;
 import com.jk.ptk.util.UserUtil;
 import com.jk.ptk.util.mail.MailNotSentException;
@@ -50,7 +50,7 @@ public class NewUserController {
 		PtkResponse response = new PtkResponse();
 
 		try {
-			LightUser acCreatedBy = userService.getLightUser(UserUtil.getEmail());
+			User acCreatedBy = userService.findUser(UserUtil.getEmail());
 			newUser.setAcCreatedBy(acCreatedBy);
 			service.addNewUser(newUser);
 
@@ -93,7 +93,7 @@ public class NewUserController {
 
 		try {
 			NewUser user = service.getNewUser(id);
-			httpStatus = HttpStatus.ACCEPTED;
+			httpStatus = HttpStatus.OK;
 			response.setData(user);
 		} catch (ValidationException e) {
 			response.setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL).setMessage("ERROR_INVALID_FIELDS")

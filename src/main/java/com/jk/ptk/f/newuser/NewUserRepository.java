@@ -1,7 +1,10 @@
 package com.jk.ptk.f.newuser;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,14 @@ public class NewUserRepository {
 		return em.find(NewUser.class, id);
 	}
 
+	public NewUser findNewUserByEmail(String email) {
+		TypedQuery<NewUser> query = em.createNamedQuery("newUser_find_by_email", NewUser.class);
+		query.setParameter("email", email);
+		List<NewUser> list = query.getResultList();
+
+		return (list.size() == 0 ? null : list.get(0));
+	}
+
 	/**
 	 * Saves {@code newUser} to database.
 	 *
@@ -41,7 +52,7 @@ public class NewUserRepository {
 	}
 
 	public int removeNewUser(String email) {
-		Query query = em.createNamedQuery("delete_newUser_by_email");
+		Query query = em.createNamedQuery("newUser_delete_by_email");
 		query.setParameter("email", email);
 		return query.executeUpdate();
 	}

@@ -10,6 +10,6 @@ public class DemoController {
 
 	@RequestMapping("/test/mail")
 	public String getMessage() {
-		return "html/" + MailConsts.TEMPLATE_COMPLETE_REGISTRAION;
+		return "html/" + MailConsts.TEMPLATE_COMPLETE_REGISTRATION;
 	}
 }

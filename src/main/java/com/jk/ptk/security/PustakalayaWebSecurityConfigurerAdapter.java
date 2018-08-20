@@ -56,20 +56,33 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		RequestMatcher optionsRequest = new RequestMatcher() {
-			
+
 			@Override
 			public boolean matches(HttpServletRequest request) {
 				String method = request.getMethod();
-				
+
 				return ("OPTIONS".equalsIgnoreCase(method));
 			}
 		};
-		
+
+		RequestMatcher addUserRequest = new RequestMatcher() {
+			@Override
+			public boolean matches(HttpServletRequest request) {
+				String method = request.getMethod();
+				String uri = request.getRequestURI();
+
+				return ("/ptk/user".equals(uri) && "POST".equalsIgnoreCase(method));
+			}
+		};
+
 		web
 			.ignoring()
+				.antMatchers("/ptk/newUser/*")
+				.antMatchers("/ptk/country")
 				.antMatchers("/ptk/login")
 				.antMatchers("/error")
 				.requestMatchers(optionsRequest)
+				.requestMatchers(addUserRequest)
 			;
 	}
 
@@ -130,6 +143,7 @@ public class PustakalayaWebSecurityConfigurerAdapter extends WebSecurityConfigur
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 		};
 	}
+
 
 
 	//@Bean

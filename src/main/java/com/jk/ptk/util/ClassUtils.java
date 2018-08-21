@@ -48,7 +48,7 @@ public class ClassUtils {
 	 * considered a package name.
 	 * 
 	 * <p>
-	 * Let's say {@code root} represents the directory <some_path>/classes. This
+	 * Let's say {@code root} represents the directory &lt;some_path&gt;/classes. This
 	 * path is the root where all the java classes are stored. The caller should
 	 * call this method with this directory and {@code prefix} either {@code null}
 	 * or an empty string because all the classes found as direct child of this
@@ -56,7 +56,7 @@ public class ClassUtils {
 	 * </p>
 	 * 
 	 * <p>
-	 * Let's say {@code root} represents the directory <some_path>/classes/com. This
+	 * Let's say {@code root} represents the directory &lt;some_path&gt;/classes/com. This
 	 * path is the root where all the java classes are stored. The caller should
 	 * call this method with this directory and {@code prefix} as "com." because all
 	 * the classes found as direct child of this directory should have package

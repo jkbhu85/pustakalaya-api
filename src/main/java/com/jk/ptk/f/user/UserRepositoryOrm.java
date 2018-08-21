@@ -3,7 +3,6 @@ package com.jk.ptk.f.user;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,9 @@ import org.springframework.stereotype.Repository;
  * @author Jitendra
  */
 @Repository
-public class UserRepositoryOrm implements UserRepository {
+class UserRepositoryOrm implements UserRepository {
 	@Autowired
 	private EntityManager em;
-
-	@Override
-	public void save(User user) {
-		em.persist(user);
-	}
 
 	@Override
 	public User findByEmail(String email) {
@@ -38,40 +32,29 @@ public class UserRepositoryOrm implements UserRepository {
 
 	@Override
 	public boolean doesEmailExists(String email) {
-		Query query = em.createNamedQuery("user_exist_by_email");
+		TypedQuery<Long> query = em.createNamedQuery("user_exist_by_email", Long.class);
 		query.setParameter("email", email);
-		return query.getResultList().size() == 1;
+		long count = query.getSingleResult();
+		
+		return count == 1;
 	}
 
 	@Override
 	public boolean doesMobileExists(String mobile) {
-		Query query = em.createNamedQuery("user_mobile_exists");
+		TypedQuery<Long> query = em.createNamedQuery("user_mobile_exists", Long.class);
 		query.setParameter("mobile", mobile);
-		return query.getResultList().size() == 1;
+		long count = query.getSingleResult();
+		
+		return count == 1;
 	}
 
 	@Override
-	public void updatePassword(String email, String passwordHash, String passwordSalt, Integer passwordVersion) {
-		Query query = em.createNamedQuery("user_update_password");
-		query.setParameter("email", email);
-		query.setParameter("passwordHash", passwordHash);
-		query.setParameter("passwordSalt", passwordSalt);
-		query.setParameter("passwordVersion", passwordVersion);
-		query.executeUpdate();
+	public void saveOrUpdate(User user) {
+		if (user.getId() != null) {
+			em.merge(user);
+		} else {
+			em.persist(user);
+		}
 	}
-
-	@Override
-	public void updateSecurityQuestionAndAnswer(String email, String question, String answer) {
-		Query query = em.createNamedQuery("user_update_security_question");
-		query.setParameter("email", email);
-		query.executeUpdate();
-	}
-
-	@Override
-	public void updateUnsuccessfulTries(String email, Integer tries) {
-		Query query = em.createNamedQuery("user_update_unsuccessful_tries");
-		query.setParameter("email", email);
-		query.setParameter("unsuccessfulTries", tries);
-		query.executeUpdate();
-	}
+	
 }

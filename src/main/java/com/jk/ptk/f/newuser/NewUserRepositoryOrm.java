@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public class NewUserRepositoryOrm implements NewUserRepository {
+class NewUserRepositoryOrm implements NewUserRepository {
 	private EntityManager em;
 	
 	@Autowired

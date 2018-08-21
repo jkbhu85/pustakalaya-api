@@ -14,7 +14,7 @@ public interface UserService {
 	/**
 	 * Saves the user with the specified {@code userValues} in the system.
 	 *
-	 * @param user
+	 * @param userValues
 	 *             the specified user
 	 * @throws ValidationException
 	 *                                  if a data validator is provided and one or

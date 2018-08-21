@@ -26,7 +26,7 @@ import com.jk.ptk.validation.ValidationException;
  * @author Jitendra
  */
 @Component("UserFieldValidator")
-public class UserFieldValidator implements DataValidator<UserV> {
+class UserFieldValidator implements DataValidator<UserV> {
 	private static final int FIRST_NAME_MAX_LEN = 30;
 	private static final int LAST_NAME_MAX_LEN = 30;
 	private static final int PASSWORD_MIN_LEN = 6;

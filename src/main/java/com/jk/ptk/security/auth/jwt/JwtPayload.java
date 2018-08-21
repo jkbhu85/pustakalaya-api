@@ -16,10 +16,8 @@ public class JwtPayload {
 	}
 
 	/**
-	 * Creates an instance with the speicified values.
+	 * Creates an instance with the specified values.
 	 *
-	 * @param id
-	 *            unique id of the user
 	 * @param name
 	 *            name of the user
 	 * @param email

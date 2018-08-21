@@ -2,65 +2,54 @@ package com.jk.ptk.f.user;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.jk.ptk.app.App;
 import com.jk.ptk.app.ResourceExpiredException;
-import com.jk.ptk.f.country.CountryRepository;
 import com.jk.ptk.f.newuser.NewUser;
-import com.jk.ptk.f.newuser.NewUserRepository;
-import com.jk.ptk.f.uash.UserAccountStatusHistory;
-import com.jk.ptk.f.uash.UserAccountStatusHistoryRepository;
-import com.jk.ptk.f.urh.UserRoleHistory;
-import com.jk.ptk.f.urh.UserRoleHistoryRepository;
 import com.jk.ptk.security.login.CredentialsUtil;
 import com.jk.ptk.security.login.InvalidCredentialsException;
 import com.jk.ptk.util.DateUtils;
-import com.jk.ptk.util.LocaleUtil;
-import com.jk.ptk.util.MailConsts;
-import com.jk.ptk.util.mail.MailModel;
-import com.jk.ptk.util.mail.MailTemplateService;
 import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.FormField;
 import com.jk.ptk.validation.ValidationException;
 
 /**
- * An implementation of the {@code UserService} type.
+ * An implementation of the {@code UserService} type. This class validates the
+ * user information before saving if a data validator is available.
  *
  * @author Jitendra
  */
-@Component
-public class UserServiceImpl implements UserService {
+@Service
+class UserServiceImpl implements UserService {
 	private UserRepository repository;
-	private CountryRepository countryRepository;
-	private NewUserRepository newUserRepository;
-	private UserRoleHistoryRepository roleRepository;
-	private UserAccountStatusHistoryRepository acStatusRepository;
-	private MailTemplateService mailService;
+	private RoleAndAccountStatusManager roleAndAccountStatusManager;
+	private UserServiceHelper userServiceHelper;
+
+	private DataValidator<UserV> dataValidator;
+
+	/**
+	 * Creates an instance with specified dependencies.
+	 * 
+	 * @param repository the user repository
+	 * @param roleAndAccountStatusManager the role and account manager instance
+	 * @param userServiceHelper instance of user service helper class
+	 */
+	@Autowired
+	public UserServiceImpl(UserRepository repository, RoleAndAccountStatusManager roleAndAccountStatusManager,
+			UserServiceHelper userServiceHelper) {
+		this.repository = repository;
+		this.roleAndAccountStatusManager = roleAndAccountStatusManager;
+		this.userServiceHelper = userServiceHelper;
+	}
 
 	@Autowired
 	@Qualifier("UserFieldValidator")
-	private DataValidator<UserV> dataValidator;
-
-	@Autowired
-	public UserServiceImpl(UserRepository repository, CountryRepository countryRepository,
-			NewUserRepository newUserRepository, UserRoleHistoryRepository roleRepository,
-			UserAccountStatusHistoryRepository acStatusRepository, MailTemplateService mailService) {
-		this.repository = repository;
-		this.countryRepository = countryRepository;
-		this.newUserRepository = newUserRepository;
-		this.roleRepository = roleRepository;
-		this.acStatusRepository = acStatusRepository;
-		this.mailService = mailService;
-	}
-
 	public void setDataValidator(DataValidator<UserV> dataValidator) {
 		this.dataValidator = dataValidator;
 	}
@@ -73,7 +62,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(rollbackOn = Exception.class)
 	public void save(UserV userValues) throws ValidationException, ResourceExpiredException {
-		NewUser newUser = newUserRepository.find(userValues.getRegistrationId());
+		NewUser newUser = userServiceHelper.findNewUser(userValues.getRegistrationId());
 
 		if (newUser == null || newUser.getExpiresOn().isBefore(LocalDateTime.now()))
 			throw new ResourceExpiredException("Registration id has expired.");
@@ -84,55 +73,12 @@ public class UserServiceImpl implements UserService {
 			dataValidator.validate(userValues);
 
 		User user = toUser(userValues, newUser);
-		UserRoleHistory urh = userRoleHistoryFrom(user);
-		UserAccountStatusHistory uash = accountStatusHistoryFrom(user);
 
-		newUserRepository.remove(newUser);
-		repository.save(user);
-		roleRepository.save(urh);
-		acStatusRepository.save(uash);
-		sendMail(user);
-	}
-
-	private UserRoleHistory userRoleHistoryFrom(User user) {
-		UserRoleHistory urh = new UserRoleHistory();
-
-		urh.setUser(user);
-		urh.setAssignedBy(user.getAcCreatedBy());
-		urh.setRole(user.getRole());
-		urh.setComments("Account created");
-
-		return urh;
-	}
-
-	private UserAccountStatusHistory accountStatusHistoryFrom(User user) {
-		UserAccountStatusHistory uash = new UserAccountStatusHistory();
-
-		uash.setAccountStatus(user.getAccountStatus());
-		uash.setUser(user);
-		uash.setComments("Account created");
-
-		return uash;
-	}
-
-	private void sendMail(User user) {
-		Map<String, Object> params = new HashMap<>();
-		MailModel model = new MailModel();
-
-		model.setParamMap(params);
-		model.setRecipient(user.getEmail());
-		model.setRecipientName(user.getFirstName());
-		model.setTemplateName(MailConsts.TEMPLATE_ACCOUNT_CREATION_COMPLETE);
-		model.setSubjectPropName(MailConsts.SUBJECT_ACCOUNT_CREATION_COMPLETE);
-		model.setLocale(LocaleUtil.from(user.getLocaleValue()));
-
-		params.put(MailConsts.PARAM_NAME_OF_USER, user.getFirstName());
-		params.put(MailConsts.PARAM_EMAIL_OF_USER, user.getEmail());
-
-		String loginUrl = App.getUrl("/login");
-		params.put(MailConsts.PARAM_LOGIN_PAGE, loginUrl);
-
-		mailService.sendMail(model);
+		userServiceHelper.removePartialRegistration(newUser);
+		repository.saveOrUpdate(user);
+		roleAndAccountStatusManager.saveUserAccountStatusHistory(user, user.getAcCreatedBy(), "Account created");
+		roleAndAccountStatusManager.saveUserRoleHistory(user, user.getAcCreatedBy(), "Account created");
+		userServiceHelper.sendMailOnAccountComplete(user);
 	}
 
 	private User toUser(UserV userValues, NewUser newUser) {
@@ -143,7 +89,7 @@ public class UserServiceImpl implements UserService {
 		user.setGender(userValues.getGender());
 
 		long countryCode = Integer.parseInt(userValues.getIsdCode());
-		user.setCountry(countryRepository.find(countryCode));
+		user.setCountry(userServiceHelper.findCountry(countryCode));
 		user.setEmail(userValues.getEmail());
 		user.setMobile(userValues.getMobile());
 
@@ -219,7 +165,10 @@ public class UserServiceImpl implements UserService {
 		String newPasswordHash = CredentialsUtil.getPasswordHash(newPassword, newPasswordSalt, currentPasswordVersion);
 
 		// perform update
-		repository.updatePassword(email, newPasswordHash, newPasswordSalt, currentPasswordVersion);
+		user.setPasswordHash(newPasswordHash);
+		user.setPasswordSalt(newPasswordSalt);
+		user.setPasswordVersion(currentPasswordVersion);
+		repository.saveOrUpdate(user);
 	}
 
 	private boolean isPasswordValid(String password, User user) {
@@ -243,7 +192,9 @@ public class UserServiceImpl implements UserService {
 				dataValidator.validate(Arrays.asList(questionField, answerField));
 			}
 
-			repository.updateSecurityQuestionAndAnswer(user.getEmail(), question, answer);
+			user.setSecurityQuestion(question);
+			user.setSecurityAnswer(answer);
+			repository.saveOrUpdate(user);
 		} else
 			throw new InvalidCredentialsException("Password didn't match.");
 	}
@@ -251,7 +202,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void updateUnsuccessfulTries(String email, Integer tries) {
-		repository.updateUnsuccessfulTries(email, tries);
+		User user = repository.findByEmail(email);
+
+		if (user != null) {
+			user.setUnsuccessfulTries(tries);
+			repository.saveOrUpdate(user);
+		}
 	}
 
 }

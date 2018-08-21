@@ -36,7 +36,7 @@ public final class FileUtils {
 	 * {@code false} otherwise.
 	 *
 	 * @param filePath
-	 *            the path of the file to be deleted
+	 *                 the path of the file to be deleted
 	 * @return {@code true} if the file is deleted successfully at {@code filePath},
 	 *         {@code false} otherwise
 	 */
@@ -51,8 +51,8 @@ public final class FileUtils {
 	 * {@code true} otherwise.
 	 *
 	 * @param files
-	 *            list of files to be deleted, if list items are directories then
-	 *            files are deleted recursively
+	 *              list of files to be deleted, if list items are directories then
+	 *              files are deleted recursively
 	 * @return {@code false} if one or more files could not be deleted, {@code true}
 	 *         otherwise
 	 */
@@ -84,8 +84,9 @@ public final class FileUtils {
 	 * successfully, {@code true} otherwise.
 	 *
 	 * @param filePaths
-	 *            list of filePaths to be deleted, if list items are directories
-	 *            then filePaths are deleted recursively
+	 *                  list of filePaths to be deleted, if list items are
+	 *                  directories
+	 *                  then filePaths are deleted recursively
 	 * @return {@code false} if one or more filePaths could not be deleted,
 	 *         {@code true} otherwise
 	 */
@@ -102,6 +103,7 @@ public final class FileUtils {
 	 * @return a list of all un-hidden files in the directory {@code dir} or
 	 *         {@code null} if directory {@code dir} does not exist
 	 * @throws IOException
+	 *                     if {@code dir} is not a directory or is not readable
 	 */
 	public static List<File> getFiles(File dir) throws IOException {
 		if (!dir.exists())
@@ -126,12 +128,12 @@ public final class FileUtils {
 	 * {@code dirPath} does not exist.
 	 *
 	 * @param dirPath
-	 *            path of the specified directory
+	 *                path of the specified directory
 	 * @return a list of all un-hidden files in the directory {@code dirPath} or
 	 *         {@code null} if directory at the specified {@code dirPath} does not
 	 *         exist
 	 * @throws Exception
-	 *             if {@code dirPath} is not a directory is can not be read
+	 *                   if {@code dirPath} is not a directory is can not be read
 	 */
 	public static List<String> getFilePaths(String dirPath) throws Exception {
 		File dir = new File(dirPath);
@@ -157,11 +159,11 @@ public final class FileUtils {
 	 * {@code filePath}.
 	 *
 	 * @param filePath
-	 *            path of the file
+	 *                 path of the file
 	 * @return byte array of contents of the file represented by the
 	 *         {@code filePath}
 	 * @throws Exception
-	 *             if a problem occures in the process
+	 *                   if a problem occures in the process
 	 */
 	public static byte[] getBytes(String filePath) throws Exception {
 		if (filePath == null)
@@ -174,10 +176,10 @@ public final class FileUtils {
 	 * Returns byte array representing contents of the {@code file}.
 	 *
 	 * @param file
-	 *            the specified file
+	 *             the specified file
 	 * @return byte array representing contents of the {@code file}
 	 * @throws Exception
-	 *             if a problem occures in the process
+	 *                   if a problem occures in the process
 	 */
 	public static byte[] getBytes(File file) throws Exception {
 		if (file == null)
@@ -208,11 +210,11 @@ public final class FileUtils {
 	 * {@code null} if {@code files} is {@code null} or empty.
 	 *
 	 * @param files
-	 *            list of files to be zipped
+	 *              list of files to be zipped
 	 * @return a zip file containing all the files in {@code files} or returns
 	 *         {@code null} if {@code files} is {@code null} or empty
 	 * @throws Exception
-	 *             if an error occures while zipping the files
+	 *                   if an error occures while zipping the files
 	 */
 	public static File zipFiles(List<File> files) throws Exception {
 		if (files == null || files.isEmpty())
@@ -234,13 +236,13 @@ public final class FileUtils {
 	 * overwritten.
 	 *
 	 * @param files
-	 *            list of files to be zipped
+	 *                list of files to be zipped
 	 * @param zipFile
-	 *            file to be used as zip file target
+	 *                file to be used as zip file target
 	 * @return a zip file containing {@code files} or {@code null} if {@code files}
 	 *         is {@code null} or empty
 	 * @throws Exception
-	 *             if there is problem in zipping the files
+	 *                   if there is problem in zipping the files
 	 */
 	public static File zipFiles(List<File> files, File zipFile) throws Exception {
 		if (files == null || files.size() == 0)
@@ -304,11 +306,11 @@ public final class FileUtils {
 	 * created in the temporary directory provided by the system.
 	 *
 	 * @param filePaths
-	 *            list of filePaths to be zipped
+	 *                  list of filePaths to be zipped
 	 * @return an absolute path of a zip file which contains {@code filePaths} or
 	 *         {@code null} if {@code filePaths} is {@code null} or empty
 	 * @throws Exception
-	 *             if there is problem in zipping the filePaths
+	 *                   if there is problem in zipping the filePaths
 	 */
 	public static String zipFilePaths(List<String> filePaths) throws Exception {
 		if (filePaths == null || filePaths.size() == 0)
@@ -325,14 +327,14 @@ public final class FileUtils {
 	 * at{@code zipFilePath} then it will be overwritten.
 	 *
 	 * @param filePaths
-	 *            list of filePaths to be zipped
+	 *                    list of filePaths to be zipped
 	 * @param zipFilePath
-	 *            destination path of the zip file
+	 *                    destination path of the zip file
 	 * @return an absolute path which points to the same file as {@code zipFilePath}
 	 *         of a zip file which contains {@code filePaths} or {@code null} if
 	 *         {@code filePaths} is {@code null} or empty
 	 * @throws Exception
-	 *             if there is problem in zipping the filePaths
+	 *                   if there is problem in zipping the filePaths
 	 */
 	public static String zipFilePaths(List<String> filePaths, String zipFilePath) throws Exception {
 		if (filePaths == null || filePaths.size() == 0)
@@ -348,7 +350,7 @@ public final class FileUtils {
 	 * in {@code filePaths} or {@code null} if {@code filePaths} is {@code null}.
 	 *
 	 * @param filePaths
-	 *            list of file paths
+	 *                  list of file paths
 	 * @return a list of {@link File} objects corressponding to file paths specified
 	 *         in {@code filePaths} or {@code null} if {@code filePaths} is
 	 *         {@code null}

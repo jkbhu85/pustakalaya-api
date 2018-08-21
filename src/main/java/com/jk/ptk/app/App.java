@@ -27,7 +27,7 @@ public final class App {
 			} catch (NumberFormatException ignore) {
 			}
 		}
-		
+
 		if (passwordVersion == -1) {
 			log.error("Password version property is not set.");
 			System.exit(1);
@@ -38,9 +38,8 @@ public final class App {
 		return passwordVersion;
 	}
 
-
 	private static int userNoneBookQuota = -1;
-	
+
 	public static int getNoneBookQuota() {
 		if (userNoneBookQuota != -1)
 			return userNoneBookQuota;
@@ -58,9 +57,8 @@ public final class App {
 		return userNoneBookQuota;
 	}
 
-
 	private static int userMemberBookQuota = -1;
-	
+
 	public static int getMemberBookQuota() {
 		if (userMemberBookQuota != -1)
 			return userMemberBookQuota;
@@ -78,9 +76,8 @@ public final class App {
 		return userMemberBookQuota;
 	}
 
-
 	private static int userLibrarianBookQuota = -1;
-	
+
 	public static int getLibrarianBookQuota() {
 		if (userLibrarianBookQuota != -1)
 			return userLibrarianBookQuota;
@@ -97,7 +94,6 @@ public final class App {
 
 		return userLibrarianBookQuota;
 	}
-	
 
 	private static int userAdminBookQuota = -1;
 
@@ -118,11 +114,14 @@ public final class App {
 		return userAdminBookQuota;
 	}
 
-
 	private static int unsuccessfulLoginTriesThreshold = -1;
+
 	/**
-	 * Maximum number of tries with incorrect credentials after which account is
+	 * Returns maximum number of tries with incorrect credentials after which account is
 	 * locked.
+	 * 
+	 * @return maximum number of tries with incorrect credentials after which account is
+	 * locked 
 	 */
 	public static int getUnsuccessfulLoginTriesThreshold() {
 		if (unsuccessfulLoginTriesThreshold != -1)
@@ -142,9 +141,8 @@ public final class App {
 		return unsuccessfulLoginTriesThreshold;
 	}
 
-
 	private static int registraionLinkExpirationHours = -1;
-	
+
 	/**
 	 * Returns registration link expiration duration in hours.
 	 *
@@ -168,8 +166,8 @@ public final class App {
 		return registraionLinkExpirationHours;
 	}
 
-
 	private static String uiDomain = null;
+
 	/**
 	 * Returns Internet domain of the front end application.
 	 *
@@ -184,10 +182,10 @@ public final class App {
 		} else {
 			uiDomain = AppProps.valueOf("app.frontend.domain");
 		}
-		
+
 		return uiDomain;
 	}
-	
+
 	/**
 	 * Returns URL for the specified URI for front end application.
 	 *
@@ -196,10 +194,13 @@ public final class App {
 	 * @return URL for the specified URI
 	 */
 	public static String getUrl(String uri) {
-		if (uri == null) return null;
-		
-		if (uri.startsWith("/")) return uiDomain + uri;
-		else return uiDomain + "/" + uri;
+		if (uri == null)
+			return null;
+
+		if (uri.startsWith("/"))
+			return appDomain() + uri;
+		else
+			return appDomain() + "/" + uri;
 	}
 
 	public static String getHmacSecret() {

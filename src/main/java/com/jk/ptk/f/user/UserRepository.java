@@ -9,14 +9,6 @@ package com.jk.ptk.f.user;
 public interface UserRepository {
 
 	/**
-	 * Saves the specified {@code user} in the system.
-	 * 
-	 * @param user
-	 *             the specified user to be saved
-	 */
-	void save(User user);
-
-	/**
 	 * Returns the user associated with the specified {@code email}.
 	 *
 	 * @param email
@@ -48,41 +40,10 @@ public interface UserRepository {
 	boolean doesMobileExists(String mobile);
 
 	/**
-	 * Updates password of the user associated with the specified {@code email} if
-	 * the user exists.
+	 * Saves or updates specified user's in the storage system.
 	 * 
-	 * @param email
-	 *                        the specified email
-	 * @param passwordHash
-	 *                        the password hash to save
-	 * @param passwordSalt
-	 *                        the password salt to save
-	 * @param passwordVersion
-	 *                        the password version to save
+	 * @param user
+	 *             the specified updated user
 	 */
-	void updatePassword(String email, String passwordHash, String passwordSalt, Integer passwordVersion);
-
-	/**
-	 * Updates security question and answer of the user associated with the
-	 * specified {@code email} if the user exists.
-	 * 
-	 * @param email
-	 *                 the specified email
-	 * @param question
-	 *                 the question to save
-	 * @param answer
-	 *                 the answer to save
-	 */
-	void updateSecurityQuestionAndAnswer(String email, String question, String answer);
-
-	/**
-	 * Updates number of unsuccessful login tries of the user associated with the
-	 * specified {@code email} if the user exists.
-	 * 
-	 * @param email
-	 *              the specified email
-	 * @param tries
-	 *              number of unsuccessful login tries to save
-	 */
-	void updateUnsuccessfulTries(String email, Integer tries);
+	void saveOrUpdate(User user);
 }

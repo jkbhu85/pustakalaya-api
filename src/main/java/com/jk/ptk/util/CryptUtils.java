@@ -15,7 +15,6 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.jk.ptk.app.App;
 import com.jk.ptk.app.AppProps;
 
 /**
@@ -45,7 +44,7 @@ public final class CryptUtils {
 	/**
 	 * Returns decrypted contents of file. If {@code absolutePath} is {@code false},
 	 * {@code fileName} is considered a file name and the file location is the
-	 * directory which is same as value of {@link App#NAME_ENV_VAR_CONFIG}.
+	 * directory which is same as value of {@link AppProps#NAME_ENV_VAR_CONFIG}.
 	 *
 	 * @param fileName
 	 *            name or path of the file

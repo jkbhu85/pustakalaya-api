@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  *
  */
 @Service("NoOpMailServiceImpl")
-public class NoOpMailServiceImpl implements MailService {
+class NoOpMailServiceImpl implements MailService {
 
 	@Override
 	public boolean sendMail(String recipients, String subject, String message) {

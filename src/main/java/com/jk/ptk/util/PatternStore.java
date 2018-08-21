@@ -23,8 +23,7 @@ public class PatternStore {
 	 * Pattern to validate emails.
 	 * 
 	 * <p>
-	 * Taken from <a href="https://www.regular-expressions.info/" target=
-	 * "_blank">https://www.regular-expressions.info/</>
+	 * Taken from <a href="https://www.regular-expressions.info/" target="_blank">https://www.regular-expressions.info/</a>
 	 * </p>
 	 */
 	public static final Pattern EMAIL = Pattern.compile("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$");

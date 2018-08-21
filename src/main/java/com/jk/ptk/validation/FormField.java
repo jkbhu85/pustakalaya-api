@@ -24,11 +24,11 @@ public class FormField {
 	 * Creates an instance with specified value, field name and mandatory status.
 	 *
 	 * @param value
-	 *            the specified value
+	 *                  the specified value
 	 * @param fieldName
-	 *            the specified field
+	 *                  the specified field
 	 * @param mandatory
-	 *            whether field is mandatory
+	 *                  whether field is mandatory
 	 */
 	public FormField(String value, String fieldName, boolean mandatory) {
 		this.value = value;
@@ -41,9 +41,13 @@ public class FormField {
 	 * list of cross fields to use for validation if any.
 	 *
 	 * @param value
+	 *                       the specified value to be validated
 	 * @param fieldName
+	 *                       the name of the field corresponding to the value
 	 * @param mandatory
+	 *                       if this field is a mandatory field
 	 * @param crossFieldList
+	 *                       list of field which are used to validate the value
 	 */
 	public FormField(String value, String fieldName, boolean mandatory, List<FormField> crossFieldList) {
 		this.value = value;
@@ -61,7 +65,7 @@ public class FormField {
 
 	/**
 	 * @param value
-	 *            the value to set
+	 *              the value to set
 	 */
 	public void setValue(String value) {
 		this.value = value;
@@ -76,7 +80,7 @@ public class FormField {
 
 	/**
 	 * @param fieldName
-	 *            the fieldName to set
+	 *                  the fieldName to set
 	 */
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
@@ -91,7 +95,7 @@ public class FormField {
 
 	/**
 	 * @param mandatory
-	 *            the mandatory to set
+	 *                  the mandatory to set
 	 */
 	public void setMandatory(boolean mandatory) {
 		this.mandatory = mandatory;
@@ -106,7 +110,7 @@ public class FormField {
 
 	/**
 	 * @param crossFieldList
-	 *            the crossFieldList to set
+	 *                       the crossFieldList to set
 	 */
 	public void setCrossFieldList(List<FormField> crossFieldList) {
 		this.crossFieldList = crossFieldList;

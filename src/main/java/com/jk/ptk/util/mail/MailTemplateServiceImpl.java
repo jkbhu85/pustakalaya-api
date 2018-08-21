@@ -10,12 +10,12 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
-public class MailTemplateServiceImpl implements MailTemplateService {
+class MailTemplateServiceImpl implements MailTemplateService {
 	@Autowired
 	private TemplateEngine templateEngine;
 
 	@Autowired
-	@Qualifier("NoOpMailServiceImpl")
+	@Qualifier("MailServiceImpl")
 	private MailService mailService;
 
 	@Autowired

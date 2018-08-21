@@ -40,7 +40,7 @@ import com.jk.ptk.util.FileUtils;
  *
  */
 @Service("MailServiceImpl")
-public class MailServiceImpl implements MailService, Closeable {
+class MailServiceImpl implements MailService, Closeable {
 	private static Logger log = LoggerFactory.getLogger(MailServiceImpl.class);
 	private Session session;
 	private Transport transport;
@@ -73,7 +73,7 @@ public class MailServiceImpl implements MailService, Closeable {
 			this.session = Session.getInstance(mailProps);
 		}
 
-		//transport = session.getTransport();
+		transport = session.getTransport();
 
 		AutoClose.register(this);
 		log.debug("Mailer was initialized successfully.");

@@ -33,7 +33,7 @@ import com.jk.ptk.validation.ValidationException;
  * @author Jitendra
  */
 @Service
-public class NewUserServiceImpl implements NewUserService {
+class NewUserServiceImpl implements NewUserService {
 	private static final Logger log = LoggerFactory.getLogger(NewUserServiceImpl.class);
 
 	private NewUserRepository repository;

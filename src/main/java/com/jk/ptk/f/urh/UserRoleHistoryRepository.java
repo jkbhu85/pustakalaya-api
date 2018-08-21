@@ -12,7 +12,7 @@ public interface UserRoleHistoryRepository {
 	/**
 	 * Saves the specified {@code urh} in the system.
 	 * 
-	 * @param uash
+	 * @param urh
 	 *             the specified entry to be saved
 	 */
 	void save(UserRoleHistory urh);

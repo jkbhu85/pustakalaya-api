@@ -20,12 +20,17 @@ import com.jk.ptk.validation.ValidationException;
  * @author Jitendra
  */
 @Component("NewUserValidator")
-public class NewUserFieldValidator implements DataValidator<NewUserV> {
+class NewUserFieldValidator implements DataValidator<NewUserV> {
 	private static final int FIRST_NAME_MAX_LEN = 30;
 	private static final int LAST_NAME_MAX_LEN = 30;
 
-	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	public NewUserFieldValidator(UserService userService) {
+		super();
+		this.userService = userService;
+	}
 
 	@Override
 	public void validate(NewUserV newUser) throws ValidationException {

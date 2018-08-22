@@ -14,7 +14,6 @@ import com.jk.ptk.app.DataLayerInitialized;
  * Represents a book category.
  *
  * @author Jitendra
- *
  */
 
 @Entity
@@ -32,7 +31,7 @@ public class BookCategory {
 	 * returns {@code null}.
 	 *
 	 * @param categoryId
-	 *            the specified book category id
+	 *                   the specified book category id
 	 * @return an object representing book category for the specified
 	 *         {@code categoryId} or returns {@code null} if no category matching
 	 *         {@code categoryId} exists
@@ -45,6 +44,13 @@ public class BookCategory {
 		return null;
 	}
 
+	/**
+	 * Initializes the constants defined in this class using values from the storage
+	 * system.
+	 * 
+	 * @param em
+	 *           the specified entity manager
+	 */
 	public static void init(EntityManager em) {
 		final String jpql = "select c from BookCategory c where c.name=:name";
 		BookCategory cat;
@@ -63,14 +69,13 @@ public class BookCategory {
 		MAGAZINE.name = cat.name;
 	}
 
-	public BookCategory() {
-	}
+	public BookCategory() {}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String name;
 
 	public Integer getId() {

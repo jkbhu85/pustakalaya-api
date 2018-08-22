@@ -1,6 +1,6 @@
 package com.jk.ptk.f.bookinstance;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,13 +14,13 @@ import javax.persistence.ManyToOne;
 import com.jk.ptk.f.user.User;
 
 /**
- * Represents an entry of book instance history.
+ * Represents an entry of book instance status history.
  *
  * @author Jitendra
  *
  */
 @Entity
-public class BookInstanceHistory {
+public class BookInstanceStatusHistory {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -30,16 +30,16 @@ public class BookInstanceHistory {
 	@JoinColumn(name="instanceFk", nullable=false)
 	private BookInstance bookInstance;
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="statusChangedByFk", nullable=false)
 	private User statusChangedBy;
 
-	private LocalDate statusChangedOn;
+	private LocalDateTime statusChangedOn;
 
 	@Column(nullable=false)
 	private String comments;
 
-	public BookInstanceHistory() {}
+	public BookInstanceStatusHistory() {}
 
 	public BookInstance getBookInstance() {
 		return bookInstance;
@@ -69,7 +69,7 @@ public class BookInstanceHistory {
 		return id;
 	}
 
-	public LocalDate getStatusChangedOn() {
+	public LocalDateTime getStatusChangedOn() {
 		return statusChangedOn;
 	}
 

@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
- * Concrete class of the interface {@link NewUserRepository} that uses an ORM framework.
+ * Concrete class of the interface {@link NewUserRepository} that uses an ORM
+ * framework.
  * 
  * @author Jitendra
- *
  */
 @Repository
 class NewUserRepositoryOrm implements NewUserRepository {

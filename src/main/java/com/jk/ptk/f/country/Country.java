@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 /**
@@ -13,7 +14,10 @@ import javax.persistence.NamedQuery;
  * @author Jitendra
  */
 @Entity
-@NamedQuery(name = "country_get_all", query = "select c from Country c order by c.name")
+@NamedQueries({
+	@NamedQuery(name = "country_get_all", query = "select c from Country c order by c.name"),
+	@NamedQuery(name="country_exists", query="SELECT COUNT(*) FROM Country c WHERE c.id=:id")
+	})
 public class Country {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,10 +11,9 @@ import javax.persistence.TypedQuery;
 import com.jk.ptk.app.DataLayerInitialized;
 
 /**
- * Represents a book instance status.
+ * Represents status of a book instance.
  *
  * @author Jitendra
- *
  */
 
 @Entity
@@ -29,25 +28,47 @@ public class BookInstanceStatus {
 
 	private static final BookInstanceStatus[] biStatusArr = { ISSUED, AVAILABLE, UNAVAILABLE, REMOVED };
 
+	public BookInstanceStatus() {
+	}
+
+	/**
+	 * Creates a book instance with status name as the specified {@code name} and
+	 * without id.
+	 * 
+	 * @param name
+	 *             the specified status name.
+	 */
+	public BookInstanceStatus(String name) {
+		this.name = name;
+	}
+
 	/**
 	 * Returns an object representing book instance status for the specified
 	 * {@code statusId}. If no status matching {@code statusId} exists then returns
 	 * {@code null}.
 	 *
 	 * @param statusId
-	 *            the specified book instance status
+	 *                 the specified book instance status
 	 * @return an object representing book instance status for the specified
 	 *         {@code statusId} or returns {@code null} if no status matching
 	 *         {@code statusId} exists
 	 */
 	public static BookInstanceStatus fromId(Integer statusId) {
 		for (BookInstanceStatus s : biStatusArr) {
-			if (s.getId() == statusId) return s;
+			if (s.getId() == statusId)
+				return s;
 		}
 
 		return null;
 	}
 
+	/**
+	 * Initializes the constants defined in this class from by fetching values from
+	 * the storage system.
+	 * 
+	 * @param em
+	 *           the specified entity manager.
+	 */
 	public static void init(EntityManager em) {
 		final String hql = "select s from BookInstanceStatus s where s.name=:name";
 		TypedQuery<BookInstanceStatus> query;
@@ -87,9 +108,6 @@ public class BookInstanceStatus {
 
 	@Column(nullable = false)
 	private String name;
-
-	private BookInstanceStatus() {
-	}
 
 	public Integer getId() {
 		return id;

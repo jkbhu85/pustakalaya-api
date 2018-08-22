@@ -1,4 +1,4 @@
-package com.jk.ptk.f.book;
+package com.jk.ptk.currency;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,11 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 import com.jk.ptk.f.country.Country;
 
 @Entity
+@NamedQueries({ @NamedQuery(name = "currency_select_all", query = "SELECT c FROM Currency c"),
+		@NamedQuery(name = "country_exists", query = "SELECT COUNT(*) FROM Currency c WHERE c.id=:id") })
 public class Currency {
 
 	@Id

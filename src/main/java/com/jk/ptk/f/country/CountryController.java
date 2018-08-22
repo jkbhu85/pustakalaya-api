@@ -20,7 +20,7 @@ public class CountryController {
 	private CountryService service;
 
 	@GetMapping("/{id}")
-	public Country getCountry(@PathVariable("id") Long id) {
+	public Country getCountry(@PathVariable("id") String id) {
 		return service.find(id);
 	}
 

@@ -13,7 +13,7 @@ public interface UserRepository {
 	 *
 	 * @param email
 	 *              the specified email
-	 * @return user user associated with the specified {@code email}
+	 * @return user associated with the specified {@code email}
 	 */
 	User findByEmail(String email);
 
@@ -40,10 +40,10 @@ public interface UserRepository {
 	boolean doesMobileExists(String mobile);
 
 	/**
-	 * Saves or updates specified user's in the storage system.
+	 * Saves or updates specified user in the storage system.
 	 * 
 	 * @param user
-	 *             the specified updated user
+	 *             the specified user to save or update
 	 */
 	void saveOrUpdate(User user);
 }

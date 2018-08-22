@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Component;
 
 import com.jk.ptk.app.response.ResponseCode;
-import com.jk.ptk.f.country.CountryService;
+import com.jk.ptk.f.country.CountryRepository;
 import com.jk.ptk.util.DateUtils;
 import com.jk.ptk.util.LocaleUtil;
 import com.jk.ptk.util.PatternStore;
@@ -38,12 +38,12 @@ class UserFieldValidator implements DataValidator<UserV> {
 	private static final Pattern DATE_PATTERN = Pattern.compile("\\d{2}-\\d{2}-\\d{4}");
 	private static final String[] GENDERS = { "M", "F", "O" };
 
-	private UserService userService;
-	private CountryService countryService;
+	private UserRepository userRepository;
+	private CountryRepository countryRepository;
 
-	public UserFieldValidator(UserService userService, CountryService countryService) {
-		this.userService = userService;
-		this.countryService = countryService;
+	public UserFieldValidator(UserRepository userRepository, CountryRepository countryRepository) {
+		this.userRepository = userRepository;
+		this.countryRepository = countryRepository;
 	}
 
 	@Override
@@ -304,7 +304,7 @@ class UserFieldValidator implements DataValidator<UserV> {
 		if (!m.matches())
 			return ResponseCode.INVALID_FORMAT;
 
-		if (userService.doesMobileExists(value))
+		if (userRepository.doesMobileExists(value))
 			return ResponseCode.VALUE_ALREADY_EXIST;
 
 		return null;
@@ -319,9 +319,9 @@ class UserFieldValidator implements DataValidator<UserV> {
 		}
 
 		try {
-			long countryCode = Integer.parseInt(value);
+			Integer countryCode = Integer.parseInt(value);
 
-			if (countryService.find(countryCode) != null)
+			if (countryRepository.doesCountryExist(countryCode))
 				return null;
 		} catch (NumberFormatException ignore) {
 		}

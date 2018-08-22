@@ -1,6 +1,6 @@
 package com.jk.ptk.f.book;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,17 +9,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 import com.jk.ptk.f.user.User;
 
 /**
- * Represents a book in database.
+ * Represents a book.
  *
  * @author Jitendra
- *
  */
 @Entity
+@NamedQueries({
+		@NamedQuery(name = "book_exists", query = "SELECT COUNT(*) FROM Book b WHERE b.id=:id"),
+		@NamedQuery(name = "book_find_by_isbn", query = "SELECT b FROM Book b WHERE b.isbn=:isbn")
+})
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +35,7 @@ public class Book {
 
 	private String authors;
 
-	private int editon;
+	private int edition;
 
 	private String isbn;
 
@@ -39,14 +44,13 @@ public class Book {
 	private BookCategory bookCategory;
 
 	@Column(nullable = false)
-	private LocalDate addedOn;
+	private LocalDateTime addedOn;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "addedByFk", nullable = false)
 	private User addedBy;
 
-	public Book() {
-	}
+	public Book() {}
 
 	public String getTitle() {
 		return title;
@@ -64,12 +68,12 @@ public class Book {
 		this.authors = authors;
 	}
 
-	public int getEditon() {
-		return editon;
+	public int getEdition() {
+		return edition;
 	}
 
-	public void setEditon(int editon) {
-		this.editon = editon;
+	public void setEdition(int editon) {
+		this.edition = editon;
 	}
 
 	public String getIsbn() {
@@ -100,7 +104,7 @@ public class Book {
 		return id;
 	}
 
-	public LocalDate getAddedOn() {
+	public LocalDateTime getAddedOn() {
 		return addedOn;
 	}
 

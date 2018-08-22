@@ -18,7 +18,7 @@ public interface CountryService {
 	 * @return a country associated with the specified {@code id} if it exists
 	 *         otherwise {@code null}
 	 */
-	Country find(Long id);
+	Country find(String id);
 
 	/**
 	 * Returns a list of all countries.

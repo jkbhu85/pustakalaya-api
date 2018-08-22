@@ -20,7 +20,7 @@ public class CountryRepositoryOrm implements CountryRepository {
 	private EntityManager em;
 
 	@Override
-	public Country find(Long id) {
+	public Country find(Integer id) {
 		return em.find(Country.class, id);
 	}
 
@@ -28,5 +28,13 @@ public class CountryRepositoryOrm implements CountryRepository {
 	public List<Country> getAll() {
 		TypedQuery<Country> q = em.createNamedQuery("country_get_all", Country.class);
 		return q.getResultList();
+	}
+
+	@Override
+	public boolean doesCountryExist(Integer id) {
+		TypedQuery<Long> query = em.createNamedQuery("country_exists", Long.class);
+		query.setParameter("id", id);
+		
+		return query.getSingleResult() == 1;
 	}
 }

@@ -3,22 +3,27 @@ package com.jk.ptk.f.country;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * An implementation of the {@code CountryService} type.
  * 
  * @author Jitendra
- *
  */
-@Component
+@Service
 public class CountryServiceImpl implements CountryService {
 	@Autowired
 	private CountryRepository repository;
 
 	@Override
-	public Country find(Long id) {
-		return repository.find(id);
+	public Country find(String bookId) {
+		try {
+			Integer id = Integer.parseInt(bookId);
+			return repository.find(id);
+		} catch (NumberFormatException ignore) {
+		}
+		
+		return null;
 	}
 
 	@Override

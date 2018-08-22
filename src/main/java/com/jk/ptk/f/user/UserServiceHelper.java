@@ -52,7 +52,7 @@ class UserServiceHelper {
 	 *           the specified id
 	 * @return a country as identified by the specified {@code id}
 	 */
-	Country findCountry(Long id) {
+	Country findCountry(Integer id) {
 		return countryRepository.find(id);
 	}
 

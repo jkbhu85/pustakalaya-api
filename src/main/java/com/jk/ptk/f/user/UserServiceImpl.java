@@ -21,7 +21,7 @@ import com.jk.ptk.validation.ValidationException;
 
 /**
  * An implementation of the {@code UserService} type. This class validates the
- * user information before saving if a data validator is available.
+ * user information before saving it if a data validator is available.
  *
  * @author Jitendra
  */
@@ -88,7 +88,7 @@ class UserServiceImpl implements UserService {
 		user.setLastName(userValues.getLastName());
 		user.setGender(userValues.getGender());
 
-		long countryCode = Integer.parseInt(userValues.getIsdCode());
+		Integer countryCode = Integer.parseInt(userValues.getIsdCode());
 		user.setCountry(userServiceHelper.findCountry(countryCode));
 		user.setEmail(userValues.getEmail());
 		user.setMobile(userValues.getMobile());

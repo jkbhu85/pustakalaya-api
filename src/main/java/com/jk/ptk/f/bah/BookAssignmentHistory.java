@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.jk.ptk.f.book.Currency;
+import com.jk.ptk.currency.Currency;
 import com.jk.ptk.f.bookinstance.BookInstance;
 import com.jk.ptk.f.user.User;
 

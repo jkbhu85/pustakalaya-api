@@ -1,6 +1,6 @@
 package com.jk.ptk.f.bookinstance;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.jk.ptk.currency.Currency;
 import com.jk.ptk.f.book.Book;
-import com.jk.ptk.f.book.Currency;
 import com.jk.ptk.f.user.User;
 
 /**
- * Represents an instance of book.
+ * Represents an instance of a book.
  *
  * @author Jitendra
  *
@@ -36,9 +36,9 @@ public class BookInstance {
 
 	private int volume;
 
-	private LocalDate addedOn;
+	private LocalDateTime addedOn;
 
-	private LocalDate removedOn;
+	private LocalDateTime removedOn;
 
 	private String comments;
 
@@ -94,11 +94,11 @@ public class BookInstance {
 		this.volume = volume;
 	}
 
-	public LocalDate getRemovedOn() {
+	public LocalDateTime getRemovedOn() {
 		return removedOn;
 	}
 
-	public void setRemovedOn(LocalDate removedOn) {
+	public void setRemovedOn(LocalDateTime removedOn) {
 		this.removedOn = removedOn;
 	}
 
@@ -154,7 +154,7 @@ public class BookInstance {
 		return id;
 	}
 
-	public LocalDate getAddedOn() {
+	public LocalDateTime getAddedOn() {
 		return addedOn;
 	}
 

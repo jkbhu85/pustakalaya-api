@@ -28,7 +28,7 @@ import com.jk.ptk.f.user.User;
 public class Book {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(nullable = false)
 	private String title;
@@ -100,7 +100,7 @@ public class Book {
 		this.addedBy = addedBy;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 

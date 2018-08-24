@@ -42,7 +42,7 @@ public class CurrencyRepositoryOrm implements CurrencyRepository {
 
 	@Override
 	public boolean doesCurrencyExist(Integer id) {
-		TypedQuery<Long> query = em.createNamedQuery("currency_select_all", Long.class);
+		TypedQuery<Long> query = em.createNamedQuery("currency_exists", Long.class);
 		query.setParameter("id", id);
 		return query.getSingleResult() == 1;
 	}

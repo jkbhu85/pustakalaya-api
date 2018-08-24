@@ -9,14 +9,14 @@ import java.util.regex.Pattern;
  */
 public class PatternStore {
 	/**
-	 * Pattern to validate zip codes used in India.
+	 * Pattern to validate ZIP codes used in India.
 	 */
-	public static final Pattern ZIP_CODE_INDIA = Pattern.compile("\\d{6}");
+	public static final Pattern ZIP_CODE_INDIA = Pattern.compile("^\\d{6}$");
 
 	/**
 	 * Pattern to validate a mobile number.
 	 */
-	public static final Pattern MOBILE = Pattern.compile("\\d{10}");
+	public static final Pattern MOBILE = Pattern.compile("^\\d{10}$");
 
 	/**
 	 * Pattern to validate email.
@@ -30,10 +30,10 @@ public class PatternStore {
 	/**
 	 * Pattern to validate locale. e.g. hi_IN.
 	 */
-	public static final Pattern LOCALE = Pattern.compile("[a-z][a-z]_[A-Z][A-Z]");
+	public static final Pattern LOCALE = Pattern.compile("^[a-z][a-z]_[A-Z][A-Z]$");
 
 	/**
 	 * Pattern to validate price of the form 9999999[.99]
 	 */
-	public static final Pattern PRICE = Pattern.compile("^\\d{1,7}(,\\d{1,2})?$");
+	public static final Pattern PRICE = Pattern.compile("^\\d{1,}(\\.\\d{1,2})?$");
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.jk.ptk.currency.Currency;
@@ -32,7 +33,7 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	public BookServiceImpl(BookRepository repository, BookInstanceRepository biRepository,
 			CurrencyRepository currencyRepository,
-			UserRepository userRepository, DataValidator<BookV> validator) {
+			UserRepository userRepository, @Qualifier("BookFieldValidator") DataValidator<BookV> validator) {
 		this.repository = repository;
 		this.biRepository = biRepository;
 		this.userRepository = userRepository;
@@ -42,7 +43,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional
-	public void save(BookV bookValues) throws ValidationException {
+	public Long save(BookV bookValues) throws ValidationException {
 		if (validator != null) validator.validate(bookValues);
 
 		Book book = toBook(bookValues);
@@ -50,6 +51,8 @@ public class BookServiceImpl implements BookService {
 		
 		List<BookInstance> biList = toBookInstance(bookValues, book);
 		for (BookInstance bi : biList) biRepository.saveOrUpdate(bi);
+		
+		return book.getId();
 	}
 
 	private Book toBook(BookV bv) {

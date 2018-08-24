@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+import org.springframework.stereotype.Component;
+
 import com.jk.ptk.app.response.ResponseCode;
 import com.jk.ptk.f.book.BookRepository;
 import com.jk.ptk.util.PatternStore;
@@ -13,6 +15,12 @@ import com.jk.ptk.validation.FormField;
 import com.jk.ptk.validation.OperationNotSupportedException;
 import com.jk.ptk.validation.ValidationException;
 
+/**
+ * Validates fields of type {@code BookInstanceV}.
+ * 
+ * @author Jitendra
+ */
+@Component("BookInstanceFieldValidator")
 public class BookInstanceFieldValidator implements DataValidator<BookInstanceV> {
 	private static final int PUBLICATION_MAX_LEN = 100;
 	private static final int VOLUME_MAX = 999;
@@ -198,7 +206,7 @@ public class BookInstanceFieldValidator implements DataValidator<BookInstanceV> 
 		} catch (NumberFormatException ignore) {
 			return ResponseCode.INVALID_FORMAT;
 		}
-		
+
 		return null;
 	}
 

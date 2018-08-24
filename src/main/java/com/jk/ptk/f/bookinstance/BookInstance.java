@@ -25,7 +25,7 @@ import com.jk.ptk.f.user.User;
 public class BookInstance {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 	@Column(nullable = false, precision = 9, scale = 2)
 	private Double price;
@@ -150,7 +150,7 @@ public class BookInstance {
 		this.removedBy = removedBy;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 

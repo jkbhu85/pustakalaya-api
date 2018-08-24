@@ -1,9 +1,12 @@
 package com.jk.ptk.f.book;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
+
+import org.springframework.stereotype.Component;
 
 import com.jk.ptk.app.response.ResponseCode;
 import com.jk.ptk.currency.CurrencyRepository;
@@ -13,6 +16,13 @@ import com.jk.ptk.validation.FormField;
 import com.jk.ptk.validation.OperationNotSupportedException;
 import com.jk.ptk.validation.ValidationException;
 
+/**
+ * Validates fields of the type {@code BookV}.
+ * 
+ * @author Jitendra
+ *
+ */
+@Component("BookFieldValidator")
 public class BookFieldValidator implements DataValidator<BookV> {
 	private static final int TITLE_MAX_LENGTH = 150;
 	private static final int NUMBER_OF_PAGES_MAX = 99999;
@@ -20,6 +30,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 	private static final int PUBLICATION_MAX_LEN = 100;
 	private static final int VOLUME_MAX = 999;
 	private static final int NUMBER_OF_COPIES_MAX = 999;
+	private static final double PRICE_MAX = 9999999.99;
 
 	private final BookRepository repository;
 	private final CurrencyRepository currencyRepository;
@@ -115,7 +126,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 
 	@Override
 	public void validate(BookV bookValues) throws ValidationException {
-		Map<String, ResponseCode> errorMap = new HashMap<>();
+		Map<String, ResponseCode> errorMap = new LinkedHashMap<>();
 		ResponseCode errorCode;
 
 		errorCode = validateTitle(bookValues.getTitle(), true);
@@ -158,7 +169,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		if (errorCode != null)
 			errorMap.put(BookV.FIELD_VOLUME, errorCode);
 
-		errorCode = validateNoOfCopies(bookValues.getNoOfCopies(), false);
+		errorCode = validateNoOfCopies(bookValues.getNoOfCopies(), true);
 		if (errorCode != null)
 			errorMap.put(BookV.FIELD_NO_OF_COPIES, errorCode);
 
@@ -177,9 +188,11 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		Long id = null;
 		try {
 			id = Long.parseLong(value);
-		} catch (NumberFormatException ignore) {}
+		} catch (NumberFormatException ignore) {
+		}
 
-		if (id == null || !repository.doesBookExist(id)) return ResponseCode.UNSUPPORTED_VALUE;
+		if (id == null || !repository.doesBookExist(id))
+			return ResponseCode.UNSUPPORTED_VALUE;
 
 		return null;
 	}
@@ -209,9 +222,11 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		Integer cId = null;
 		try {
 			cId = Integer.parseInt(value);
-		} catch (NumberFormatException ignore) {}
+		} catch (NumberFormatException ignore) {
+		}
 
-		if (cId == null || BookCategory.fromId(cId) == null) return ResponseCode.UNSUPPORTED_VALUE;
+		if (cId == null || BookCategory.fromId(cId) == null)
+			return ResponseCode.UNSUPPORTED_VALUE;
 
 		return null;
 	}
@@ -227,8 +242,16 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		Matcher m = PatternStore.PRICE.matcher(value);
 		if (!m.matches())
 			return ResponseCode.INVALID_FORMAT;
+		
+		try {
+			double price = Double.parseDouble(value);
+			
+			if (price > PRICE_MAX) return ResponseCode.VALUE_TOO_LARGE;
+			
+			return null;
+		} catch (NumberFormatException ignore) {}
 
-		return null;
+		return ResponseCode.INVALID_FORMAT;
 	}
 
 	private ResponseCode validateCurrency(String value, boolean mandatory) {
@@ -242,9 +265,11 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		Integer cId = null;
 		try {
 			cId = Integer.parseInt(value);
-		} catch (NumberFormatException ignore) {}
+		} catch (NumberFormatException ignore) {
+		}
 
-		if (cId == null || !currencyRepository.doesCurrencyExist(cId)) return ResponseCode.UNSUPPORTED_VALUE;
+		if (cId == null || !currencyRepository.doesCurrencyExist(cId))
+			return ResponseCode.UNSUPPORTED_VALUE;
 
 		return null;
 	}
@@ -295,9 +320,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		try {
 			int num = Integer.parseInt(value);
 			if (num < 1)
-				return ResponseCode.UNSUPPORTED_VALUE;
-			if (num > NUMBER_OF_PAGES_MAX)
-				return ResponseCode.VALUE_TOO_LARGE;
+				return ResponseCode.VALUE_TOO_SMALL;
 		} catch (NumberFormatException ignore) {
 			return ResponseCode.UNSUPPORTED_VALUE;
 		}
@@ -313,7 +336,8 @@ public class BookFieldValidator implements DataValidator<BookV> {
 				return null;
 		}
 
-		if (!isIsbnValid(value)) return ResponseCode.INVALID_FORMAT;
+		if (!isIsbnValid(value))
+			return ResponseCode.INVALID_FORMAT;
 
 		return null;
 	}
@@ -329,7 +353,8 @@ public class BookFieldValidator implements DataValidator<BookV> {
 
 		if (isbn.length() == 10) {
 			try {
-				int tot = 0;
+				int tot = 0;//calcIsbn10Sum(isbn);
+				
 				for (int i = 0; i < 9; i++) {
 					int digit = Integer.parseInt(isbn.substring(i, i + 1));
 					tot += ((10 - i) * digit);
@@ -346,7 +371,8 @@ public class BookFieldValidator implements DataValidator<BookV> {
 			}
 		} else {
 			try {
-				int tot = 0;
+				int tot = 0;//calcIsbn13Sum(isbn);
+				
 				for (int i = 0; i < 12; i++) {
 					int digit = Integer.parseInt(isbn.substring(i, i + 1));
 					tot += (i % 2 == 0) ? digit * 1 : digit * 3;
@@ -363,6 +389,34 @@ public class BookFieldValidator implements DataValidator<BookV> {
 				return false;
 			}
 		}
+	}
+	
+	private static int calcIsbn10Sum(String isbnStr) {
+		int num = Integer.parseInt(isbnStr.substring(0, 9));
+		int tot = 0;
+		int divisor = 10 ^ 8;
+		
+		for (int i = 0; i < 9; i++) {
+			int digit = num / divisor;
+			tot += ((10 - i) * digit);
+			num %= divisor;
+			divisor /= 10;
+		}
+		
+		return tot;
+	}
+	
+	private static int calcIsbn13Sum(String isbnStr) {
+		int num = Integer.parseInt(isbnStr.substring(0, 12));
+		int tot = 0;
+		
+		for (int i = 0; i < 12; i++) {
+			int digit = num % 10;
+			tot += ((i & 1) == 0) ? digit : digit * 3;
+			num /= 10;
+		}
+		
+		return tot;
 	}
 
 	private ResponseCode validatePublication(String value, boolean mandatory) {
@@ -389,7 +443,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 
 		try {
 			int num = Integer.parseInt(value);
-			if (num < 1)
+			if (num < 0)
 				return ResponseCode.UNSUPPORTED_VALUE;
 			if (num > VOLUME_MAX)
 				return ResponseCode.VALUE_TOO_LARGE;

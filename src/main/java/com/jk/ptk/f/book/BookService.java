@@ -14,10 +14,11 @@ public interface BookService {
 	 * 
 	 * @param bookValues
 	 *             the specified book to save
+	 * @return TODO
 	 * @throws ValidationException
 	 *                             if any of the field is not valid
 	 */
-	void save(BookV bookValues) throws ValidationException;
+	Long save(BookV bookValues) throws ValidationException;
 
 	/**
 	 * Returns a book identified by the specified id.

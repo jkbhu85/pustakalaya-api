@@ -42,11 +42,12 @@ public class BookController {
 		PtkResponse ptkResponse = null;
 		
 		try {
-			service.save(bookValues);
+			Long id = service.save(bookValues);
 			httpStatus = HttpStatus.OK;
+			log.info("Book with id {} was added successfully.", id);
 		} catch (ValidationException e) {
 			ptkResponse = new PtkResponse();
-			ptkResponse.setErrors(e.getErrorMap()).setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL);
+			ptkResponse.setMessage("ERROR_INVALID_FIELDS").setErrors(e.getErrorMap()).setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL);
 			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
 			log.error("Error while saving book.", e);

@@ -1,4 +1,4 @@
-package com.jk.ptk.currency;
+package com.jk.ptk.f.currency;
 
 import java.util.List;
 
@@ -24,12 +24,8 @@ public class CurrencyServiceImpl implements CurrencyService {
 	public Currency find(String id) {
 		if (id == null || id.isEmpty()) return null;
 
-		try {
-			Integer cid = Integer.parseInt(id);
-			return repository.find(cid);
-		} catch (NumberFormatException ignore) {}
-
-		return null;
+		Integer cid = Integer.parseInt(id);
+		return repository.find(cid);
 	}
 
 	@Override
@@ -41,12 +37,8 @@ public class CurrencyServiceImpl implements CurrencyService {
 	public boolean doesCurrencyExist(String id) {
 		if (id == null || id.isEmpty()) return false;
 
-		try {
-			Integer cid = Integer.parseInt(id);
-			return repository.doesCurrencyExist(cid);
-		} catch (NumberFormatException ignore) {}
-
-		return false;
+		Integer cid = Integer.parseInt(id);
+		return repository.doesCurrencyExist(cid);
 	}
 
 }

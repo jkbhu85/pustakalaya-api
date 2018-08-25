@@ -29,8 +29,10 @@ public class BookRepositoryOrm implements BookRepository {
 
 	@Override
 	public void saveOrUpdate(Book book) {
-		if (book.getId() != null) em.persist(book);
+		if (book.getId() == null) em.persist(book);
 		else em.merge(book);
+		
+		em.flush();
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package com.jk.ptk.currency;
+package com.jk.ptk.f.currency;
 
 import java.util.List;
 

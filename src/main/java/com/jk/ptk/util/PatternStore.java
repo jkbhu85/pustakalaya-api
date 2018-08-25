@@ -35,5 +35,5 @@ public class PatternStore {
 	/**
 	 * Pattern to validate price of the form 9999999[.99]
 	 */
-	public static final Pattern PRICE = Pattern.compile("^\\d{1,}(\\.\\d{1,2})?$");
+	public static final Pattern PRICE = Pattern.compile("^\\d+(\\.\\d{1,2})?$");
 }

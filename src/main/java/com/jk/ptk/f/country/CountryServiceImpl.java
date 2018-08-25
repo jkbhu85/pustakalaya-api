@@ -17,13 +17,8 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public Country find(String bookId) {
-		try {
-			Integer id = Integer.parseInt(bookId);
-			return repository.find(id);
-		} catch (NumberFormatException ignore) {
-		}
-		
-		return null;
+		Integer id = Integer.parseInt(bookId);
+		return repository.find(id);
 	}
 
 	@Override

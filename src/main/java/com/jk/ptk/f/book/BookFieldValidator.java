@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import org.springframework.stereotype.Component;
 
 import com.jk.ptk.app.response.ResponseCode;
-import com.jk.ptk.currency.CurrencyRepository;
+import com.jk.ptk.f.currency.CurrencyRepository;
 import com.jk.ptk.util.PatternStore;
 import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.FormField;
@@ -169,7 +169,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		if (errorCode != null)
 			errorMap.put(BookV.FIELD_VOLUME, errorCode);
 
-		errorCode = validateNoOfCopies(bookValues.getNoOfCopies(), true);
+		errorCode = validateNoOfCopies(bookValues.getNumberOfCopies(), true);
 		if (errorCode != null)
 			errorMap.put(BookV.FIELD_NO_OF_COPIES, errorCode);
 
@@ -285,11 +285,11 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		try {
 			int num = Integer.parseInt(value);
 			if (num < 1)
-				return ResponseCode.UNSUPPORTED_VALUE;
+				return ResponseCode.VALUE_TOO_SMALL;
 			if (num > NUMBER_OF_PAGES_MAX)
 				return ResponseCode.VALUE_TOO_LARGE;
 		} catch (NumberFormatException ignore) {
-			return ResponseCode.UNSUPPORTED_VALUE;
+			return ResponseCode.INVALID_FORMAT;
 		}
 
 		return null;
@@ -319,10 +319,9 @@ public class BookFieldValidator implements DataValidator<BookV> {
 
 		try {
 			int num = Integer.parseInt(value);
-			if (num < 1)
-				return ResponseCode.VALUE_TOO_SMALL;
+			if (num < 1) return ResponseCode.INVALID_FORMAT;
 		} catch (NumberFormatException ignore) {
-			return ResponseCode.UNSUPPORTED_VALUE;
+			return ResponseCode.INVALID_FORMAT;
 		}
 
 		return null;
@@ -353,7 +352,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 
 		if (isbn.length() == 10) {
 			try {
-				int tot = 0;//calcIsbn10Sum(isbn);
+				int tot = 0;
 				
 				for (int i = 0; i < 9; i++) {
 					int digit = Integer.parseInt(isbn.substring(i, i + 1));
@@ -371,7 +370,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 			}
 		} else {
 			try {
-				int tot = 0;//calcIsbn13Sum(isbn);
+				int tot = 0;
 				
 				for (int i = 0; i < 12; i++) {
 					int digit = Integer.parseInt(isbn.substring(i, i + 1));
@@ -390,33 +389,60 @@ public class BookFieldValidator implements DataValidator<BookV> {
 			}
 		}
 	}
-	
-	private static int calcIsbn10Sum(String isbnStr) {
-		int num = Integer.parseInt(isbnStr.substring(0, 9));
-		int tot = 0;
-		int divisor = 10 ^ 8;
+
+	@SuppressWarnings("unused")
+	private static boolean isIsbnValid2(String isbn) {
+		if (isbn == null || isbn.isEmpty())
+			return false;
+
+		isbn = isbn.replace("-", "");
+
+		if (isbn.length() != 13 && isbn.length() != 10)
+			return false;
 		
-		for (int i = 0; i < 9; i++) {
-			int digit = num / divisor;
-			tot += ((10 - i) * digit);
-			num %= divisor;
-			divisor /= 10;
+		if (isbn.length() == 10) {
+			try {
+				int isbnNum, total = 0;
+
+				// if first from right is X
+				if (isbn.charAt(9) == 'X') {
+					isbnNum = Integer.parseInt(isbn.substring(0, 9));
+					total = 10;
+				} else {
+					long temp = Long.parseLong(isbn);
+					total = (int)(temp % 10);
+					isbnNum = (int) (temp / 10);
+				}
+
+				for (int i = 2; i < 11; i++) {
+					int digit = isbnNum % 10;
+					total += (i * digit);
+					isbnNum /= 10;
+				}
+				
+				return (total % 11 == 0);
+			} catch (NumberFormatException ignore) {
+				ignore.printStackTrace();
+				return false;
+			}
+		} else {
+			try {
+				long num = Long.parseLong(isbn);
+				int tot = (int)(num % 10);
+				
+				num /= 10;
+
+				for (int i = 1; i < 13; i++) {
+					int digit = (int) (num % 10);
+					tot += ((i & 1) == 0) ? digit : digit * 3;
+					num /= 10;
+				}
+
+				return (tot % 10 == 0);
+			} catch (NumberFormatException ignore) {
+				return false;
+			}
 		}
-		
-		return tot;
-	}
-	
-	private static int calcIsbn13Sum(String isbnStr) {
-		int num = Integer.parseInt(isbnStr.substring(0, 12));
-		int tot = 0;
-		
-		for (int i = 0; i < 12; i++) {
-			int digit = num % 10;
-			tot += ((i & 1) == 0) ? digit : digit * 3;
-			num /= 10;
-		}
-		
-		return tot;
 	}
 
 	private ResponseCode validatePublication(String value, boolean mandatory) {
@@ -444,11 +470,11 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		try {
 			int num = Integer.parseInt(value);
 			if (num < 0)
-				return ResponseCode.UNSUPPORTED_VALUE;
+				return ResponseCode.INVALID_FORMAT;
 			if (num > VOLUME_MAX)
 				return ResponseCode.VALUE_TOO_LARGE;
 		} catch (NumberFormatException ignore) {
-			return ResponseCode.UNSUPPORTED_VALUE;
+			return ResponseCode.INVALID_FORMAT;
 		}
 
 		return null;
@@ -465,11 +491,11 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		try {
 			int num = Integer.parseInt(value);
 			if (num < 1)
-				return ResponseCode.UNSUPPORTED_VALUE;
+				return ResponseCode.VALUE_TOO_SMALL;
 			if (num > NUMBER_OF_COPIES_MAX)
 				return ResponseCode.VALUE_TOO_LARGE;
 		} catch (NumberFormatException ignore) {
-			return ResponseCode.UNSUPPORTED_VALUE;
+			return ResponseCode.INVALID_FORMAT;
 		}
 
 		return null;

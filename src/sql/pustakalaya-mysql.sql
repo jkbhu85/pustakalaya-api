@@ -46,7 +46,7 @@ CREATE TABLE ptk.BookCategory (
 
 CREATE TABLE ptk.Currency (
 	id            SMALLINT NOT NULL AUTO_INCREMENT,
-    currency_code VARCHAR(24) NOT NULL,
+    code VARCHAR(24) NOT NULL,
     description   VARCHAR(50) NOT NULL,
     countryFk    SMALLINT NOT NULL,
     PRIMARY KEY (id),

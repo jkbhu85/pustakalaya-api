@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.jk.ptk.currency.Currency;
-import com.jk.ptk.currency.CurrencyRepository;
 import com.jk.ptk.f.bookinstance.BookInstance;
 import com.jk.ptk.f.bookinstance.BookInstanceRepository;
 import com.jk.ptk.f.bookinstance.BookInstanceStatus;
+import com.jk.ptk.f.currency.Currency;
+import com.jk.ptk.f.currency.CurrencyRepository;
 import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRepository;
 import com.jk.ptk.util.UserUtil;
@@ -48,11 +48,16 @@ public class BookServiceImpl implements BookService {
 
 		Book book = toBook(bookValues);
 		repository.saveOrUpdate(book);
+		Long bookId = book.getId();
+		System.out.println(" --- --- --- bookId: " + bookId);
 		
 		List<BookInstance> biList = toBookInstance(bookValues, book);
-		for (BookInstance bi : biList) biRepository.saveOrUpdate(bi);
+		for (BookInstance bi : biList) {
+			bi.setBook(book);
+			biRepository.saveOrUpdate(bi);
+		}
 		
-		return book.getId();
+		return bookId;
 	}
 
 	private Book toBook(BookV bv) {
@@ -65,17 +70,21 @@ public class BookServiceImpl implements BookService {
 
 		book.setTitle(bv.getTitle());
 		book.setAuthors(bv.getAuthors());
-		book.setEdition(Integer.parseInt(bv.getEdition()));
 		book.setIsbn(bv.getIsbn());
 		book.setBookCategory(bookCategory);
 		book.setAddedBy(addedBy);
+		
+		String edition = bv.getEdition();
+		if (edition != null && !edition.isEmpty()) {
+			book.setEdition(Integer.parseInt(bv.getEdition()));
+		}
 
 		return book;
 	}
 
 	private List<BookInstance> toBookInstance(BookV bv, Book book) {
 		List<BookInstance> biList = new ArrayList<>();
-		final int noOfCopies = Integer.parseInt(bv.getNoOfCopies());
+		final int noOfCopies = Integer.parseInt(bv.getNumberOfCopies());
 		Integer currencyId = Integer.parseInt(bv.getCurrency());
 		Currency currency = currencyRepository.find(currencyId);
 		Double price = Double.parseDouble(bv.getPrice());
@@ -84,7 +93,6 @@ public class BookServiceImpl implements BookService {
 
 		for (int i = 0; i < noOfCopies; i++) {
 			BookInstance bi = new BookInstance();
-			bi.setBook(book);
 			bi.setAddedBy(book.getAddedBy());
 			bi.setCurrency(currency);
 			bi.setPrice(price);

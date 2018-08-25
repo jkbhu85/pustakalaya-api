@@ -12,7 +12,7 @@ public class BookV {
 	public static final String FIELD_ISBN = "isbn";
 	public static final String FIELD_PUBLICATION = "publication";
 	public static final String FIELD_VOLUME = "volume";
-	public static final String FIELD_NO_OF_COPIES = "noOfCopies";
+	public static final String FIELD_NO_OF_COPIES = "numberOfCopies";
 
 	private String title;
 	private String bookCategory;
@@ -24,7 +24,7 @@ public class BookV {
 	private String isbn;
 	private String publication;
 	private String volume;
-	private String noOfCopies;
+	private String numberOfCopies;
 
 	/**
 	 * @return the title
@@ -179,16 +179,16 @@ public class BookV {
 	/**
 	 * @return the noOfCopies
 	 */
-	public String getNoOfCopies() {
-		return noOfCopies;
+	public String getNumberOfCopies() {
+		return numberOfCopies;
 	}
 
 	/**
 	 * @param noOfCopies
 	 *                   the noOfCopies to set
 	 */
-	public void setNoOfCopies(String noOfCopies) {
-		this.noOfCopies = noOfCopies;
+	public void setNumberOfCopies(String noOfCopies) {
+		this.numberOfCopies = noOfCopies;
 	}
 
 }

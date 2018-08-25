@@ -21,7 +21,7 @@ import javax.persistence.NamedQuery;
 public class Country {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 
 	@Column(nullable = false)
 	private String name;
@@ -64,7 +64,7 @@ public class Country {
 		this.abbr = abbr;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 

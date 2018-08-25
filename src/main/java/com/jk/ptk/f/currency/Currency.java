@@ -1,4 +1,4 @@
-package com.jk.ptk.currency;
+package com.jk.ptk.f.currency;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jk.ptk.f.country.Country;
 
 @Entity
@@ -23,23 +24,23 @@ public class Currency {
 	private Integer id;
 
 	@Column(nullable = false)
-	private String currencyCode;
+	private String code;
 
 	private String description;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "countryFk", nullable = false)
 	private Country country;
 
 	public Currency() {
 	}
 
-	public String getCurrencyCode() {
-		return currencyCode;
+	public String getCode() {
+		return code;
 	}
 
-	public void setCurrencyCode(String currencyCode) {
-		this.currencyCode = currencyCode;
+	public void setCode(String currencyCode) {
+		this.code = currencyCode;
 	}
 
 	public String getDescription() {
@@ -50,6 +51,7 @@ public class Currency {
 		this.description = description;
 	}
 
+	@JsonIgnore
 	public Country getCountry() {
 		return country;
 	}
@@ -67,7 +69,7 @@ public class Currency {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((country == null) ? 0 : country.hashCode());
-		result = prime * result + ((currencyCode == null) ? 0 : currencyCode.hashCode());
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
@@ -87,10 +89,10 @@ public class Currency {
 				return false;
 		} else if (!country.equals(other.country))
 			return false;
-		if (currencyCode == null) {
-			if (other.currencyCode != null)
+		if (code == null) {
+			if (other.code != null)
 				return false;
-		} else if (!currencyCode.equals(other.currencyCode))
+		} else if (!code.equals(other.code))
 			return false;
 		if (description == null) {
 			if (other.description != null)
@@ -107,7 +109,6 @@ public class Currency {
 
 	@Override
 	public String toString() {
-		return "Currency [id=" + id + ", currencyCode=" + currencyCode + ", description=" + description + ", country="
-				+ country.getName() + "]";
+		return "Currency [id=" + id + ", code=" + code + ", description=" + description + "]";
 	}
 }

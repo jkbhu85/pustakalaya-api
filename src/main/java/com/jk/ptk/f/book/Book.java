@@ -35,7 +35,7 @@ public class Book {
 
 	private String authors;
 
-	private int edition;
+	private Integer edition;
 
 	private String isbn;
 
@@ -68,11 +68,11 @@ public class Book {
 		this.authors = authors;
 	}
 
-	public int getEdition() {
+	public Integer getEdition() {
 		return edition;
 	}
 
-	public void setEdition(int editon) {
+	public void setEdition(Integer editon) {
 		this.edition = editon;
 	}
 
@@ -108,4 +108,14 @@ public class Book {
 		return addedOn;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", title=" + title + ", authors=" + authors + ", edition=" + edition + ", isbn="
+				+ isbn + ", bookCategory=" + bookCategory.getName() + ", addedOn=" + addedOn + ", addedBy=" + addedBy.getEmail() + "]";
+	}
+
+	
 }

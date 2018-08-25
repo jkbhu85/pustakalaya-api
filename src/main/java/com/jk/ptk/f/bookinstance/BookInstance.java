@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.jk.ptk.currency.Currency;
 import com.jk.ptk.f.book.Book;
+import com.jk.ptk.f.currency.Currency;
 import com.jk.ptk.f.user.User;
 
 /**
@@ -30,6 +30,7 @@ public class BookInstance {
 	@Column(nullable = false, precision = 9, scale = 2)
 	private Double price;
 
+	@Column(name = "noOfPages", nullable = false)
 	private int numOfPages;
 
 	private String publication;
@@ -46,7 +47,7 @@ public class BookInstance {
 	@JoinColumn(name = "bookFk", nullable = false)
 	private Book book;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "currencyFk", nullable = false)
 	private Currency currency;
 
@@ -157,5 +158,17 @@ public class BookInstance {
 	public LocalDateTime getAddedOn() {
 		return addedOn;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "BookInstance [id=" + id + ", price=" + price + ", numOfPages=" + numOfPages + ", publication="
+				+ publication + ", volume=" + volume + ", comments=" + comments + ", book=" + book.getTitle() + ", currency="
+				+ currency.getCode() + ", status=" + status.getName() + ", addedBy=" + addedBy.getEmail() + "]";
+	}
+	
+	
 
 }

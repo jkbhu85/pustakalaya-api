@@ -36,9 +36,12 @@ class UserServiceImpl implements UserService {
 	/**
 	 * Creates an instance with specified dependencies.
 	 * 
-	 * @param repository the user repository
-	 * @param roleAndAccountStatusManager the role and account manager instance
-	 * @param userServiceHelper instance of user service helper class
+	 * @param repository
+	 *                                    the user repository
+	 * @param roleAndAccountStatusManager
+	 *                                    the role and account manager instance
+	 * @param userServiceHelper
+	 *                                    instance of user service helper class
 	 */
 	@Autowired
 	public UserServiceImpl(UserRepository repository, RoleAndAccountStatusManager roleAndAccountStatusManager,
@@ -62,7 +65,7 @@ class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(rollbackOn = Exception.class)
 	public void save(UserV userValues) throws ValidationException, ResourceExpiredException {
-		NewUser newUser = userServiceHelper.findNewUser(userValues.getRegistrationId());
+		NewUser newUser = userServiceHelper.findNewUser(userValues.getEmail());
 
 		if (newUser == null || newUser.getExpiresOn().isBefore(LocalDateTime.now()))
 			throw new ResourceExpiredException("Registration id has expired.");
@@ -208,6 +211,16 @@ class UserServiceImpl implements UserService {
 			user.setUnsuccessfulTries(tries);
 			repository.saveOrUpdate(user);
 		}
+	}
+
+	@Override
+	public Profile getProfile(String email) {
+		if (email != null && !email.isEmpty()) {
+			User user = repository.findByEmail(email);
+			if (user != null)
+				return new Profile(user);
+		}
+		return null;
 	}
 
 }

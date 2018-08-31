@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.ptk.app.ResourceExpiredException;
@@ -36,16 +36,17 @@ public class UserController {
 		this.service = userService;
 	}
 
-	@GetMapping("/{email}")
-	public User getUser(@PathVariable("email") String email) {
-		return service.findByEmail(email);
+	@GetMapping	
+	public Profile getProfile(@RequestParam("email") String email) {
+		log.info("User info of the user with email {} are requested.", email);
+		return service.getProfile(email);
 	}
 
 	@PostMapping
 	public ResponseEntity<PtkResponse> addUser(@RequestBody UserV userFormValues) {
 		HttpStatus httpStatus;
 		PtkResponse response = new PtkResponse();
-
+		log.info("Request to add user with email {} is being processed.", userFormValues.getEmail());
 		try {
 			service.save(userFormValues);
 			response.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL).setMessage("SUCCESS_ACCOUNT_CREATED");

@@ -124,12 +124,12 @@ public class User {
 		this.gender = gender;
 	}
 
-	public String getImgPath() {
+	public String getImagePath() {
 		return imagePath;
 	}
 
-	public void setImgPath(String imgPath) {
-		this.imagePath = imgPath;
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 
 	public LocalDate getDateOfBirth() {
@@ -179,15 +179,7 @@ public class User {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
+	
 	public String getLocaleValue() {
 		return localeValue;
 	}

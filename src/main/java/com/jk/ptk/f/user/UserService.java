@@ -15,7 +15,7 @@ public interface UserService {
 	 * Saves the user with the specified {@code userValues} in the system.
 	 *
 	 * @param userValues
-	 *             the specified user
+	 *                   the specified user
 	 * @throws ValidationException
 	 *                                  if a data validator is provided and one or
 	 *                                  more fields fail the validation
@@ -119,4 +119,13 @@ public interface UserService {
 	 *              number of unsuccessful tries
 	 */
 	void updateUnsuccessfulTries(String email, Integer tries);
+
+	/**
+	 * Returns profile details of the user associated with the specified email.
+	 * 
+	 * @param email
+	 *              the specified email
+	 * @return profile details of the user associated with the specified email
+	 */
+	Profile getProfile(String email);
 }

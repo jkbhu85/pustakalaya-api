@@ -93,14 +93,14 @@ class UserServiceHelper {
 	}
 
 	/**
-	 * Returns the new user identified by the specified {@code registrationId}.
+	 * Returns the new user identified by the specified email.
 	 * 
-	 * @param registrationId
-	 *                       the specified registration id
-	 * @return new user identified by the specified {@code registrationId}
+	 * @param email
+	 *                       the specified email
+	 * @return new user associated with the specified email
 	 */
-	NewUser findNewUser(String registrationId) {
-		return newUserRepository.find(registrationId);
+	NewUser findNewUser(String email) {
+		return newUserRepository.findByEmail(email);
 	}
 
 }

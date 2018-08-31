@@ -41,7 +41,7 @@ public class NewUserController {
 
 			response.setResponseCode(ResponseCode.OPERATION_SUCCESSFUL).setMessage("SUCCESS_NEWUSER_ADDED");
 
-			httpStatus = HttpStatus.ACCEPTED;
+			httpStatus = HttpStatus.OK;
 		} catch (ValidationException e) {
 			response.setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL).setMessage("ERROR_INVALID_FIELDS")
 					.setErrors(e.getErrorMap());

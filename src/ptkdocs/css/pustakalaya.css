@@ -19,7 +19,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   font-size: 1rem;
-  color: #373737;
+  color: #4a4a4a;
   background-color: #f7f7f7;
   box-shadow: 0 0 0.21rem #666;
 }
@@ -260,12 +260,19 @@ hr {
 }
 .ptk-table-simple {
   border-collapse: collapse;
+  margin-bottom: 0;
+}
+.ptk-table-simple > thead > tr > th {
+  text-align: left;
+  padding-left: 1rem;
+  font-weight: 300;
 }
 .ptk-table-simple > tbody > tr > td {
-  padding-top: .4rem;
-  padding-bottom: .4rem;
+  padding-top: .2rem;
+  padding-bottom: .2rem;
   padding-left: 1rem;
 }
+.ptk-table-simple > thead > tr > th:first-of-type,
 .ptk-table-simple > tbody > tr > td:first-of-type {
   padding-left: 0;
 }
@@ -273,6 +280,9 @@ hr {
 #header {
   background:#F9A825;
   padding: .5rem 2rem;
+}
+.header-link {
+  outline: none;
 }
 .header-link table {
   border-collapse: collapse;
@@ -353,9 +363,6 @@ dl.response-list > dt {
 dl.response-list > dd {
   margin-bottom: 2rem;
   margin-left: 2rem;
-}
-dl.response-list > dt:before {
-  content: "\21E6\20";
 }
 /*  U+02192 */
 div.response {

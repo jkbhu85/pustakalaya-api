@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pustakalaya | Use Case | Assign Book</title>
+    <link type="text/css" rel="stylesheet" href="../css/pustakalaya.css" />
+</head>
+
+<body>
+    <header id="header"></header>
+    <nav></nav>
+
+    <div class="main-content">
+        <div class="back-button">
+            <a href="./toc-uses-cases.html">Back</a>
+        </div>
+
+        <h1>Assign Book</h1>
+
+        <h3>Terminology</h3>
+        <table class="ptk-table-simple mb-2">
+            <tbody>
+                <tr>
+                    <td>User</td>
+                    <td>User to be assigned the book.</td>
+                </tr>
+                <tr>
+                    <td>Book instance</td>
+                    <td>The book instance to be assigned to user</td>
+                </tr>
+                <tr>
+                    <td>Requester</td>
+                    <td>A user of the system having priviledge LIBRARIAN or above.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>API Endpoint</h3>
+        <table class="ptk-table-simple mb-2">
+            <tbody>
+                <tr>
+                    <td>URI</td>
+                    <td>
+                        <code class="url">ptk/book/instance/assign</code>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Http Method</td>
+                    <td>POST</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Required</h3>
+        <div class="ptk-table-wrapper">
+            <table class="ptk-table full-width table-valign-top">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Data&nbsp;type</th>
+                        <th>Description</th>
+                        <th>Validation constraints</th>
+                        <th>Error codes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>bookInstanceId</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Valid book instance id defined in the system.</td>
+                        <td>
+                            <table class="ptk-table-simple table-valign-top">
+                                <thead>
+                                    <tr>
+                                        <th>Error&nbsp;code</th>
+                                        <th>Condition</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>63</td>
+                                        <td>book instance id does not exist</td>
+                                    </tr>
+                                    <tr>
+                                        <td>64</td>
+                                        <td>book instance with id is not available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>email</td>
+                        <td>string</td>
+                        <td>Required</td>
+                        <td>Valid user email defined in the system.</td>
+                        <td>
+                            <table class="ptk-table-simple table-valign-top">
+                                <thead>
+                                    <tr>
+                                        <th>Error&nbsp;code</th>
+                                        <th>Condition</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>63</td>
+                                        <td>email does not exist</td>
+                                    </tr>
+                                    <tr>
+                                        <td>23</td>
+                                        <td>user account access is revoked</td>
+                                    </tr>
+                                    <tr>
+                                        <td>62</td>
+                                        <td>user associated with email has exhausted book quota</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Precondition</h3>
+        <ul>
+            <li>Requester is authenticated.</li>
+            <li>Requester must have priviledge of LIBRARIAN or above.</li>
+            <li>The book instance is available to be assigned.</li>
+            <li>User represented by the email has not exhausted his/her book quota.</li>
+            <li>User's account is not marked as deleted or revoked.</li>
+        </ul>
+
+
+        <h3>Success scenario</h3>
+        <ol>
+            <li>
+                <p>
+                    An entry with specified values is inserted in the <code>BookAssignmentHistory</code> 
+                    table.
+                </p>
+                <ul>
+                    <li>primary key of the book instance</li>
+                    <li>primary key of the user associated with the email</li>
+                    <li>primary key of the requester</li>
+                    <li>current timestamp to mark the time of assignment</li>
+                    <li>an expected return date of the book instance.</li>
+                </ul>
+            </li>
+            <li>The book quota count of user is incremented by 1.</li>
+            <li>The book isntance status is changed to <code>issued</code>.</li>
+        </ol>
+
+        <h3>Failure scenario</h3>
+        <ul>
+            <li>
+                <p>Requester is not authenticated.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Requester is not authorized.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Data is invalid.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+            <li>
+                <p>Any other error.</p>
+                <ul>
+                    <li>Do nothing.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Response</h3>
+        <p>
+            The cases for which a response is not shown, the response is to be shown from 
+            <a href="../common-responses.html">common responses</a>.
+        </p>
+        
+        <dl class="response-list">
+            <dt>Book was added successfully.</dt>
+            <dd>
+				<div class="response">
+					<div class="response-code">
+						<span>200</span>
+					</div>
+					<div class="response-message">
+                        <code>&lt;empty_response&gt;</code>
+                    </div>
+                </div>
+            </dd>
+
+            <dt>Requester is not authenticated.</dt>
+            <dd></dd>
+
+            <dt>Requester is not authorized.</dt>
+            <dd></dd>
+
+            <dt>Data is invalid.</dt>
+            <dd>
+
+            </dd>
+
+            <dt>Any other error</dt>
+            <dd></dd>
+        </dl>
+        <hr/>
+    </div>
+    <!-- .main-content -->
+
+    <footer id="footer"></footer>
+
+    <script src="../js/global.js"></script>
+</body>
+
+</html>

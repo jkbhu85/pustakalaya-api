@@ -48,9 +48,6 @@ public class LoginController {
 				.setMessage("ERROR_LOGIN_UNSUCCESSFUL");
 			status = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
-			response
-				.setResponseCode(ResponseCode.UNKNOWN_ERROR)
-				.setMessage("ERROR_UNKNOWN");
 			status = HttpStatus.INTERNAL_SERVER_ERROR;
 			log.error("Error in authentication.{}", e);
 		}

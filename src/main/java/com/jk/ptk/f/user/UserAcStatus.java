@@ -36,7 +36,7 @@ public class UserAcStatus {
 	 * {@code null}.
 	 *
 	 * @param statusId
-	 *            the specified user account status id
+	 *                 the specified user account status id
 	 * @return an object representing user account status for the specified
 	 *         {@code statusId} or returns {@code null} if no status matching
 	 *         {@code statusId} exists

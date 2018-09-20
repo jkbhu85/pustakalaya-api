@@ -37,8 +37,8 @@ function loadHeader() {
                     <td><img class="header-logo" src="${imgUrl}"/></td>
                     <td>
                         <div class="header-text">
-                            <div class="header-text-top">Pustakalaya</div>
-                            <div class="header-text-bottom">पुस्तकालय</div>
+                            <div class="header-text-top">पुस्तकालय</div>
+                            <div class="header-text-bottom">Pustakalaya</div>
                         </div>
                     </td>
                 </tr>

@@ -206,7 +206,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		}
 
 		if (value.length() > TITLE_MAX_LENGTH)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}
@@ -304,7 +304,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		}
 
 		if (value.length() > AUTHORS_MAX_LENGTH)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}
@@ -390,61 +390,6 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private static boolean isIsbnValid2(String isbn) {
-		if (isbn == null || isbn.isEmpty())
-			return false;
-
-		isbn = isbn.replace("-", "");
-
-		if (isbn.length() != 13 && isbn.length() != 10)
-			return false;
-		
-		if (isbn.length() == 10) {
-			try {
-				int isbnNum, total = 0;
-
-				// if first from right is X
-				if (isbn.charAt(9) == 'X') {
-					isbnNum = Integer.parseInt(isbn.substring(0, 9));
-					total = 10;
-				} else {
-					long temp = Long.parseLong(isbn);
-					total = (int)(temp % 10);
-					isbnNum = (int) (temp / 10);
-				}
-
-				for (int i = 2; i < 11; i++) {
-					int digit = isbnNum % 10;
-					total += (i * digit);
-					isbnNum /= 10;
-				}
-				
-				return (total % 11 == 0);
-			} catch (NumberFormatException ignore) {
-				ignore.printStackTrace();
-				return false;
-			}
-		} else {
-			try {
-				long num = Long.parseLong(isbn);
-				int tot = (int)(num % 10);
-				
-				num /= 10;
-
-				for (int i = 1; i < 13; i++) {
-					int digit = (int) (num % 10);
-					tot += ((i & 1) == 0) ? digit : digit * 3;
-					num /= 10;
-				}
-
-				return (tot % 10 == 0);
-			} catch (NumberFormatException ignore) {
-				return false;
-			}
-		}
-	}
-
 	private ResponseCode validatePublication(String value, boolean mandatory) {
 		if (value == null || value.isEmpty()) {
 			if (mandatory)
@@ -454,7 +399,7 @@ public class BookFieldValidator implements DataValidator<BookV> {
 		}
 
 		if (value.length() > PUBLICATION_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}

@@ -2,6 +2,7 @@ package com.jk.ptk.f.user;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -163,14 +164,14 @@ class UserServiceImpl implements UserService {
 			dataValidator.validate(Arrays.asList(pwd, cpwd));
 		}
 
-		Integer currentPasswordVersion = App.getCurrentPasswordVersion();
+		Integer applicationPasswordVersion = App.getCurrentPasswordVersion();
 		String newPasswordSalt = CredentialsUtil.getPasswordSalt();
-		String newPasswordHash = CredentialsUtil.getPasswordHash(newPassword, newPasswordSalt, currentPasswordVersion);
+		String newPasswordHash = CredentialsUtil.getPasswordHash(newPassword, newPasswordSalt, applicationPasswordVersion);
 
 		// perform update
 		user.setPasswordHash(newPasswordHash);
 		user.setPasswordSalt(newPasswordSalt);
-		user.setPasswordVersion(currentPasswordVersion);
+		user.setPasswordVersion(applicationPasswordVersion);
 		repository.saveOrUpdate(user);
 	}
 
@@ -214,12 +215,12 @@ class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Profile getProfile(String email) {
+	public Map<String, String> getProfile(String email) {
 		if (email != null && !email.isEmpty()) {
 			User user = repository.findByEmail(email);
-			if (user != null)
-				return new Profile(user);
+			return UserUtil.toProfile(user);
 		}
+		
 		return null;
 	}
 

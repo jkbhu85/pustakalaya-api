@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,7 @@ import com.jk.ptk.app.ResourceExpiredException;
 import com.jk.ptk.app.response.PtkResponse;
 import com.jk.ptk.app.response.ResponseCode;
 import com.jk.ptk.security.login.InvalidCredentialsException;
+import com.jk.ptk.util.UserUtil;
 import com.jk.ptk.validation.ValidationException;
 
 /**
@@ -25,7 +27,8 @@ import com.jk.ptk.validation.ValidationException;
  *
  * @author Jitendra
  */
-@RestController("/ptk/user")
+@RestController
+@RequestMapping("/ptk/user")
 public class UserController {
 	private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
@@ -37,12 +40,12 @@ public class UserController {
 	}
 
 	@GetMapping	
-	public Profile getProfile(@RequestParam("email") String email) {
+	public Map<String, String> getProfile(@RequestParam("email") String email) {
 		log.info("User info of the user with email {} are requested.", email);
 		return service.getProfile(email);
 	}
 
-	@PostMapping
+	@PostMapping("/")
 	public ResponseEntity<PtkResponse> addUser(@RequestBody UserV userFormValues) {
 		HttpStatus httpStatus;
 		PtkResponse response = new PtkResponse();
@@ -59,7 +62,6 @@ public class UserController {
 					.setErrors(e.getErrorMap());
 			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
-			response.setResponseCode(ResponseCode.UNKNOWN_ERROR).setMessage("ERROR_UNKNOWN");
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 			log.error("Error while adding user.", e);
 		}
@@ -72,7 +74,7 @@ public class UserController {
 	public ResponseEntity<PtkResponse> updatePassword(@RequestBody Map<String, String> body) {
 		HttpStatus httpStatus;
 		PtkResponse response = new PtkResponse();
-		String email = body.get("email");
+		String email = UserUtil.getEmail();
 		String oldPassword = body.get("currentPassword");
 		String newPassword = body.get("newPassword");
 		String confirmNewPassword = body.get("confirmNewPassword");
@@ -89,9 +91,8 @@ public class UserController {
 					.setErrors(e.getErrorMap());
 			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
-			response.setResponseCode(ResponseCode.UNKNOWN_ERROR).setMessage("ERROR_UNKNOWN");
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-			log.error("Error while updating user password.{}", e);
+			log.error("Error while updating user password.", e);
 		}
 		ResponseEntity<PtkResponse> res = new ResponseEntity<>(response, httpStatus);
 		return res;
@@ -119,7 +120,6 @@ public class UserController {
 					.setErrors(e.getErrorMap());
 			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
-			response.setResponseCode(ResponseCode.UNKNOWN_ERROR).setMessage("ERROR_UNKNOWN");
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 			log.error("Error while updating user security question and answer.{}", e);
 		}

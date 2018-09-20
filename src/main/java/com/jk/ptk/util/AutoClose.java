@@ -33,11 +33,11 @@ public final class AutoClose {
 				try {
 					c.close();
 				} catch (Exception e) {
-					LOG.error("Error in closing resource.{}", e);
+					LOG.error("Error in closing resource.", e);
 				}
 			}
 
-			LOG.info("{} tasks were closed.", TASKS.size());
+			LOG.info("{} task(s) were closed.", TASKS.size());
 		}
 	};
 	// @formatter:on
@@ -47,7 +47,7 @@ public final class AutoClose {
 	}
 
 	/**
-	 * Registers the specified object for autoclose on application shutdown. Calling
+	 * Registers the specified object for auto close on application shutdown. Calling
 	 * this method has no effect if shut down activity has started.
 	 *
 	 * @param closeable
@@ -60,7 +60,7 @@ public final class AutoClose {
 	}
 
 	/**
-	 * Unregisters the specified object from autoclose on application shutdown. This
+	 * Unregisters the specified object from auto close on application shutdown. This
 	 * method has no effect if {@code closeable} was not registered. Also calling
 	 * this method has no effect if shut down activity has started.
 	 *

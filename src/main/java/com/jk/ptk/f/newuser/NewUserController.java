@@ -52,10 +52,7 @@ public class NewUserController {
 
 			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
-			response.setResponseCode(ResponseCode.UNKNOWN_ERROR).setMessage("ERROR_UNKNOWN");
-
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-
 			log.error("Exception in adding new user.", e);
 		}
 
@@ -77,9 +74,7 @@ public class NewUserController {
 					.setData(e.getErrorMap());
 			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {
-			response.setResponseCode(ResponseCode.UNKNOWN_ERROR).setMessage("ERROR_UNKNOWN");
 			httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
-
 			log.error("Exception in fetching new user.", e);
 		}
 

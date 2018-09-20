@@ -2,6 +2,8 @@ package com.jk.ptk.f.bookinstance;
 
 import java.util.Map;
 
+import com.jk.ptk.validation.InvalidArgumentException;
+
 /**
  * Implementations of this interface manipulates the instances of type
  * {BookInstance}.
@@ -28,8 +30,16 @@ public interface BookInstanceService {
 	 *                       the specified book instance id
 	 * @param email
 	 *                       the specified email of the user
+	 * @param requester
+	 *                       the specified requester
+	 * @throws InvalidArgumentException
+	 *                                  if any of the argument does not satisfy the
+	 *                                  criteria for the book assignment
+	 * @throws Exception
+	 *                                  if requester is not valid
 	 */
-	void assignBookInstance(String bookInstanceId, String email);
+	void assignBookInstance(String bookInstanceId, String email, String requester)
+			throws InvalidArgumentException, Exception;
 
 	/**
 	 * Unassigns the book instance identified by the specified instance id.

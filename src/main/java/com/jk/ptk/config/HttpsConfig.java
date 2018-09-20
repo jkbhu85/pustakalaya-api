@@ -23,13 +23,26 @@ public class HttpsConfig {
 		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
 			@Override
 			protected void postProcessContext(Context context) {
+				// enforce HTTPS over entire application
 				SecurityConstraint constraint = new SecurityConstraint();
-				constraint.setUserConstraint("CONFIDENTIAL");
 				SecurityCollection collection = new SecurityCollection();
 				collection.addPattern("/*");
+				constraint.setUserConstraint("CONFIDENTIAL");
 				constraint.addCollection(collection);
 
 				context.addConstraint(constraint);
+				
+				
+				// enable PUT mapping for API, i.e. for URI's starting with '/ptk'
+				/*
+				SecurityConstraint putMappingConstraint = new SecurityConstraint();
+				SecurityCollection putMappingCollection = new SecurityCollection();
+				putMappingCollection.addPattern("/ptk");
+				putMappingCollection.addMethod("PUT");
+				putMappingConstraint.addCollection(putMappingCollection);
+				
+				context.addConstraint(putMappingConstraint);
+				*/
 			}
 		};
 

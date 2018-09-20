@@ -1,9 +1,11 @@
 # IDEs and editors
+.vscode
 .idea
 .c9/
 *.launch
 .settings/
 
+.vscode/
 /target/
 /.apt_generated/
 /.settings/

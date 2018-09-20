@@ -16,8 +16,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 class UserRepositoryOrm implements UserRepository {
-	@Autowired
 	private EntityManager em;
+	
+	@Autowired
+	public UserRepositoryOrm(EntityManager em) {
+		this.em = em;
+	}
 
 	@Override
 	public User findByEmail(String email) {

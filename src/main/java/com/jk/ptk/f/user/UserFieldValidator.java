@@ -210,7 +210,7 @@ class UserFieldValidator implements DataValidator<UserV> {
 		}
 
 		if (value.length() > FIRST_NAME_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}
@@ -224,7 +224,7 @@ class UserFieldValidator implements DataValidator<UserV> {
 		}
 
 		if (value.length() > LAST_NAME_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}
@@ -338,10 +338,10 @@ class UserFieldValidator implements DataValidator<UserV> {
 		}
 
 		if (value.length() < PASSWORD_MIN_LEN)
-			return ResponseCode.VALUE_TOO_SMALL;
+			return ResponseCode.LENGTH_TOO_SHORT;
 
 		if (value.length() > PASSWORD_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}
@@ -371,10 +371,10 @@ class UserFieldValidator implements DataValidator<UserV> {
 		}
 
 		if (value.length() < SECURITY_QUESTION_MIN_LEN)
-			return ResponseCode.VALUE_TOO_SMALL;
+			return ResponseCode.LENGTH_TOO_SHORT;
 
 		if (value.length() > SECURITY_QUESTION_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}
@@ -388,10 +388,10 @@ class UserFieldValidator implements DataValidator<UserV> {
 		}
 
 		if (value.length() < SECURITY_ANSWER_MIN_LEN)
-			return ResponseCode.VALUE_TOO_SMALL;
+			return ResponseCode.LENGTH_TOO_SHORT;
 
 		if (value.length() > SECURITY_ANSWER_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}

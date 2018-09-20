@@ -62,27 +62,76 @@
 
         <h3>Required</h3>
         <div class="ptk-table-wrapper">
-            <table class="ptk-table full-width">
+            <table class="ptk-table full-width table-valign-top">
                 <thead>
                     <tr>
                         <th>Field</th>
                         <th>Data&nbsp;type</th>
                         <th>Description</th>
                         <th>Validation constraints</th>
+                        <th class="ptk-table-vld-col">Validation error codes</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>firstName</td>
+                        <td><code>firstName</code></td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Length must be between 1-30</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>min length violated</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>max length violated</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>lastName</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Length must be between 1-30</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>min length violated</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>max length violated</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>email</td>
@@ -91,6 +140,30 @@
                         <td>Must pass the regular expression:
                             <code class="pattern">^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$</code>
                         </td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>36</td>
+                                        <td>Invalid format</td>
+                                    </tr>
+                                    <tr>
+                                        <td>38</td>
+                                        <td>User with same email already exists.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>locale</td>
@@ -98,6 +171,30 @@
                         <td>Required</td>
                         <td>Valid value of format
                             <code class="nc">language_country</code> (e.g. en_US)
+                        </td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>36</td>
+                                        <td>Invalid format</td>
+                                    </tr>
+                                    <tr>
+                                        <td>37</td>
+                                        <td>Unsupported value</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
                 </tbody>
@@ -186,23 +283,7 @@
                         <pre>
 {
     "responseCode": 10,
-    "message": "SUCCESS_USER_ADDED"
-}</pre>
-                    </div>
-                </div>
-            </dd>
-
-            <dt>Mail could not be sent to the user.</dt>
-            <dd>
-                <div class="response">
-                    <div class="response-code">
-                        <span>422</span>
-                    </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "responseCode": 38,
-    "message": "ERROR_EMAIL_NOT_SENT"
+    "message": "SUCCESS_NEWUSER_ADDED"
 }</pre>
                     </div>
                 </div>
@@ -250,13 +331,14 @@
 
         <h3>Required</h3>
         <div class="ptk-table-wrapper">
-            <table class="ptk-table full-width">
+            <table class="ptk-table full-width table-valign-top">
                 <thead>
                     <tr>
                         <th>Field</th>
                         <th>Data&nbsp;type</th>
                         <th>Description</th>
                         <th>Validation constraints</th>
+                        <th class="ptk-table-vld-col">Validation error codes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -265,24 +347,93 @@
                         <td>string</td>
                         <td>Required</td>
                         <td>Id has not expired</td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td>firstName</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Length must be between 1-30</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>min length violated</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>max length violated</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>lastName</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Length must be between 1-30</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>min length violated</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>max length violated</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>gender</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>M or F or O</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>Empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>37</td>
+                                        <td>Is neither one of M, F or O</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>dateOfBirth</td>
@@ -290,6 +441,34 @@
                         <td>Required</td>
                         <td>In the format DD/MM/YYYY (day/month/year). Date should be in the range [today
                             minus 100] years to [today minus 3] years.
+                        </td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>36</td>
+                                        <td>if date is not of the specified format</td>
+                                    </tr>
+                                    <tr>
+                                        <td>32</td>
+                                        <td>If date is less than minimum</td>
+                                    </tr>
+                                    <tr>
+                                        <td>33</td>
+                                        <td>If date is less than maximum</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </td>
                     </tr>
                     <tr>
@@ -300,12 +479,56 @@
                             Must pass the regular expression
                             <code class="pattern">[1-9][0-9]{9}</code>
                         </td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>36</td>
+                                        <td>if mobile is not of the specified format</td>
+                                    </tr>
+                                    <tr>
+                                        <td>38</td>
+                                        <td>If mobile is already associated with an existing user</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>isdCode</td>
                         <td>number</td>
                         <td>Required</td>
                         <td>A valid country id</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>37</td>
+                                        <td>If id does not represent a country id</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>locale</td>
@@ -314,30 +537,146 @@
                         <td>Valid value of format
                             <code>language_country</code>
                         </td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>36</td>
+                                        <td>if locale is not of the specified format</td>
+                                    </tr>
+                                    <tr>
+                                        <td>37</td>
+                                        <td>If locale is not supported by the application</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>password</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Length must be between 6-12.</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>min length violated</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>max length violated</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>confirmPassword</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Must be exactly same as password.</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>40</td>
+                                        <td>does not match the password</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>securityQuestion</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Length must be between 6-100.</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>min length violated</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>max length violated</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                     <tr>
                         <td>securityAnswer</td>
                         <td>string</td>
                         <td>Required</td>
                         <td>Length must be between 4-50.</td>
+                        <td>
+                            <table class="ptk-table-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Situation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>empty value</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>min length violated</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>max length violated</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -462,6 +801,7 @@
                         <th>Data&nbsp;type</th>
                         <th>Description</th>
                         <th>Validation constraints</th>
+                        <th class="ptk-table-vld-col">Validation error codes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -470,6 +810,7 @@
                         <td>string</td>
                         <td>Required</td>
                         <td>Must be a valid id registered in the system.</td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -485,7 +826,6 @@
                     <li>last name</li>
                     <li>email</li>
                     <li>locale</li>
-                    <li>account created by</li>
                 </ul>
             </li>
         </ul>

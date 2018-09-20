@@ -20,17 +20,17 @@
 
         <h1>Common Responses</h1>
         <p>These are common responses returned by the API. Response type is <code>application/json</code>.
-        See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>.
-        See <a href="../error-codes.html">error codes</a>.</p>
+            See <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response codes</a>.
+            See <a href="../error-codes.html">error codes</a>.</p>
 
         <p>The format of the response is as following:</p>
         <div class="response">
             <div class="response-message">
-        <pre>
+                <pre>
 {
     "responseCode": &lt;xx&gt;
     "message": "",
-    "errors": [],
+    "errors": {},
     "data": &lt;primitive_type&gt; | {} | []
 }</pre>
             </div>
@@ -47,13 +47,7 @@
                     <div class="response-code">
                         <span>401</span>
                     </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_NOT_AUTHENTICATED"
-}</pre>
-                    </div>
-                </div>
+                    <div class="response-message">No response message.</div>
             </dd>
 
             <dt>Requester is not authorized.</dt>
@@ -62,12 +56,7 @@
                     <div class="response-code">
                         <span>403</span>
                     </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_NOT_AUTHORIZED"
-}</pre>
-                    </div>
+                    <div class="response-message">No response message.</div>
                 </div>
             </dd>
 
@@ -77,12 +66,7 @@
                     <div class="response-code">
                         <span>500</span>
                     </div>
-                    <div class="response-message">
-                        <pre>
-{
-    "message": "ERROR_UNKNOWN"
-}</pre>
-                    </div>
+                    <div class="response-message">No response message.</div>
                 </div>
             </dd>
 
@@ -97,18 +81,14 @@
 {
     "responseCode": 61,
     "message": "ERROR_INVALID_FIELDS",
-    "errors": [
-        {
-            "fieldName": "&lt;INVALID_FIELD_NAME&gt;",
-            "errorCode": &lt;3x&gt;
-        },
-        ...
-    ]
+    "errors":  {
+        "&lt;INVALID_FIELD_NAME&gt;": &lt;3x&gt;
+    }
 }</pre>
                     </div>
                 </div>
-				
-                <p class="note">Send appropriate error code.</p>
+
+                <p class="note">Send appropriate error codes.</p>
             </dd>
         </dl>
 

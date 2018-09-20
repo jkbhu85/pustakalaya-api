@@ -24,12 +24,11 @@ public final class App {
 			try {
 				passwordVersion = Integer.parseInt(AppProps.valueOf("app.security.password.version"));
 				log.info("Password version in used is {}.", passwordVersion);
-			} catch (NumberFormatException ignore) {
-			}
+			} catch (NumberFormatException ignore) {}
 		}
 
 		if (passwordVersion == -1) {
-			log.error("Password version property is not set.");
+			log.error("Password version property with name 'app.security.password.version' is not set.");
 			System.exit(1);
 		}
 	}
@@ -38,39 +37,25 @@ public final class App {
 		return passwordVersion;
 	}
 
-	private static int userNoneBookQuota = -1;
 
 	public static int getNoneBookQuota() {
-		if (userNoneBookQuota != -1)
-			return userNoneBookQuota;
-
-		if (AppProps.valueOf("user.none.book.quota") == null) {
-			userNoneBookQuota = 0;
-		} else {
-			try {
-				userNoneBookQuota = Integer.parseInt(AppProps.valueOf("user.none.book.quota"));
-			} catch (NumberFormatException ignore) {
-				userNoneBookQuota = 0;
-			}
-		}
-
-		return userNoneBookQuota;
+		return 0;
 	}
 
 	private static int userMemberBookQuota = -1;
 
 	public static int getMemberBookQuota() {
-		if (userMemberBookQuota != -1)
-			return userMemberBookQuota;
+		if (userMemberBookQuota != -1) return userMemberBookQuota;
 
-		if (AppProps.valueOf("user.none.book.quota") == null) {
-			userMemberBookQuota = 0;
-		} else {
+		if (AppProps.valueOf("user.member.book.quota") == null) {
 			try {
 				userMemberBookQuota = Integer.parseInt(AppProps.valueOf("user.member.book.quota"));
-			} catch (NumberFormatException ignore) {
-				userMemberBookQuota = 0;
-			}
+			} catch (NumberFormatException ignore) {}
+		}
+		
+		if (userMemberBookQuota == -1) {
+			userMemberBookQuota = 0;
+			log.warn("Using default value of {} for property 'user.memeber.book.quota'.", userMemberBookQuota);
 		}
 
 		return userMemberBookQuota;
@@ -79,17 +64,17 @@ public final class App {
 	private static int userLibrarianBookQuota = -1;
 
 	public static int getLibrarianBookQuota() {
-		if (userLibrarianBookQuota != -1)
-			return userLibrarianBookQuota;
+		if (userLibrarianBookQuota != -1) return userLibrarianBookQuota;
 
-		if (AppProps.valueOf("user.librarian.book.quota") == null) {
-			userLibrarianBookQuota = 0;
-		} else {
+		if (AppProps.valueOf("user.librarian.book.quota") != null) {
 			try {
 				userLibrarianBookQuota = Integer.parseInt(AppProps.valueOf("user.librarian.book.quota"));
-			} catch (NumberFormatException ignore) {
-				userLibrarianBookQuota = 0;
-			}
+			} catch (NumberFormatException ignore) {}
+		}
+
+		if (userLibrarianBookQuota == -1) {
+			userLibrarianBookQuota = 0;
+			log.warn("Using default value of {} for property 'user.librarian.book.quota'.", userLibrarianBookQuota);
 		}
 
 		return userLibrarianBookQuota;
@@ -98,17 +83,17 @@ public final class App {
 	private static int userAdminBookQuota = -1;
 
 	public static int getAdminBookQuota() {
-		if (userAdminBookQuota != -1)
-			return userAdminBookQuota;
+		if (userAdminBookQuota != -1) return userAdminBookQuota;
 
-		if (AppProps.valueOf("user.admin.book.quota") == null) {
-			userAdminBookQuota = 0;
-		} else {
+		if (AppProps.valueOf("user.admin.book.quota") != null) {
 			try {
 				userAdminBookQuota = Integer.parseInt(AppProps.valueOf("user.admin.book.quota"));
-			} catch (NumberFormatException ignore) {
-				userAdminBookQuota = 0;
-			}
+			} catch (NumberFormatException ignore) {}
+		}
+
+		if (userAdminBookQuota == -1) {
+			userAdminBookQuota = 0;
+			log.warn("Using default value of {} for property 'user.admin.book.quota'.", userAdminBookQuota);
 		}
 
 		return userAdminBookQuota;
@@ -117,25 +102,28 @@ public final class App {
 	private static int unsuccessfulLoginTriesThreshold = -1;
 
 	/**
-	 * Returns maximum number of tries with incorrect credentials after which account is
+	 * Returns maximum number of tries with incorrect credentials after which
+	 * account is
 	 * locked.
 	 * 
-	 * @return maximum number of tries with incorrect credentials after which account is
-	 * locked 
+	 * @return maximum number of tries with incorrect credentials after which
+	 *         account is
+	 *         locked
 	 */
 	public static int getUnsuccessfulLoginTriesThreshold() {
-		if (unsuccessfulLoginTriesThreshold != -1)
-			return unsuccessfulLoginTriesThreshold;
+		if (unsuccessfulLoginTriesThreshold != -1) return unsuccessfulLoginTriesThreshold;
 
-		if (AppProps.valueOf("user.security.login.unsuccessful.tries.threshold") == null) {
-			unsuccessfulLoginTriesThreshold = 4;
-		} else {
+		if (AppProps.valueOf("user.security.login.unsuccessful.tries.threshold") != null) {
 			try {
 				unsuccessfulLoginTriesThreshold = Integer
 						.parseInt(AppProps.valueOf("user.security.login.unsuccessful.tries.threshold"));
-			} catch (NumberFormatException ignore) {
-				unsuccessfulLoginTriesThreshold = 4;
-			}
+			} catch (NumberFormatException ignore) {}
+		}
+
+		if (unsuccessfulLoginTriesThreshold == -1) {
+			unsuccessfulLoginTriesThreshold = 4;
+			log.warn("Using default value of {} for property 'user.security.login.unsuccessful.tries.threshold'.",
+					unsuccessfulLoginTriesThreshold);
 		}
 
 		return unsuccessfulLoginTriesThreshold;
@@ -149,18 +137,19 @@ public final class App {
 	 * @return registration link expiration duration in hours
 	 */
 	public static int registrationLinkExpireDuration() {
-		if (registraionLinkExpirationHours != -1)
-			return registraionLinkExpirationHours;
+		if (registraionLinkExpirationHours != -1) return registraionLinkExpirationHours;
 
-		if (AppProps.valueOf("user.partial.registration.link.expire.period") == null) {
-			registraionLinkExpirationHours = 72;
-		} else {
+		if (AppProps.valueOf("user.partial.registration.link.expire.period") != null) {
 			try {
 				registraionLinkExpirationHours = Integer
 						.parseInt(AppProps.valueOf("user.partial.registration.link.expire.period"));
-			} catch (NumberFormatException ignore) {
-				registraionLinkExpirationHours = 72;
-			}
+			} catch (NumberFormatException ignore) {}
+		}
+
+		if (registraionLinkExpirationHours == -1) {
+			registraionLinkExpirationHours = 72;
+			log.warn("Using default value of {} for property 'user.partial.registration.link.expire.period'.",
+					registraionLinkExpirationHours);
 		}
 
 		return registraionLinkExpirationHours;
@@ -174,13 +163,13 @@ public final class App {
 	 * @return Internet domain of the front end application
 	 */
 	public static String appDomain() {
-		if (uiDomain != null)
-			return uiDomain;
+		if (uiDomain != null) return uiDomain;
 
-		if (AppProps.valueOf("app.frontend.domain") == null) {
-			uiDomain = "https://localhost:4200";
-		} else {
+		if (AppProps.valueOf("app.frontend.domain") != null) {
 			uiDomain = AppProps.valueOf("app.frontend.domain");
+		} else {
+			uiDomain = "https://localhost:4200";
+			log.warn("Using default value of {} for the property 'app.frontend.domain'.", uiDomain);
 		}
 
 		return uiDomain;
@@ -194,11 +183,9 @@ public final class App {
 	 * @return URL for the specified URI
 	 */
 	public static String getUrl(String uri) {
-		if (uri == null)
-			return null;
+		if (uri == null) return null;
 
-		if (uri.startsWith("/"))
-			return appDomain() + uri;
+		if (uri.startsWith("/")) return appDomain() + uri;
 		else
 			return appDomain() + "/" + uri;
 	}
@@ -212,5 +199,24 @@ public final class App {
 		}
 
 		return hmacSecret;
+	}
+
+	private static int bookReturnPeriodDays = -1;
+
+	public static int getBookReturnPeriodDays() {
+		if (bookReturnPeriodDays != -1) return bookReturnPeriodDays;
+
+		if (AppProps.valueOf("book.return.period.days") != null) {
+			try {
+				bookReturnPeriodDays = Integer.parseInt(AppProps.valueOf("book.return.period.days"));
+			} catch (NumberFormatException ignore) {}
+		}
+
+		if (bookReturnPeriodDays == -1) {
+			bookReturnPeriodDays = 30;
+			log.warn("Using default value of {} for property 'book.return.period.days'.", bookReturnPeriodDays);
+		}
+
+		return bookReturnPeriodDays;
 	}
 }

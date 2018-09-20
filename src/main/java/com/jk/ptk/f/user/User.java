@@ -57,6 +57,8 @@ public class User {
 
 	private int bookQuota;
 
+	private int bookAssignCount;
+
 	private LocalDateTime createdOn;
 
 	@Column(name = "locale")
@@ -148,6 +150,14 @@ public class User {
 		this.bookQuota = bookQuota;
 	}
 
+	public int getBookAssignCount() {
+		return bookAssignCount;
+	}
+
+	public void setBookAssignCount(int bookAssignCount) {
+		this.bookAssignCount = bookAssignCount;
+	}
+
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
@@ -179,7 +189,7 @@ public class User {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-	
+
 	public String getLocaleValue() {
 		return localeValue;
 	}

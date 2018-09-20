@@ -19,6 +19,9 @@ public class UserV {
 	public static final String FIELD_CONFIRM_PASSWORD = "confirmPassword";
 	public static final String FIELD_SECURITY_QUESTION = "securityQuestion";
 	public static final String FIELD_SECURITY_ANSWER = "securityAnswer";
+	public static final String FIELD_IMAGE_PATH = "imagePath";
+	public static final String FIELD_BOOK_QUOTA = "bookQuota";
+	public static final String FIELD_CREATED_ON = "createdOn";
 
 	private String registrationId;
 	private String email;

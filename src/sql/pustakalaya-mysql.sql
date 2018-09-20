@@ -512,3 +512,6 @@ VALUES
 );
 
 commit;
+
+
+ALTER TABLE ptk.LibUser ADD COLUMN bookAssignCount TINYINT NOT NULL DEFAULT 0 AFTER bookQuota;

@@ -219,7 +219,7 @@ public class BookInstanceFieldValidator implements DataValidator<BookInstanceV> 
 		}
 
 		if (value.length() > PUBLICATION_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}

@@ -72,7 +72,7 @@ class NewUserFieldValidator implements DataValidator<NewUserV> {
 		}
 
 		if (value.length() > FIRST_NAME_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}
@@ -86,7 +86,7 @@ class NewUserFieldValidator implements DataValidator<NewUserV> {
 		}
 
 		if (value.length() > LAST_NAME_MAX_LEN)
-			return ResponseCode.VALUE_TOO_LARGE;
+			return ResponseCode.LENGTH_TOO_LONG;
 
 		return null;
 	}

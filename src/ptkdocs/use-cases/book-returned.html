@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Pustakalaya | Use Case | Assign Book</title>
+    <title>Pustakalaya | Use Case | Book Returned</title>
     <link type="text/css" rel="stylesheet" href="../css/pustakalaya.css" />
 </head>
 
@@ -16,22 +16,23 @@
             This website does not work without JavaScript. Please enable JavaScript or use a
             browser that supports JavaScript.
         </noscript>
+
         <div class="back-button">
             <a href="./toc-uses-cases.html">Back</a>
         </div>
 
-        <h1>Assign Book</h1>
+        <h1>Book returned by user</h1>
 
         <h3>Terminology</h3>
         <table class="ptk-table-simple mb-2">
             <tbody>
                 <tr>
                     <td>User</td>
-                    <td>User to be assigned the book.</td>
+                    <td>User to collect book from.</td>
                 </tr>
                 <tr>
                     <td>Book instance</td>
-                    <td>The book instance to be assigned to user</td>
+                    <td>The book instance to be returned or informed as misplaced by user</td>
                 </tr>
                 <tr>
                     <td>Requester</td>
@@ -46,7 +47,7 @@
                 <tr>
                     <td>URI</td>
                     <td>
-                        <code class="url">ptk/book/instance/assign</code>
+                        <code class="url">ptk/book/instance/returned</code>
                     </td>
                 </tr>
                 <tr>
@@ -55,6 +56,7 @@
                 </tr>
             </tbody>
         </table>
+
 
         <h3>Required</h3>
         <div class="ptk-table-wrapper">
@@ -87,40 +89,6 @@
                                         <td>63</td>
                                         <td>book instance id does not exist</td>
                                     </tr>
-                                    <tr>
-                                        <td>64</td>
-                                        <td>book instance with id is not available</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>email</td>
-                        <td>string</td>
-                        <td>Required</td>
-                        <td>Valid user email defined in the system.</td>
-                        <td>
-                            <table class="ptk-table-simple table-valign-top">
-                                <thead>
-                                    <tr>
-                                        <th>Error&nbsp;code</th>
-                                        <th>Condition</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>63</td>
-                                        <td>email does not exist</td>
-                                    </tr>
-                                    <tr>
-                                        <td>23</td>
-                                        <td>user account access is revoked</td>
-                                    </tr>
-                                    <tr>
-                                        <td>62</td>
-                                        <td>user associated with email has exhausted book quota</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </td>
@@ -133,31 +101,49 @@
         <ul>
             <li>Requester is authenticated.</li>
             <li>Requester must have priviledge of LIBRARIAN or above.</li>
-            <li>The book instance is available to be assigned.</li>
-            <li>User represented by the email has not exhausted his/her book quota.</li>
-            <li>User's account is not marked as deleted or revoked.</li>
+            <li>The book instance is issued to a user.</li>
         </ul>
-
 
         <h3>Success scenario</h3>
         <ol>
             <li>
                 <p>
-                    An entry with specified values is inserted in the <code>BookAssignmentHistory</code>
-                    table.
+                    Fetch the most recent entry in the <code>BookAssignmentHistory</code>
+                    table with <code>book_instance_fk</code> column having value same as
+                    <code>bookInstanceId</code> and update the following fields.
                 </p>
                 <ul>
-                    <li>an id for this entry</li>
-                    <li>primary key of the book instance in column <code>book_instance_fk</code></li>
-                    <li>primary key of the user associated with the email in column <code>issued_to_fk</code></li>
-                    <li>primary key of the requester in column <code>issued_by_fk</code></li>
-                    <li>current timestamp to mark the time of assignment in column <code>issued_on</code></li>
-                    <li>an expected return date of the book instance in column <code>expected_return_date</code>.</li>
+                    <li>primary key of the requester in column <code>released_by_fk</code></li>
+                    <li>current timestamp to mark the time of returned in column <code>return_date</code></li>
+                    <li>amount fined in column <code>amount_fined</code></li>
+                    <li>currency in column <code>currency_fk</code></li>
                 </ul>
             </li>
-            <li>The book quota count of user is incremented by 1.</li>
-            <li>The book instance status is changed to <code>issued</code>.</li>
+            <li>The book quota count of user is decremented by 1.</li>
+            <li>The book instance status is changed to <code>available</code>.</li>
         </ol>
+
+        <div class="note mb-2">
+            <p>To calculate the amount fined use the specified values as will be agreed in the
+                below form.</p>
+            <pre>period1 multiplier1 period2 multiplier2 ... periodN multiplierN 0 multiplier</pre>
+            <p>Where <code>period1</code> will be number of days after expected retuen date of
+                book and so on and <code>0</code> indicates the rest of the days. The number of
+                days will be multiplied by corressponding multiplier as show below.</p>
+<pre>
+amount fined = period1 * multiplier1 
+             + period2 * multiplier2
+             + ... 
+             + periodN * multiplierN 
+             + &lt;rest_of_the_days&gt; * multiplier</pre>
+            <p>For example:</p>
+            <pre>30 1 30 1.5 0 2</pre>
+            <p>After the expected return date the first 30 days will be fined with 1 unit of
+                currency then next 30 days will be fined with 1.5 units of currency and rest of the
+                next days will be fined with 2 units of currency.</p>
+            <p>If a person has delayed a book by 65 days then the fined amount will be calculated as:</p>
+            <pre>30 * 1 + 30 * 1.5 + 5 * 2 = 85 (Units of currency)</pre>
+        </div>
 
         <h3>Failure scenario</h3>
         <ul>
@@ -194,7 +180,7 @@
         </p>
 
         <dl class="response-list">
-            <dt>Book was added successfully.</dt>
+            <dt>Book was returned successfully.</dt>
             <dd>
                 <div class="response">
                     <div class="response-code">
@@ -219,11 +205,13 @@
             <dd></dd>
         </dl>
         <hr />
+
+        <div class="back-button">
+            <a href="./toc-uses-cases.html">Back</a>
+        </div>
     </div>
-    <!-- .main-content -->
 
     <footer id="footer"></footer>
-
     <script src="../js/global.js"></script>
 </body>
 

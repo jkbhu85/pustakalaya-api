@@ -3,12 +3,12 @@
 .idea
 .c9/
 *.launch
-.settings/
 
 .vscode/
 /target/
 /.apt_generated/
 /.settings/
+/build/
 .classpath
 .factorypath
 .project

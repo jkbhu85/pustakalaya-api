@@ -7,8 +7,6 @@ import java.util.Map;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,12 +16,9 @@ import com.jk.ptk.app.response.ResponseCode;
 import com.jk.ptk.f.user.User;
 import com.jk.ptk.f.user.UserRole;
 import com.jk.ptk.f.user.UserService;
-import com.jk.ptk.util.LocaleUtil;
-import com.jk.ptk.util.MailConsts;
 import com.jk.ptk.util.UserUtil;
 import com.jk.ptk.util.UuidUtils;
-import com.jk.ptk.util.mail.MailModel;
-import com.jk.ptk.util.mail.MailTemplateService;
+import com.jk.ptk.util.mail.MailHelper;
 import com.jk.ptk.validation.DataValidator;
 import com.jk.ptk.validation.ValidationException;
 
@@ -34,10 +29,8 @@ import com.jk.ptk.validation.ValidationException;
  */
 @Service
 class NewUserServiceImpl implements NewUserService {
-	private static final Logger log = LoggerFactory.getLogger(NewUserServiceImpl.class);
-
 	private NewUserRepository repository;
-	private MailTemplateService mailService;
+	private MailHelper mailHelper;
 	private UserService userService;
 
 	@Autowired
@@ -45,10 +38,10 @@ class NewUserServiceImpl implements NewUserService {
 	DataValidator<NewUserV> validator;
 
 	@Autowired
-	public NewUserServiceImpl(NewUserRepository repository, UserService userService, MailTemplateService mailService) {
+	public NewUserServiceImpl(NewUserRepository repository, UserService userService, MailHelper mailHelper) {
 		this.repository = repository;
 		this.userService = userService;
-		this.mailService = mailService;
+		this.mailHelper = mailHelper;
 	}
 
 	public void setDataValidator(DataValidator<NewUserV> validator) {
@@ -85,12 +78,7 @@ class NewUserServiceImpl implements NewUserService {
 		repository.save(newUser);
 
 		// notify user
-		try {
-			sendMail(newUser);
-		} catch (Throwable e) {
-			log.debug("Error in sending mail to user. Deleting user info of {}", newUser.getEmail());
-			throw e;
-		}
+		mailHelper.sendMailOnAccountCreation(newUser);
 	}
 
 	private NewUser newUserFrom(NewUserV userValues) {
@@ -102,25 +90,6 @@ class NewUserServiceImpl implements NewUserService {
 		user.setLocaleStr(userValues.getLocale());
 
 		return user;
-	}
-
-	private void sendMail(NewUser newUser) {
-		String registrationUri = App.getUrl("/user/register?id=" + newUser.getId());
-		Map<String, Object> params = new HashMap<>();
-		MailModel model = new MailModel();
-
-		model.setParamMap(params);
-		model.setRecipient(newUser.getEmail());
-		model.setRecipientName(newUser.getFirstName());
-		model.setTemplateName(MailConsts.TEMPLATE_COMPLETE_REGISTRATION);
-		model.setSubjectPropName(MailConsts.SUBJECT_COMPLETE_REGISTRATION);
-		model.setLocale(LocaleUtil.from(newUser.getLocaleStr()));
-
-		params.put(MailConsts.PARAM_NAME_OF_USER, newUser.getFirstName());
-		params.put(MailConsts.PARAM_COMPLETE_REGISTRATION_EXPIRE, App.registrationLinkExpireDuration() + "");
-		params.put(MailConsts.PARAM_COMPLETE_REGISTRATION_LINK, registrationUri);
-
-		mailService.sendMail(model);
 	}
 
 	@Override

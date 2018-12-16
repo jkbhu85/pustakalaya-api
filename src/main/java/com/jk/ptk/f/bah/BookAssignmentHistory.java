@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.jk.ptk.f.bookinstance.BookInstance;
 import com.jk.ptk.f.currency.Currency;
 import com.jk.ptk.f.user.User;
@@ -43,6 +45,8 @@ public class BookAssignmentHistory {
 	@JoinColumn(name="releasedByFk")
 	private User releasedBy;
 
+	@CreationTimestamp
+	@Column(nullable = false)
 	private LocalDate issuedOn;
 
 	private LocalDate expectedReturnDate;
@@ -136,7 +140,5 @@ public class BookAssignmentHistory {
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
 	}
-
-
 
 }

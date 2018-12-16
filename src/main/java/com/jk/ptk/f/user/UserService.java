@@ -1,7 +1,5 @@
 package com.jk.ptk.f.user;
 
-import java.util.Map;
-
 import com.jk.ptk.app.ResourceExpiredException;
 import com.jk.ptk.security.login.InvalidCredentialsException;
 import com.jk.ptk.validation.ValidationException;
@@ -123,13 +121,12 @@ public interface UserService {
 	void updateUnsuccessfulTries(String email, Integer tries);
 
 	/**
-	 * Returns a map of user's profile information which is associated with the
-	 * specified email.
+	 * Returns an instance of user's profile created using the user associated with
+	 * the specified email.
 	 * 
 	 * @param email
 	 *              the specified email
-	 * @return a map of user's profile information which is associated with the
-	 *         specified email
+	 * @return an instance of user's profile created using the specified user
 	 */
-	Map<String, String> getProfile(String email);
+	UserProfile getProfile(String email);
 }

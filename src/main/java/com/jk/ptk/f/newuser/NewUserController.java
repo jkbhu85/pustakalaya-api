@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jk.ptk.app.response.PtkResponse;
 import com.jk.ptk.app.response.ResponseCode;
-import com.jk.ptk.util.mail.MailNotSentException;
 import com.jk.ptk.validation.ValidationException;
 
 /**
@@ -45,10 +44,6 @@ public class NewUserController {
 		} catch (ValidationException e) {
 			response.setResponseCode(ResponseCode.OPERATION_UNSUCCESSFUL).setMessage("ERROR_INVALID_FIELDS")
 					.setErrors(e.getErrorMap());
-
-			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
-		} catch (MailNotSentException e) {
-			response.setResponseCode(ResponseCode.MAIL_NOT_SENT_INVALID_EMAIL).setMessage("ERROR_EMAIL_NOT_SENT");
 
 			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;
 		} catch (Exception e) {

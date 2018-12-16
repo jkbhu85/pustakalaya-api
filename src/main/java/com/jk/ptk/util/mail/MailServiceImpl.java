@@ -39,7 +39,7 @@ import com.jk.ptk.util.FileUtils;
  * @author Jitendra
  *
  */
-@Service("MailServiceImpl")
+@Service("mailServiceImpl")
 class MailServiceImpl implements MailService, Closeable {
 	private static Logger log = LoggerFactory.getLogger(MailServiceImpl.class);
 	private Session session;
@@ -147,16 +147,6 @@ class MailServiceImpl implements MailService, Closeable {
 			msg.setContent(multipart);
 
 			log.debug("Mail prepared, about to send to: {}", recipients);
-
-			/*
-			log.debug("Connecting transport...");
-			transport = session.getTransport();
-			transport.connect();
-
-			log.debug("Transport connected");
-
-			transport.sendMessage(msg, msg.getAllRecipients());
-			transport.close();*/
 
 			Transport.send(msg);
 

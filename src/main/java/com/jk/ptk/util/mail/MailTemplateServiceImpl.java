@@ -15,7 +15,7 @@ class MailTemplateServiceImpl implements MailTemplateService {
 	private TemplateEngine templateEngine;
 
 	@Autowired
-	@Qualifier("MailServiceImpl")
+	@Qualifier("noOpMailServiceImpl")
 	private MailService mailService;
 
 	@Autowired
@@ -24,7 +24,7 @@ class MailTemplateServiceImpl implements MailTemplateService {
 	private static final String TEMPLATE_PREFIX = "html/";
 
 	@Override
-	public void sendMail(MailModel model) {
+	public void sendMail(MailModel model) throws Exception {
 		final Context context = new Context(model.getLocale());
 		final String subject = bundle.getMessage(model.getSubjectPropName(), model.getSubjectParameters(), model.getLocale());
 		final StringWriter writer = new StringWriter();
@@ -35,6 +35,6 @@ class MailTemplateServiceImpl implements MailTemplateService {
 
 		final String msgBody = writer.toString();
 
-		mailService.sendMail(model.getRecipient(), subject, msgBody);
+		mailService.sendMail(model.getTo(), subject, msgBody);
 	}
 }

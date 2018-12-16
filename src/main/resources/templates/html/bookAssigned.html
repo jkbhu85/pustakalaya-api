@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="#{book.assigned.subject(${subjectParameters})}"></title>
+</head>
+
+<body>
+	<p th:text="#{greetings(${mail.firstName})}"></p>
+	
+	<p th:text="#{book.assigned.line1(${mail.bookTitle}, ${mail.assignedOn})}"></p>
+	
+	<p th:text="#{book.assigned.line2(${mail.returnOn})}"></p>
+	
+	<div>
+		<p>
+			<span th:text="#{thanks}"></span><br/>
+			<span th:text="#{pustakalaya.team}"></span><br/>
+			<span th:text="#{contact.mail}"></span><br/>
+			<span th:text="#{contact.number}"></span>
+		</p>
+	</div>
+</body>
+</html>

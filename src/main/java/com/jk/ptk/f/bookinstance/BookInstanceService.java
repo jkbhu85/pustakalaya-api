@@ -1,7 +1,5 @@
 package com.jk.ptk.f.bookinstance;
 
-import java.util.Map;
-
 import com.jk.ptk.validation.InvalidArgumentException;
 
 /**
@@ -20,7 +18,7 @@ public interface BookInstanceService {
 	 * @return details of the book instance identified with the specified book
 	 *         instance id
 	 */
-	Map<String, String> findBookInstance(String bookInstanceId);
+	BookInstance findBookInstance(String bookInstanceId);
 
 	/**
 	 * Assigns the book instance identified by the specified book instance id to the

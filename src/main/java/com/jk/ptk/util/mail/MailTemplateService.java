@@ -4,7 +4,6 @@ package com.jk.ptk.util.mail;
  * Implementation of this class sends a mail using the provided information.
  * 
  * @author Jitendra
- *
  */
 public interface MailTemplateService {
 	/**
@@ -12,6 +11,8 @@ public interface MailTemplateService {
 	 * 
 	 * @param model
 	 *              the specified model.
+	 * @throws Exception
+	 *                   if an error occurs while sending mail.
 	 */
-	public void sendMail(MailModel model);
+	public void sendMail(MailModel model) throws Exception;
 }

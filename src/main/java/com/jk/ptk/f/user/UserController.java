@@ -40,7 +40,7 @@ public class UserController {
 	}
 
 	@GetMapping	
-	public Map<String, String> getProfile(@RequestParam("email") String email) {
+	public UserProfile getProfile(@RequestParam("email") String email) {
 		log.info("User info of the user with email {} are requested.", email);
 		return service.getProfile(email);
 	}

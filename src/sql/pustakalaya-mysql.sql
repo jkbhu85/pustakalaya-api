@@ -200,18 +200,19 @@ CREATE TABLE ptk.BookAssignmentHistory (
     issuedToFk     BIGINT NOT NULL,
     issuedByFk     BIGINT NOT NULL,
     releasedByFk   BIGINT,
-    issuedOn       TIMESTAMP NOT NULL,
+    issuedOn       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     expectedReturnDate DATE NOT NULL,
     returnDate     TIMESTAMP NULL,
     amountFined    DECIMAL(9, 2),
-    currency       SMALLINT,
+    currencyFk       SMALLINT,
     comments       VARCHAR(200),
     PRIMARY KEY (id),
-    FOREIGN KEY (bookInstanceFk) REFERENCES BookInstance (id),
-    FOREIGN KEY (issuedToFk) REFERENCES LibUser (id),
-    FOREIGN KEY (issuedByFk) REFERENCES LibUser (id),
-    FOREIGN KEY (releasedByFk) REFERENCES LibUser (id),
-    FOREIGN KEY (currency) REFERENCES Currency (id)
+    CONSTRAINT UK_BAH_1 UNIQUE(bookInstanceFk, issuedToFk, issuedOn),
+    CONSTRAINT FK_BOOK_INSTANCE FOREIGN KEY (bookInstanceFk) REFERENCES BookInstance (id),
+    CONSTRAINT FK_ISSUED_TO FOREIGN KEY (issuedToFk) REFERENCES LibUser (id),
+    CONSTRAINT FK_ISSUED_BY FOREIGN KEY (issuedByFk) REFERENCES LibUser (id),
+    CONSTRAINT FK_RELEASED_BY FOREIGN KEY (releasedByFk) REFERENCES LibUser (id),
+    CONSTRAINT FK_CURRENCY FOREIGN KEY (currencyFk) REFERENCES Currency (id)
 );
 
 CREATE TABLE ptk.SupportedLocale(

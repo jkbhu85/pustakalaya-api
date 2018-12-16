@@ -2,7 +2,6 @@ package com.jk.ptk.f.user;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -215,9 +214,10 @@ class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Map<String, String> getProfile(String email) {
+	public UserProfile getProfile(String email) {
 		if (email != null && !email.isEmpty()) {
 			User user = repository.findByEmail(email);
+			if (user == null) return null;
 			return UserUtil.toProfile(user);
 		}
 		

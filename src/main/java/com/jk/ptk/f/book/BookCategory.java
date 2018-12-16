@@ -20,10 +20,10 @@ import com.jk.ptk.app.DataLayerInitialized;
 @DataLayerInitialized
 public class BookCategory {
 
-	public static final BookCategory TEXT_BOOK = new BookCategory();
+	public static final BookCategory TEXTBOOK = new BookCategory();
 	public static final BookCategory MAGAZINE = new BookCategory();
 
-	public static final BookCategory[] categories = { TEXT_BOOK, MAGAZINE };
+	public static final BookCategory[] categories = { TEXTBOOK, MAGAZINE };
 
 	/**
 	 * Returns an object representing book category for the specified
@@ -59,8 +59,8 @@ public class BookCategory {
 		query = em.createQuery(jpql, BookCategory.class);
 		query.setParameter("name", "TEXTBOOK");
 		cat = query.getSingleResult();
-		TEXT_BOOK.id = cat.id;
-		TEXT_BOOK.name = cat.name;
+		TEXTBOOK.id = cat.id;
+		TEXTBOOK.name = cat.name;
 
 		query = em.createQuery(jpql, BookCategory.class);
 		query.setParameter("name", "MAGAZINE");

@@ -39,16 +39,15 @@ public class LoginServiceImpl implements LoginService {
 		User user = service.findByEmail(username);
 
 		// no user found, throw exception
-		Integer accountStatus = user.getAccountStatus().getId();
-		if (user == null || UserAcStatus.CLOSED.getId().equals(accountStatus)) {
+		if (user == null || UserAcStatus.CLOSED.equals(user.getAccountStatus())) {
 			throw new InvalidCredentialsException();
 		}
 
-		if (UserAcStatus.LOCKED.getId().equals(accountStatus)) {
+		if (UserAcStatus.LOCKED.equals(user.getAccountStatus())) {
 			throw new AccountLockedException();
 		}
 
-		if (UserAcStatus.REVOKED.getId().equals(accountStatus)) {
+		if (UserAcStatus.REVOKED.equals(user.getAccountStatus())) {
 			throw new AccountRevokedException();
 		}
 

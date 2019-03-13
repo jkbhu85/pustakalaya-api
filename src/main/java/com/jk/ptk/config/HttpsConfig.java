@@ -1,5 +1,7 @@
 package com.jk.ptk.config;
 
+import java.io.File;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
@@ -16,11 +18,17 @@ import com.jk.ptk.app.AppProps;
 @Configuration
 public class HttpsConfig {
 	private static final Logger log = LoggerFactory.getLogger(HttpsConfig.class);
+	private static final int DEFAULT_HTTP_PORT = 8080;
+	private static final int DEFAULT_HTTPS_PORT = 8443;
+	private int httpPort;
+	private int httpsPort;
 
 	// redirect all traffic of HTTP to HTTPS
 	@Bean
 	public ServletWebServerFactory servletContainer() {
-		TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
+		setPortNumbers();
+		
+		TomcatServletWebServerFactory serverFactory = new TomcatServletWebServerFactory() {
 			@Override
 			protected void postProcessContext(Context context) {
 				// enforce HTTPS over entire application
@@ -46,38 +54,70 @@ public class HttpsConfig {
 			}
 		};
 
-		tomcat.addAdditionalTomcatConnectors(httpsConnector());
+		serverFactory.setPort(httpPort);
+		//serverFactory.addAdditionalTomcatConnectors(httpConnector());
+		serverFactory.addAdditionalTomcatConnectors(httpsConnector());
 
-		return tomcat;
+		return serverFactory;
 	}
-
-	private Connector httpsConnector() {
-		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-
-		int httpPort;
-		int httpsPort;
-
+	
+	private void setPortNumbers() {
 		try {
 			httpPort = Integer.parseInt(AppProps.valueOf("app.security.http.port"));
-			
-		} catch (NumberFormatException e) {
-			httpPort = 8080;
-			log.warn("Port number for HTTP is not defined.");
+		} catch (NumberFormatException ignore) {
+			log.warn("Port number for HTTP is not defined or is incorrect. Using default port {}", DEFAULT_HTTP_PORT);
+			httpPort = DEFAULT_HTTP_PORT;
 		}
 		
 		try {
 			httpsPort = Integer.parseInt(AppProps.valueOf("app.security.https.port"));
 		} catch (NumberFormatException e) {
-			httpsPort = 8443;
-			log.warn("Port number for HTTPS is not defined.");
+			log.warn("Port number for HTTPS is not defined. Using default port {}", DEFAULT_HTTPS_PORT);
+			httpsPort = DEFAULT_HTTPS_PORT;
 		}
+	}
+	
+	private Connector httpConnector() {
+		Connector httpConnector = new Connector();
+		
+		httpConnector.setPort(httpPort);
+		httpConnector.setRedirectPort(httpsPort);
+		httpConnector.setProperty("connectionTimeout", "20000");
+		httpConnector.setProperty("protocol", "HTTP/1.1");
+		
+		return httpConnector;
+	}
 
-		connector.setScheme("http");
-		connector.setPort(httpPort);
-		connector.setRedirectPort(httpsPort);
-		connector.setSecure(false);
+	private Connector httpsConnector() {
+		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+		
+		String basePath = System.getenv(AppProps.NAME_ENV_VAR_CONFIG);
+		String storePath = basePath + File.separator + AppProps.valueOf("app.security.ssl.keystore");
+		String storeType = AppProps.valueOf("app.security.ssl.keystore-type");
+		String storePass = AppProps.valueOf("app.security.ssl.keystore-password");
+		
+		/*SSLHostConfigCertificate certificate = new SSLHostConfigCertificate();
+		certificate.setCertificateKeystoreFile(storePath);
+		certificate.setCertificateKeystorePassword(storePass);
+		certificate.setCertificateKeystoreType(storeType);
+		
+		SSLHostConfig sslConfig = new SSLHostConfig();
+		sslConfig.addCertificate(certificate);*/
+		
+		// enable SSL
+		//connector.addSslHostConfig(sslConfig);
 
-		log.info("Using {} as HTTP and {} as HTTPS port number.", httpPort, httpsPort);
+		connector.setProperty("SSLEnabled", "true");
+		connector.setProperty("keystoreFile", storePath);
+		connector.setProperty("keystorePass", storePass); 
+		connector.setProperty("keystoreType", storeType);
+		connector.setProperty("sslProtocol", "TLS");
+		connector.setProperty("clientAuth", "false");
+		connector.setScheme("https");
+		connector.setPort(httpsPort);
+		connector.setSecure(true);
+		
+		connector.setProperty("maxThreads", "150");
 
 		return connector;
 	}
